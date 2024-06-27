@@ -2,8 +2,72 @@
 
 \section{Definition}\label{sec:definition}
 
+In informatics, we often get an input as a string of characters, and want to compute some function on it.
+In complexity Theory, we mostly focus on decision problems where we only want to find out if some input fulfills some given property.
+To formalize this, there is the concept of formal languages.
+The following definitions are taken from the lecture Theory of Computer Science~\cite{theory-cs}.
+For the mathematical background, refer to \autoref{ch:mathematical-background}.
+
+\begin{define}[Alphabet]
+    An alphabet $\Sigma$ is a finite set of symbols
+\end{define}
+
+\begin{define}[Word]
+    A word over some alphabet $\Sigma$ is finite sequence of symbols from $\Sigma$.
+    We denote $\varepsilon$ as the empty word, $\Sigma^*$ as the set of all words over $\Sigma$ and $|w|$ as the number of symbols in $w$.
+\end{define}
+
+The concatenation of two words or symbol is written after each other, examples are $ab$ and $\Sigma^*a\Sigma^*$ (the set of all words containing at least one $a$).
+
+\begin{define}[Formal Language]
+    A formal language is a set of words over some alphabet $\Sigma$, that is a subset of $\Sigma^*$
+\end{define}
+
+For any computational decision problem, we can then reformulate it as the problem of deciding if the input word is contained in the formal language consisting of all words which have the required property.
 
 \section{Chomsky Hierarchy}\label{sec:chromsky-hierarchy}
+
+One of the multiple ways to categorize formal languages was invented by Avram Noam Chomsky, a modern linguist.
+It is based on the complexity of defining the language in some finite way, namely using grammars, but other formalisms are equivalent.
+
+\subsection{Grammars}\label{subsec:grammars}
+
+A grammar can informally be seen as a set of rules telling us how to generate all words in a language.
+
+\begin{define}[Grammar]
+    A grammar is a 4-tuple $\langle V, \Sigma, R, S \rangle$ consisting of
+    \begin{itemize}
+        \item[$V$] The set of non-terminal symbols
+        \item[$\Sigma$] The set of terminal symbols
+        \item[$R$] A set of rules, formally over $(V \cup \Sigma)^{*}V(V \cup \Sigma)^{*} \times (V \cup \Sigma)^{*}$
+        \item[$S$] The start symbol from the set $V$
+    \end{itemize}
+\end{define}
+
+The non-terminal symbols are symbols that are not in the end alphabet $\Sigma$ and exist for the purpose of steering the process of word generation.
+Further, the rules dictate that there must be at least one non-terminal symbol on the left-hand side of the production rule, as $(V \cup \Sigma)^*$ contains all words consisting of symbols from $V$ and $\Sigma$, and thus $(V \cup \Sigma)^{*}V(V \cup \Sigma)^{*}$ is the language of all words containing at least one non-terminal symbol.
+We normally write rules in the form $a \to b$ instead of $\langle a, b \rangle$.
+
+To generate the words, we have the concept of derivations.
+\begin{define}[Derivation]
+    First, we can define one derivation step.
+
+    We say $u'$ can be derived from $u$ if
+    \begin{itemize}
+        \item $u$ is of the form $xyz$ for some words $x, y, z \in (V \cup \Sigma)^*$ and $u'$ is of the form $xy'z$
+        \item there exists a rule $y \to y'$ in $R$
+    \end{itemize}
+    We say that a word is in the \emph{generated language} of a grammar if it can be derived in a finite number of steps from $S$.
+\end{define}
+
+\begin{exmp}
+    Consider the grammar $\langle \{S\}, \{a, b\}, R, S \rangle$ with
+    \begin{align*}
+        R = \{ &S \to aSb, \\
+        &S \to \varepsilon \}
+    \end{align*}
+    The generated language for this grammar is $\{\varepsilon, ab, aabb, \dots\} = \{a^{n}b^{n} \mid n \in \mathbb{N}_0\}$
+\end{exmp}
 
 \subsection{Regular Languages}\label{subsec:regular-languages}
 

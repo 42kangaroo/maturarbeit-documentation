@@ -10,7 +10,9 @@
 \usepackage[utf8]{inputenc}       % Utf8 Zeichensatz
 \usepackage[T1]{fontenc}          % Schriftenkodierung
 \usepackage[lighttt]{lmodern}     % Schriftart
-\usepackage{amsmath}              % Mathematische Formeln
+\usepackage{amsmath}
+\usepackage{amsthm}     % Mathematische Formeln
+\usepackage{amssymb}
 \usepackage[normalem]{ulem}       % Durchgestrichener Text
 \usepackage{xcolor}               % Farbiger Text
 \usepackage{verbatim}             % Text ohne Formatierung
@@ -33,6 +35,7 @@
 \usepackage[version=4]{mhchem}    % Für chemische Formeln
 \usepackage{siunitx}
 \usepackage{stackengine}
+\usepackage{cleveref}
 \makeindex
 % ========= ENDE VON PAKETE LADEN =========
 
@@ -145,6 +148,13 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
     \vskip 30\p@
 }}
 \makeatother
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{define}{Definition}[chapter]
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[chapter]
 % ========== ENDE VON METADATEN ===========
 
 
@@ -184,8 +194,8 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 % === KAPITEL DER ARBEIT ===
 \input{vorwort}
 \input{einleitung}
-\input{descriptive_complexity}
 \input{formal_languages}
+\input{descriptive_complexity}
 \input{personal_contribution}
 \input{results}
 \input{conclusion_direction}

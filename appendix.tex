@@ -67,10 +67,10 @@ In second order logic, we extend the capabilities of first order logic with the 
 Turing machines are the most common model of computation. We abreviate Turing Machines as TM
 \begin{description}
     \item[Informal definition] A turing machine is a automaton with a finite number of states and an infinite tape. Using a read/write head, which can read one symbol on the tape, modify one symbol on the tape and move left and right, a Turing Machine can compute functions
-    \item[Formal definition] Formally, a Turing machine is a 7-tuple $M = \langle  Q, \sum, \Gamma, \delta, q_0, q_{accept}, q_{reject}\rangle$, where
+    \item[Formal definition] Formally, a Turing machine is a 7-tuple $M = \langle  Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}\rangle$, where
     \begin{description}
         \item[$Q$] is the set of states
-        \item[$\sum$] is the set representing the symbols of which the input word on the tape can consist
+        \item[$\Sigma$] is the set representing the symbols of which the input word on the tape can consist
         \item[$\Gamma$] is the set of symbols which can be written or read on the tape
         \item[$\delta$] is the transition function, with $\delta : \Gamma \times Q \to \Gamma \times Q \times \{L, R\}$. So when a TM is in state $n$ and reads $a$ on the tape, $\delta$ tells us to which state we should transition, which symbol we should write and which direction we should move the read/write head
         \item[$q_0$] the start state
