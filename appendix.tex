@@ -77,5 +77,8 @@ Turing machines are the most common model of computation. We abreviate Turing Ma
         \item[$q_{accept}$] the accept state
         \item[$q_{reject}$] the reject state
     \end{description}
+    \item[Turing computation] At the beginning, the TM is in the start state, the input is written in a consecutive way on the tape and the read/write head is on the first character of the input word. In consecutive steps, the machine state then changes according to the transition function. If at some point the machine enters the accept or the reject state, the computation halts, and the TM is said to have accepted / rejected the input. In this work we will ignore the tape content after the computation and focus on decision problems.
+    \item[Decidability] If a TM halts on all inputs, we say that it decides a problem, as we can always be sure that the machine will accept or reject an input in finite time.
+    \item[Nondetermenistic TM (NTM)] We can extend the transition function $\delta$ to allow multiple transitions from a given state. If there exists any computational path which leads to an accept state, the NTM accepts. This is not analog to how real sequential computers work, but allows interesting results, and is as powerfull as a normal deterministic TM.
     \item[Church-Turing Thesis] According to the Church-Turing Thesis, this formalism is equivalent to what any computer can compute.
 \end{description}
