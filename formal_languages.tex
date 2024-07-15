@@ -1,5 +1,6 @@
 \chapter{Formal Languages}\label{ch:formal-languages}
 
+
 \section{Definition}\label{sec:definition}
 
 In informatics, we often get an input as a string of characters, and want to compute some function on it.
@@ -24,6 +25,7 @@ The concatenation of two words or symbol is written after each other, examples a
 \end{define}
 
 For any computational decision problem, we can then reformulate it as the problem of deciding if the input word is contained in the formal language consisting of all words which have the required property.
+
 
 \section{Chomsky Hierarchy}\label{sec:chromsky-hierarchy}
 
@@ -54,25 +56,124 @@ To generate the words, we have the concept of derivations.
 
     We say $u'$ can be derived from $u$ if
     \begin{itemize}
+        \setlength\itemsep{0.2em}
         \item $u$ is of the form $xyz$ for some words $x, y, z \in (V \cup \Sigma)^*$ and $u'$ is of the form $xy'z$
         \item there exists a rule $y \to y'$ in $R$
     \end{itemize}
+
     We say that a word is in the \emph{generated language} of a grammar if it can be derived in a finite number of steps from $S$.
 \end{define}
 
 \begin{exmp}
     Consider the grammar $\langle \{S\}, \{a, b\}, R, S \rangle$ with
-    \begin{align*}
-        R = \{ &S \to aSb, \\
-        &S \to \varepsilon \}
-    \end{align*}
+    \[
+        R = \begin{Bmatrix*}[l]
+                S \to aSb,
+                &S \to \varepsilon
+        \end{Bmatrix*}
+    \]
     The generated language for this grammar is $\{\varepsilon, ab, aabb, \dots\} = \{a^{n}b^{n} \mid n \in \mathbb{N}_0\}$
 \end{exmp}
 
+Now that we have a tool to describe some infinite languages using a finite description, we can further differentiate the complexity of a language by the minimum required complexity of the rules in any grammar that describes the language.
+
 \subsection{Regular Languages}\label{subsec:regular-languages}
+
+The regular languages have the most restricted type of grammars.
+Formally, any regular language can be described by a grammar with rules in $V\times(\Sigma \cup \Sigma V \cup \varepsilon)$.
+This means that we only have exactly one non-terminal on the left-hand side and the right hand side is either a terminal, the empty word or a terminal symbol followed by a non-terminal symbol.
+
+\begin{exmp}
+    Consider the grammar $\langle \{S, O\}, \{a\}, R, S \rangle$ with
+    \[
+        R = \begin{Bmatrix*}[l]
+                S \to aO,
+                &S \to \varepsilon, \\
+                O \to aS
+        \end{Bmatrix*}
+    \]
+    The generated language are exactly all words with even length.
+\end{exmp}
+
+These languages have been studied quite thoroughly and have multiple equivalent formalisms:
+\begin{itemize}
+    \setlength\itemsep{0.2em}
+    \item The language is recognised Deterministic finite automata, which process the input word one character at a time (for a formal definition see~\cite{theory-cs})
+    \item The language can be decided by a read-only turing machine, that is a turing machine that can not modify it's tape
+    \item The language can be described by a regular expression
+\end{itemize}
+
+For a more in-depth analysis of regular languages and equivalent formalisms refer to~\cref{subsec:des-regular-languages} and~\cite{Straubing1994}.
 
 \subsection{Context-Free Languages}\label{subsec:context-free-languages}
 
+The context-free languages extend the regular languages by allowing arbitrary right-hand sides for the rules of the defining grammar.
+Formally, that gives us rules in $V\times(\Sigma \cup V)^{*}$.
+Most valid arithmetic expressions, logical formulas and formally correct code in programming languages are context-free, as we can see the non-terminal symbols as types wich are then converted to specific expressions of that type.
+
+\begin{exmp}
+    Consider the grammar $\langle \{\bold{Exp}, \bold{NumF}, \bold{Num}\}, \{0, 1, (, ), -, +\}, R, \bold{Exp} \rangle$ with
+    \[
+        R = \begin{Bmatrix*}[l]
+                \bold{Exp} \to \bold{NumF},
+                &\bold{Exp} \to (\bold{Exp} + \bold{Exp}), \\
+                \bold{Exp} \to (\bold{Exp} - \bold{Exp}),
+                &\bold{Exp} \to (-\bold{Exp}), \\
+                \bold{Num} \to 0\bold{Num},
+                &\bold{Num} \to 1\bold{Num}, \\
+                \bold{Num} \to \varepsilon,
+                &\bold{NumF} \to 0, \\
+                \bold{NumF} \to 1\bold{Num}
+        \end{Bmatrix*}
+    \]
+    This generates the language of all well-formed formulas using addition and subtraction over binary numbers.
+    For clarity, $\bold{Exp}$ denotes an arbitrary expression, $\bold{NumF}$ any number without leading zeroes and $\bold{Num}$ any number (possibly empty or with leading zeroes).
+\end{exmp}
+
+Those languages have less known formalisms, the Push-Down Automaton (again see~\cite{theory-cs}) being the most common.
+For a characterisation of the context-free languages using logic, see~\cref{subsec:des-context-free-languages}.
+
 \subsection{Context-Sensitive Languages}\label{subsec:context-sensitive-languages}
 
+The most important category of languages for this work have multiple restrictions on the grammars which produce the same set.
+
+One restriction is that all rules are of the form $\alpha\beta\gamma \to \alpha\varphi\gamma$ with $\alpha, \gamma \in (\Sigma \cup V)^{*}$, $\beta \in V$ and $\varphi \in (\Sigma \cup V)^{+}$.
+Additionally, if $S$ is the start variable and never occurs on the right-hand side of any rule, we may include $S \to \varepsilon$.
+
+Equivalently, we can have all grammars with $u \leq v$ for any rule $u \to v$, in addition to the special case with the start variable mentioned above.
+These grammars are called noncontracting.
+
+The last, most usefull form for proofs is the Kuroda normal form~\cite{Pettorossi2022}, where all rules have one of the following forms:
+\begin{itemize}
+    \setlength\itemsep{0.2em}
+    \item $A \to BC$
+    \item $AB \to CB$
+    \item $A \to a$
+    \item $S \to \varepsilon$ if $S$ is the start symbol and does not occur on any right-hand side
+\end{itemize}
+where $A, B, C, S \in V$ and $a \in \Sigma$.
+
+\begin{exmp}
+    Consider the grammar $\langle \{S, B\}, \{a, b, c\}, R, S \rangle$ with
+    \[
+        R = \begin{Bmatrix*}[l]
+               S \to abc, &S \to aSBc, \\
+               cB \to Bc, &bB \to bb
+        \end{Bmatrix*}
+    \]
+    It generates the language $a^{n}b^{n}c^{n}$ for $n \in \mathbb{N}_{1}$ and is noncontracting.
+\end{exmp}
+
+The corresponding formalism for these languages are the linearly bounded nondeterministic Turing machines which can only write on the tape cells that contained a non-blank symbol.
+This and an equivalent extension of Second-Order logic will be proven in~\cref{subsec:des-context-sensitive-languages}.
+
 \subsection{Recursive Languages}\label{subsec:recursive-languages}
+
+The recursive languages are the most general languages in the hierarchy, as they don't have any restrictions on the rules.
+It can be shown that this set of languages is equivalent to the languages recognisable by a turing machine.
+By the Church-Turing thesis, this means that these are exactly the languages that can be computed by any of our computers and algorithms.
+Thus, we have a huge number of equivalent formalisms, including a RAM machine, while-programs and lambda calculus.
+
+It is worth noting that there are languages which are not recursive.
+One of the most important example of these languages is the set of all (descriptions) of turing machines which halt on every input, also known as the halting problem.
+For the characterisation using logic, again refer to~\cref{subsec:des-recursive-languages}.
