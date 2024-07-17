@@ -3,12 +3,82 @@
 
 \section{Aims}\label{sec:aims}
 
+In mathematics, abstraction is one of the most important tools as it enables us to make general statements and prove them for all the concrete instantiations of a concept.
+Formal Logic takes this even further and makes it possible to abstract mathematical thought itself.
+In Computer science, we are often interested in the amount of resources needed to compute a certain function or solve a certain problem, speaking in terms of time and storage space.
+Different forms of logic have the power to describe different types of problems.
+By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean querry meaning "the i$^{th}$ bit of an encoding of the answer is 1"}, we can say a corresponding logical charaterisation of a problem is a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
+By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
+
+Using these results, many insights into the underlying structure of real-world problems can be made which in turn can give us better ways to deal with them.
+Further, descriptive complexity has applications in database theory and computer aided verification and proofs.
+
+
+\section{Tools}\label{sec:tools}
+
+As always, we first need to present some tools and techniques which will be used later in the proofs.
+Definition are again taken and modified from~\cite{theory-cs} and~\cite{descriptive-complexity}.
+
+\subsection{Complexity Theory}\label{subsec:complexity-theory}
+
+Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume turing machines}.
+Also, we do not really care about constants in the computation, and thus use a notation which omits these.
+
+\begin{define}[Big-O notation]
+    Let $f, g$ be functions $f, g: \mathbb{N} \to \mathbb{R}_+$.
+
+    We say that $f \in \mathcal{O}(g)$ if there exists positive integers $n_0, c$ such that for all $n \geq n_0$ we have \[f(n) \leq c\cdot g(n)\]
+\end{define}
+
+Complexity classes can then be defined as all the problems which have a turing machine satisfying some bounds that can compute their solutions.
+Now we will define some common and important complexity classes.
+
+\begin{define}
+    [{DTIME[$\mathcal{O}(t)$]}]
+    We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f \in \mathcal{O}(t)$.
+\end{define}
+
+\begin{define}[P]
+    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME[$\mathcal{O}(q)$]
+\end{define}
+
+\begin{define}
+    [{DSPACE[$\mathcal{O}(t)$]}]
+    We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f \in \mathcal{O}(t)$.
+\end{define}
+
+\begin{define}[PSPACE]
+    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE[$\mathcal{O}(q)$]
+\end{define}
+
+We can go do the same for nondeterministic turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE.
+There, we always take the maximum of tape cells and steps over any computation branch.
+
+The complexity class P has a special meaning for computer scientists as these are the problems which are deemed "feasible" on modern computers.
+
+\subsection{Reduction}\label{subsec:reduction}
+
+A reduction can informally be seen as a method of using a problem we already solved to solve a new problem by converting this new problem into an instance of the old problem.
+These reduction can be very usefull to define complete problems for complexity classes, which in turn enable us to prove theorems for all problems of a specific complexity class.
+
+\begin{define}[first-order reduction]
+    Let $\mathcal{C}$ be a complexity class and $A$ and $B$ be two problems over vocabularies $\sigma$ and $\tau$.
+    Now suppose that there is some first-order query $I: \text{STRUC}[\sigma] \to \text{STRUC}[\tau]$ for which we have the following property:
+    \[
+        \mathcal{A} \in A \Leftrightarrow I(\mathcal{A}) \in B
+    \]
+    Then $I$ is a first order reduction from $A$ to $B$, denoted as $A \leq_{fo} B$.
+\end{define}
+
+\subsection{Ehrenfeucht-Fraïssé Games}\label{subsec:ehrenfeucht-fraisse-games}
+
 
 \section{Important Results}\label{sec:important-results}
 
 \subsection{NSPACE[$s(n)$] $\subseteq$ DSPACE[$s(n)^2$]}\label{subsec:nspacesubsetdspacesquared}
 
-\subsection{FO(LFP) $=$ P}\label{subsec:fo(lfp)=p}
+\subsection{SPACE Hierarchy theorem}\label{subsec:space-hierarchy-theorem}
+
 
 \section{Results concerning the Chomsky hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
@@ -19,6 +89,7 @@
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages}
 
 \subsection{Recursive Languages}\label{subsec:des-recursive-languages}
+
 
 \section{Open questions}\label{sec:open-questions}
 
