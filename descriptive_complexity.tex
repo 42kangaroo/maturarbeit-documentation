@@ -56,7 +56,7 @@ There, we always take the maximum of tape cells and steps over any computation b
 
 The complexity class P has a special meaning for computer scientists as these are the problems which are deemed "feasible" on modern computers.
 
-\subsection{Reduction}\label{subsec:reduction}
+\subsection{Reduction and Completeness}\label{subsec:reduction}
 
 A reduction can informally be seen as a method of using a problem we already solved to solve a new problem by converting this new problem into an instance of the old problem.
 These reduction can be very usefull to define complete problems for complexity classes, which in turn enable us to prove theorems for all problems of a specific complexity class.
@@ -70,8 +70,56 @@ These reduction can be very usefull to define complete problems for complexity c
     Then $I$ is a first order reduction from $A$ to $B$, denoted as $A \leq_{fo} B$.
 \end{define}
 
+First order reductions can then be used to show that some problem is also a member in some complexity class, as in most complexity classes, we can compute the first order query, and then we are left with a problem that we already know is in the required class.
+The converse can also be shown: for some problem $B$ which is not in some complexity class $\mathcal{C}$, if we have $B \leq_{fo} A$, then $A$ is also not in $\mathcal{C}$, as otherwise $B$ would also be in $\mathcal{C}$, which is a contradiction.
+
+Using the reductions, we can define completeness.
+
+\begin{define}[Completness via first-order reductions for Complexity Class $\mathcal{C}$]
+    We say some problem $A$ is complete for $\mathcal{C}$ via $\leq_{fo}$ if and only if
+    \begin{itemize}
+        \setlength\itemsep{0.2em}
+        \item $A \in \mathcal{C}$
+        \item for all $B \in \mathcal{C}$, we have $B \leq_{fo} A$
+    \end{itemize}
+\end{define}
+
+Informally, a complete problem captures the essence of the complexity class.
+Further, they have an application in some proofs of equivalences between complexity classes $\mathcal{C}$ and logics $\mathcal{L}$.
+These proofs follow the following steps as in~\cite{descriptive-complexity}:
+\begin{enumerate}
+    \item Show that $\mathcal{L} \subseteq \mathcal{C}$ by providing a way to convert any formula $\varphi \in \mathcal{L}$ into an algorithm in $\mathcal{C}$.
+    \item Find a complete problem $T$ for $\mathcal{C}$ via first-order reductions.
+    \item Show that $\mathcal{L}$ is closed under first-order reductions, that is that any formula can be extended by first-order quantifiers and boolean connectives and stay in $\mathcal{L}$.
+    \item Find a formula for $T$ in $\mathcal{L}$, which shows $T \in \mathcal{L}$.
+\end{enumerate}
+The above steps work, as for any problem $B$ in $\mathcal{C}$, there is a first-order reduction $I$ to $T$, and both $\mathcal{L}$ and $\mathcal{C}$ are complete via these reductions, so we also have $B \in \mathcal{L} = \mathcal{C}$.
+
 \subsection{Ehrenfeucht-Fraïssé Games}\label{subsec:ehrenfeucht-fraisse-games}
 
+Ehrenfeucht-Fraïssé games are combinatorial games which are equivalent to first-order formulas and their extensions.
+Using these games, it is often possible to show non-expressability results for certain problems in some logic $\mathcal{L}$.
+
+As a motivation, we can look at what it means for a formula to hold on some structure.
+Assume the formula has the form $\forall x\varphi(x)$.
+Then this can be seen as some opponent choosing some element $a \in |\mathcal{A}|$ and us now needing to show that $\varphi(a)$ holds.
+The case where the formula has the form $\exists x\psi(x)$ can be treated similarly, but we can choose the element ourselves.
+
+Now for the formal definition
+\begin{define}[Ehrenfeucht-Fraïssé Game]
+    The \emph{$k$-pebble Ehrenfeucht-Fraïssé Game $\mathcal{G}_k$} is played by two players: the Spoiler and the Duplicator on a pair of structures $\mathcal{A}$ and $\mathcal{B}$ using $k$ pairs of pebbles.
+    In each move, the spoiler places one of the remaining pebbles on an element of one of the two structures.
+    Then, the duplicator tries to match the move on the other structure by placing the corresponding pebble on an element.
+    We say that the duplicator wins the $k$-pebble Ehrenfeucht-Fraïssé Game on $\mathcal{A}, \mathcal{B}$ if after the $k$ rounds, the map $i : |\mathcal{A}| \to |\mathcal{B}|$ defined as for all elements of $|\mathcal{A}|$ with a pebble and the constants as the element in $|\mathcal{B}|$ with the corresponding pebble or constant forms a partial isomorphism.
+    A partial isomorphism is an isomorphism formed for some subset of the universe, with all relations restricted to that subset.
+\end{define}
+
+In this context, the spoiler wants to show that $\mathcal{A}$ and $\mathcal{B}$ are different, whereas the duplicator wants to show their equivalence.
+
+As this is a zero-sum game of full information, one of the two players must have a winning strategy.
+It can be proven that if the duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with less or equal to $k$ nested quantifiers.
+We can use these facts to prove non-expressibility of some problems in first-order logic by exhibiting two structures $\mathcal{A}_k$ and $\mathcal{B}_k$ for each $k$ with one satisfying the problem constraints and the other not and a winning strategy for the duplicator on these two structures.
+This methodology can be extended to other logics by adding new moves or restrictions to the game.
 
 \section{Important Results}\label{sec:important-results}
 

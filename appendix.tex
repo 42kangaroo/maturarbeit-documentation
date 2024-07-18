@@ -43,7 +43,17 @@ We abbreviate first order logic as FO.
         \item[Existencial Quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y)$ (where $\varphi(y)$ denotes $\varphi$ with any occurrence of $x$ replaced with the element $y$)
         \item[Universal Quantification] We have $\mathcal{A} \models \forall x\varphi$ if and only if for all $y \in |\mathcal{A}|$ we have $\mathcal{A} \models \varphi(y)$
     \end{description}
-    \item[First-Order Querries] % TODO first order querries?
+    \item[First-Order Querries] A first order query is a map from structures over one vocabulary $\sigma$ to structures from another vocabulary $\tau$.
+    The mapping is done in such a way that we have first-order formulas for the universe (which is a subset of $|\mathcal{A}|^k$ for some $k$), the relation symbols and all the constants.
+    For a more formally thorough definition see~\cite{descriptive-complexity}
+    \item[Isomorphism] An isomorphism is a map $i: |\mathcal{A}| \to |\mathcal{B}|$ with $\mathcal{A}, \mathcal{B}$ over the same vocabulary which satisfies the following properties:
+    \begin{itemize}
+        \setlength\itemsep{0.2em}
+        \item $i$ is bijective
+        \item for every available relation $R$ of arity $a$ and every $a$-tuple $\overline{e}$ in $|\mathcal{A}|^a$, we have \[R^{\mathcal{A}}(e_1, \cdot, e_a) \Leftrightarrow R^{\mathcal{B}}(i(e_1), \cdot, i(e_a))\]
+        \item for every constant symbol $c$, we have $i(c^{\mathcal{A}}) = c^{\mathcal{B}}$.
+    \end{itemize}
+    We write $\mathcal{A} \cong \mathcal{B}$
 \end{description}
 
 
