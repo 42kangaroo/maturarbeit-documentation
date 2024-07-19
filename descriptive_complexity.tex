@@ -127,6 +127,32 @@ This methodology can be extended to other logics by adding new moves or restrict
 
 \subsection{SPACE Hierarchy theorem}\label{subsec:space-hierarchy-theorem}
 
+The SPACE hierarchy theorem states that for both nondeterministic and deterministic space, we have problems that can be solved in some space $t(n)$, but not in less.
+Formally, we have
+\[
+    \text{DSPACE}[o(t)] \subsetneq \text{DSPACE}[\mathcal{O}(t)]
+\]
+where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
+This holds for all (space constructible) $t \geq \log n$.
+The same holds for NSPACE.
+
+We will present a proof for deterministic space.
+\begin{proof}
+    The proof uses a diagonalization argument by presenting some machine $D$ that takes a turing machine $M$ and an input size in unary as input and does the opposite of $M$ if it halts.
+    We want to show that for all $M$ which run in space $f(n) \in o(t(n))$, we have an input on which $D$ and $M$ do not agree.
+    This would show that the language computed by $D$ is not in DSPACE[$o(t)$], and thus the strict containment.
+
+    On input $\langle M, 1^{k} \rangle$ our machine $D$ marks of $t(|\langle M, 1^{k} \rangle|)$ tape cells, which are the cells that are allowed for the computation.
+    Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a TM can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
+    Then, we simulate $M$ on input $\langle M, 1^{k} \rangle$.
+    If we transcend any bound, we reject.
+    For all $M$ in DSPACE[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
+    On this input, the simulation finishes, and we can invert the output.
+
+    This directly gives us an input for which $M$ and $D$ differ, and thus proves our claim.
+    Furthermore, $D$ runs in DSPACE[$\mathcal{O}(t)$] as by construction we assured that we do not run infinitely and that we stay within the space bound.
+\end{proof}
+
 
 \section{Results concerning the Chomsky hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
@@ -141,6 +167,17 @@ This methodology can be extended to other logics by adding new moves or restrict
 
 \section{Open questions}\label{sec:open-questions}
 
+The domain of descriptive complexity is full of open questions as the proofs of lower bounds seems to be very difficult in most cases.
+Further, even separation between complexity classes wich seem to take an exponential amount of resources compared to another one in practice can not be shown to be different.
+
 \subsection{P$\overset{?}{=}$NP}\label{subsec:pnp}
+The P vs. NP question is the most emblematic question in descriptive complexity theory.
+In practice, for any NP-complete problem, only exponential worst-case algorithms are known.
+This leads to the widely believed conjuncture that P $\neq$ NP.
+The problem is one of the seven Millennium Problems and a solution of equality or inequality is worth 1 Million US dollars.
+The consequences of a solution stating that P $=$ NP could have many practical advantages if it was constructive and had a low constant, as many important problems in research and logistics could be solved quickly.
+It would also mean the breakdown of most of modern cryptography, which relies on problem being intractable.
+On a conceptual level, it would mean that finding a proof to a problem is not harder than verifying its correctness, which would greatly impact the work of mathematicians.
+If a proof of the contrary would be known, this would focus the research more on the average case complexity of NP problems, but because of the continued lack of success on the question, this shift has already widely taken place.
 
 \subsection{NSPACE[$O(n)$]$\overset{?}{=}$DSPACE[$O(n)$]}\label{subsec:nspacedspace}
