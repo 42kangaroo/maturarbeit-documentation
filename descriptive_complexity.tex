@@ -1,3 +1,4 @@
+%! suppress = MissingImport
 \chapter{Descriptive Complexity}\label{ch:descriptive-complexity}
 
 
@@ -7,7 +8,7 @@ In mathematics, abstraction is one of the most important tools as it enables us 
 Formal Logic takes this even further and makes it possible to abstract mathematical thought itself.
 In Computer science, we are often interested in the amount of resources needed to compute a certain function or solve a certain problem, speaking in terms of time and storage space.
 Different forms of logic have the power to describe different types of problems.
-By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean querry meaning "the i$^{th}$ bit of an encoding of the answer is 1"}, we can say a corresponding logical charaterisation of a problem is a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
+By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean querry meaning "the i$^{th}$ bit of an encoding of the answer is 1"}, we can say a corresponding logical characterisation of a problem is a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
 By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
 
 Using these results, many insights into the underlying structure of real-world problems can be made which in turn can give us better ways to deal with them.
@@ -59,7 +60,7 @@ The complexity class P has a special meaning for computer scientists as these ar
 \subsection{Reduction and Completeness}\label{subsec:reduction}
 
 A reduction can informally be seen as a method of using a problem we already solved to solve a new problem by converting this new problem into an instance of the old problem.
-These reduction can be very usefull to define complete problems for complexity classes, which in turn enable us to prove theorems for all problems of a specific complexity class.
+These reduction can be very useful to define complete problems for complexity classes, which in turn enable us to prove theorems for all problems of a specific complexity class.
 
 \begin{define}[first-order reduction]
     Let $\mathcal{C}$ be a complexity class and $A$ and $B$ be two problems over vocabularies $\sigma$ and $\tau$.
@@ -98,7 +99,7 @@ The above steps work, as for any problem $B$ in $\mathcal{C}$, there is a first-
 \subsection{Ehrenfeucht-Fraïssé Games}\label{subsec:ehrenfeucht-fraisse-games}
 
 Ehrenfeucht-Fraïssé games are combinatorial games which are equivalent to first-order formulas and their extensions.
-Using these games, it is often possible to show non-expressability results for certain problems in some logic $\mathcal{L}$.
+Using these games, it is often possible to show inexpressibility results for certain problems in some logic $\mathcal{L}$.
 
 As a motivation, we can look at what it means for a formula to hold on some structure.
 Assume the formula has the form $\forall x\varphi(x)$.
@@ -118,12 +119,92 @@ In this context, the spoiler wants to show that $\mathcal{A}$ and $\mathcal{B}$ 
 
 As this is a zero-sum game of full information, one of the two players must have a winning strategy.
 It can be proven that if the duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with less or equal to $k$ nested quantifiers.
-We can use these facts to prove non-expressibility of some problems in first-order logic by exhibiting two structures $\mathcal{A}_k$ and $\mathcal{B}_k$ for each $k$ with one satisfying the problem constraints and the other not and a winning strategy for the duplicator on these two structures.
+We can use these facts to prove inexpressibility of some problems in first-order logic by exhibiting two structures $\mathcal{A}_k$ and $\mathcal{B}_k$ for each $k$ with one satisfying the problem constraints and the other not and a winning strategy for the duplicator on these two structures.
 This methodology can be extended to other logics by adding new moves or restrictions to the game.
 
 \section{Important Results}\label{sec:important-results}
 
 \subsection{NSPACE[$s(n)$] $\subseteq$ DSPACE[$s(n)^2$]}\label{subsec:nspacesubsetdspacesquared}
+
+This result is part of Savitch's Theorem, which introduces alternating turing machines in an intermediate step.
+These TMs are a generalisation of nondeterministic TMs, which can be seen as machine taking the "or" of all it's computation paths.
+
+\begin{define}[Alternating Turing Machine]
+    An alternating Turing machine is a turing machine with two types of states: the existential and universal gates.
+    Now, the acceptance conditions change compared to a NTM and depends on the state we are currently in.
+    If we are in an existential state, we accept if and only if \emph{at least one} of the computations leading on from this configuration is accepting.
+    If we are in an universal state, we accept if and only \emph{all} the computations leading on from this configuration are accepting.
+\end{define}
+
+These ATMs are now capable of also taking the "and" of the child states and maintain the ability to take the "or" of its children.
+
+We define ATIME[$\mathcal{O}(t)$] and ASPACE[$\mathcal{O}(t)$] analogously to NTIME[$\mathcal{O}(t)$] and NSPACE[$\mathcal{O}(t)$].
+
+Now we can proceed to the (quite technical) proof of Savitch's Theorem as presented in~\cite{descriptive-complexity}.
+
+\begin{theorem}[Savitch's Theorem]
+    For all space-constructible functions $t \geq \log n$ we have
+    \[
+        \text{NSPACE}[\mathcal{O}(t)] \subseteq \text{ATIME}[\mathcal{O}(t^2)] \subseteq \text{DSPACE}[\mathcal{O}(t^2)]
+    \]
+\end{theorem}
+
+\begin{proof}
+    We start with the first inclusion, $\text{NSPACE[$\mathcal{O}(t)$]} \subseteq \text{ATIME[$\mathcal{O}(t^2)$]}$.
+    We now need to show that any NSPACE[$\mathcal{O}(t)$] turing machine can be simulated by a ATIME[$\mathcal{O}(t^2)$] alternating turing machine.
+    Let $N$ be a NSPACE[$\mathcal{O}(t)$] turing machine.
+    Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
+
+    Now consider $G_w$, the computation graph of $N$ on input $w$.
+    We now see that $N$ accepts $w$ if and only if there is a path from the start configuration $s$ to the accepting configuration $t$.
+    We now present a routine $P(d, x, y)$ which asserts that there is a path of length at most $2^{d}$ from vertex $x$ to $y$.
+    Inductively, we can define $P$ as follows:
+    \[
+        P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
+    \]
+    This formula asserts that there exists a middle vertex $z$ for which there is a $2^{d - 1}$ path from $x$ to $z$ and from $z$ to $y$.
+    Using an alternating turing machine, we can evaluate the formula using an existential state to find the middle vertex $z$, and then an universal state covering both shorter paths.
+
+    Now for the runtime analysis, we see that we need $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as a configuration includes the tape, which has length $\mathcal{O}(t(n))$.
+    Further, we then need to evaluate some $P(d - 1, z, y)$.
+    By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
+    By the fact that there are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
+
+    For the second inclusion, we need to simulate a ATIME[$\mathcal{O}(s(n))$] machine $A$ using a DSPACE[$\mathcal{O}(s(n))$] machine (here, we substituted $s(n)$ for $t(n)^2$).
+    Again, we consider the computation graph of $A$ on input $w$.
+    This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
+
+    We can systematically search this computation graph to get our answer.
+    This is done by keeping a string of choices $c_{1}c_{2}\dots c_r$ of length $\mathcal{O}(s(n))$ made until this point.
+    Note that this uniquely determines which state we are in.
+
+    Now, we can find the answer recursively.
+    If we are in a halt state, we report this back to the previous state.
+    In an existential state, we simulate its children, and if we get a positive result from one of them, we also return a positive result.
+    In an universal state, we simulate its children, and if we get a positive result from all of them, we return a positive result.
+
+    In total, we use only $\mathcal{O}(s(n))$ space, to simulate $A$.
+
+    Thus, the second part of the theorem follows and by transitivity of $\subseteq$ we have $\text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]$.
+\end{proof}
+
+We do not know if the containment is strict or not for any of the inclusions of the theorem.
+From this theorem, we also get the following interesting corollary.
+
+\begin{corollary}
+    We have $\text{PSPACE} = \text{NPSPACE}$.
+\end{corollary}
+
+\begin{proof}
+    \begin{align*}
+        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NTIME}[\mathcal{O}(n^k)] \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DTIME}[\mathcal{O}(n^{2k})] \\
+        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DTIME}[\mathcal{O}(n^{k})] \\
+        &= \text{PSPACE} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NTIME}[\mathcal{O}(n^{k})] \\
+        &= \text{NPSPACE}
+    \end{align*}
+\end{proof}
 
 \subsection{SPACE Hierarchy theorem}\label{subsec:space-hierarchy-theorem}
 
@@ -133,7 +214,7 @@ Formally, we have
     \text{DSPACE}[o(t)] \subsetneq \text{DSPACE}[\mathcal{O}(t)]
 \]
 where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
-This holds for all (space constructible) $t \geq \log n$.
+This holds for all space-constructible $t \geq \log n$.
 The same holds for NSPACE.
 
 We will present a proof for deterministic space.
@@ -175,9 +256,22 @@ The P vs. NP question is the most emblematic question in descriptive complexity 
 In practice, for any NP-complete problem, only exponential worst-case algorithms are known.
 This leads to the widely believed conjuncture that P $\neq$ NP.
 The problem is one of the seven Millennium Problems and a solution of equality or inequality is worth 1 Million US dollars.
+
 The consequences of a solution stating that P $=$ NP could have many practical advantages if it was constructive and had a low constant, as many important problems in research and logistics could be solved quickly.
 It would also mean the breakdown of most of modern cryptography, which relies on problem being intractable.
 On a conceptual level, it would mean that finding a proof to a problem is not harder than verifying its correctness, which would greatly impact the work of mathematicians.
 If a proof of the contrary would be known, this would focus the research more on the average case complexity of NP problems, but because of the continued lack of success on the question, this shift has already widely taken place.
 
 \subsection{NSPACE[$O(n)$]$\overset{?}{=}$DSPACE[$O(n)$]}\label{subsec:nspacedspace}
+
+This problem is known under the name first Linear bounded automaton problem since its proposal by Kuroda in~\cite{Kuroda1964}, and asks if nondeterminism adds power in the context of bounded space.
+This comes from the fact that a NSPACE[$\mathcal{O}(n)$] turing machine can be seen as a TM with a linear bound on its space usage.
+This theorem is of interest as we know that NSPACE[$\mathcal{O}(n)$] is equivalent to the context-sensitive languages by~\cref{subsec:des-context-sensitive-languages}.
+
+Since the proposal, there were two advances.
+One is the proof that NSPACE is closed under complement.
+The contrary would have implied $\text{NSPACE}[\mathcal{O}(n)] \neq \text{DSPACE}[\mathcal{O}(n)]$ as DSPACE is closed under complement.
+The second advance is Savitch's Theorem in~\cref{subsec:nspacesubsetdspacesquared} which already gives a bound for simulating NSPACE using DSPACE machines.
+It is not known if this theorem is optimal, that is whether the blowup by a power of 2 is optimal or if we can do better.
+
+An equality would imply that the context-sensitive languages can be recognised by a deterministic linear bounded automaton, which could make recognising words in context-sensitive langauges easier and faster.
