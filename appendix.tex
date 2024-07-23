@@ -13,6 +13,7 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
         \item[Intersection] denoted as $\cap$, an element is in $A \cap B$ if and only if it is in $A$ and $B$
         \item[Cartesian product] denoted as $\times$, $A \times B$ is the set of tuples with an element of $A$ and an element of $B$
         \item[Cartesian power] $A^k$ denotes the cartesian product of $A$ with itself repeated $k$ times
+        \item[Power set] denoted as $\mathcal{P}(A)$ contains all subsets of $A$
     \end{description}
 \end{description}
 
@@ -43,6 +44,7 @@ We abbreviate first order logic as FO.
         \item[Existencial Quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y)$ (where $\varphi(y)$ denotes $\varphi$ with any occurrence of $x$ replaced with the element $y$)
         \item[Universal Quantification] We have $\mathcal{A} \models \forall x\varphi$ if and only if for all $y \in |\mathcal{A}|$ we have $\mathcal{A} \models \varphi(y)$
     \end{description}
+    \item[Free variables] A variable is called free if there is an occurrence of it which is not bound by a quantifier whose scope surrounds it
     \item[First-Order Querries] A first order query is a map from structures over one vocabulary $\sigma$ to structures from another vocabulary $\tau$.
     The mapping is done in such a way that we have first-order formulas for the universe (which is a subset of $|\mathcal{A}|^k$ for some $k$), the relation symbols and all the constants.
     For a more formally thorough definition see~\cite{descriptive-complexity}

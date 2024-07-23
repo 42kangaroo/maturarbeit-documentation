@@ -237,7 +237,99 @@ We will present a proof for deterministic space.
 
 \section{Results concerning the Chomsky hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
+Now that we have seen most of the required theory, we can start to apply it to the main theme of this work, the Chomsky hierarchy.
+For this section, we define the vocabulary on strings to be $\sigma = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \text{max} \rangle$.
+The universe consists of the numbers from $0$ to $n - 1$, we have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\text{max} = n - 1$.
+
+
 \subsection{Regular Languages}\label{subsec:des-regular-languages}
+
+Here, we will show that the regular languages are captured exactly by second-order logic where we restrict ourselves to quantify only over predicates of arity one and do not include $\leq$.
+Further, we also are not allowed to use $\leq$, but have access to equality $x = y$ and the successor relation $x = y + 1$.
+We call this class SOM[$+1$].
+
+First we need to present a formal definition of deterministic finite automata.
+\begin{define}[DFA]
+    A deterministic finite automaton is a 5-tuple $M = \langle Q, \Sigma, \delta, q_0,  F \rangle$ where
+    \begin{itemize}
+        \item[$Q$] is the set of states
+        \item[$\Sigma$] is the alphabet
+        \item[$\delta$] is the transition function mapping a state and a symbol to the next state, so formally $\delta : Q\times \Sigma \to Q$.
+        \item[$q_0$] the start state
+        \item[$F$] a subset of $Q$ which are the accepting states.
+    \end{itemize}
+\end{define}
+We say that a DFA $D$ accepts a word $w \in \Sigma^{*}$ if when starting at the start state, if we go through $w$ and always transition to the next state according to the actual symbol in $w$ and the actual state, we end up in an accepting state.
+
+In~\cite{theory-cs} and~\cite{Straubing1994} there is a proof of the following fact we will use in our proof for SOM[$+1$]:
+\begin{theorem}
+    For any alphabet $\Sigma$, there is a DFA recognising language $L \subseteq \Sigma^{*}$ if and only if it is regular.
+\end{theorem}
+
+Now we can start to prove our main theorem for regular languages.
+\begin{theorem}
+    For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in SOM[$+1$] if and only if it is regular.
+\end{theorem}
+
+\begin{proof}
+    First we show that any regular language can be expressed in SOM[$+1$].
+    Let $L$ be regular, end $D_L$ be a DFA recognising the language.
+    We assume $L$ does not contain the empty word, otherwise we can recognise the language $L \setminus \{\varepsilon\}$ and then add $\varphi \lor \forall x(x \neq x)$, which adds the empty string back.
+
+    Now let $D_L$ have $k$ states.
+    We can existentially quantify unary relations $X_1, \dots, X_k$ to have the meaning that $X_i(y)$ is true if and only if $D_L$ is in state $i$ after $y$ steps.
+    Then, we need to make consistency checks.
+    We present formulas for each of the consistency checks, and then can take the "and" of those to get our final formula $\exists X_1, \dots, X_k(\varphi_1 \land \varphi_2 \land \varphi_3)$.
+    \begin{description}
+        \item[The start state is $q_j$] we have \[\varphi_1 \coloneqq \bigwedge_{i = 1}^{k} (i = j \leftrightarrow X_j(0))\]
+        \item[We end in an accepting state] Let $T_i$ be the set of all characters which lead from $q_i$ to an accepting state.
+        Then we have
+        \[
+            \varphi_2 \coloneqq \bigwedge_{i = 1}^{k}\left(X_i(\text{max}) \to \bigvee_{a \in T_i} Q_a(max)\right)
+        \]
+        \item[We move according to the transition function] We have
+        \begin{align*}
+            \forall x\left( \forall y \left( y = x + 1 \to \left(\bigwedge_{i = 1}^{k} \bigwedge_{a \in \Sigma} \left(\left(X_i(x) \land Q_a(x)\right) \to X_{\delta(i, a)}(y)\right) \right. \right. \right. \\
+            \left. \left. \left.\land \bigwedge_{i = 1}^{k}\bigwedge_{a \in \Sigma} \left(\left(X_i(y) \land Q_a(x)\right) \to \bigvee_{r = 1}^{k}\left(X_r(x) \land \delta(r, a) = j\right)\right)  \right)  \right) \right)
+        \end{align*}
+    \end{description}
+    By induction we can show that always exactly one $i$ satisfies $X_i(x)$ for any $x$.
+    Thus, if the created formula is satisfied, we know that $D_L$ accepts the word, and thus we have described $L$ in SOM[$+1$].
+
+    For the other direction, we need to introduce two new concepts.
+
+    One of them is the nondeterministic finite automaton, which is analogous to the nondeterministic turing machine as it can also have multiple transitions going from the same state.
+    As with the NTM and the TM, both the DFA and the NFA have the same expressive power.
+
+    The other concept is that of $(\mathcal{V}_1, \mathcal{V}_2)$-structures.
+    These structures are generalisations of our former vocabulary $\sigma$ as they have characters in $A \times \mathcal{P}(\mathcal{V}_1)\times \mathcal{P}(\mathcal{V}_2)$.
+    These structures are useful as we can make $\mathcal{V}_1$ to be the set of free first-order variables in a formula $\varphi$ and $\mathcal{V}_2$ be the set of free second-order variables in the formula.
+    If at a position $i$ in our $(\mathcal{V}_1, \mathcal{V}_2)$-structures we have $x$ in the first-order component of its character, we see this as meaning that $x = i$.
+    For the second-order variables in the third component, a $X$ at position $i$ means that $X(i)$ holds.
+
+    Now, we can prove by induction that all formulas in SOM[$+1$] with free variables in $\mathcal{V}_1$ and $\mathcal{V}_2$ are regular.
+    Sentences, the formulas without free variables are the special case where $\mathcal{V}_1, \mathcal{V}_2 = \emptyset$.
+
+    First, we need to check that the $(\mathcal{V}_1, \mathcal{V}_2)$-structures are consistent, and no first-order variable $x$ appears more than once.
+    This can be done by a NFA which has one state for each subset of variables, and extends its subset while going over the string.
+    If a variable appears twice, we enter a state that always loops and rejects.
+
+    Then, we see that the atomic formulas can be checked, as $x = y$, $x = y + 1$ and $Q_a(x)$ are easy to check, and checking $X(x)$ is equivalent to looking if the occurrence of $x$ has $X$ in the third component.
+    We always need to take the intersection with the NFA which checks if the structure is valid.
+
+    All boolean connective are also valid as regular languages are closed under complement, intersection and union as seen in~\cite{theory-cs}.
+
+    The most difficult case is a formula of the form $\exists x \varphi$ (as $\forall x \varphi \equiv \neg \exists x \neg \varphi)$).
+    If $\exists x \varphi$ is over $(\mathcal{V}_1, \mathcal{V}_2)$-structures, then $\varphi$ is over $(\mathcal{V}_1 \cup \{x\}, \mathcal{V}_2)$-structures.
+    By induction, we know that $\varphi$ defines a regular language and thus there is a NFA $N$ which recognises it.
+    For the new automaton, we duplicate our states, with the meanings "used $x$" and "not used $x$".
+    If we are in a state where $x$ was used, we can not take any transition with $x$ in the second set.
+    If we are in a state where $x$ was not used, we can take a transition with $x$ in the second set and go to the corresponding state with $x$ used or take a transition where $x$ is not used and go to the corresponding state where $x$ was not used.
+
+    The remaining case with second-order variables is treated analogously, without the restriction on the number of times the variable is used, so we do not need to duplicate our states.
+
+    By induction, we have thus showed the other direction, and we see that SOM[$+ 1$] and the regular languages are equivalent.
+\end{proof}
 
 \subsection{Context-Free Languages}\label{subsec:des-context-free-languages}
 
