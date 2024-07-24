@@ -296,6 +296,8 @@ Now we can start to prove our main theorem for regular languages.
     By induction we can show that always exactly one $i$ satisfies $X_i(x)$ for any $x$.
     Thus, if the created formula is satisfied, we know that $D_L$ accepts the word, and thus we have described $L$ in SOM[$+1$].
 
+    \vspace{5mm}
+
     For the other direction, we need to introduce two new concepts.
 
     One of them is the nondeterministic finite automaton, which is analogous to the nondeterministic turing machine as it can also have multiple transitions going from the same state.
@@ -333,10 +335,108 @@ Now we can start to prove our main theorem for regular languages.
 
 \subsection{Context-Free Languages}\label{subsec:des-context-free-languages}
 
+For the context-free languages, we will show that they have an underlying structure that includes matchings.
+
+A matching relation is a binary relation $M$ on the universe $\{0, \dots, n - 1\}$ which has the following properties:
+\begin{description}
+    \item[increasing] If $M(i, j)$, then $i < j$
+    \item[uniqueness] Any $k$ in the universe appears at most once in the relation
+    \item[non-crossing] If we were to draw arcs for the matching, none of them would intersect.
+    Formally, if $M(i, j)$ and $M(k, l)$, then either $j < k$ or $l < i$
+\end{description}
+Visually, we can think of these relations as nested ranges over the universe.
+
+With matchings, we can define FO($\exists$Match) as the first order logic extended with existential quantification over matching relations.
+
+\begin{theorem}
+    For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in FO($\exists$Match) if and only if it is context-free.
+\end{theorem}
+
+For this, we first introduce a normal form for context-free grammars.
+The proof that every context-free grammar can be converted to this form can be found in~\cite{Lautemann1995}.
+\begin{lemma}
+    Every context free language has a grammar which satisfies
+    \begin{itemize}
+        \item All rules are of one of the two forms
+        \begin{itemize}
+            \item $X \to \alpha$ with $\alpha \in \Sigma$
+            \item $X \to \alpha u \beta$ with $\alpha, \beta \in \Sigma$ and $u \in (\Sigma \cup V)^{*}$
+        \end{itemize}
+        \item For all production rules with a right hand side that has at least one nonterminal we define its \emph{pattern}.
+        The pattern of rule $X \to v_{0}X_{1}v_{2}X_{2}\dots X_{s}v_{s}$ is defined to be $v_{0}|v_{1}|\dots|v_{s}$, where $|$ is a new symbol not in $\Sigma$
+        We require that for any two rules with the same pattern, they have the same left-hand side and thus the source nonterminal can be uniquely identified by the pattern.
+    \end{itemize}
+\end{lemma}
+
+For a specific arch $\langle i, j \rangle$ in a matching $M$ on some word structure, we can also determine a pattern.
+For this, we go through all indices from $i$ to $j$ and add the character at the actual position.
+If we are at a starting point of some arch $\langle k, l \rangle$, instead of adding the actual character, we add $|$ and continue at $l + 1$.
+
+Now, we can start with the proof of our theorem.
+\begin{proof}
+    We want to find a formula such that for all archs $\langle i, j \rangle$ in $M$, the substring from $i$ to $j$ can be derived from the non-terminal for which we have a rule with the pattern of $\langle i, j \rangle$.
+
+    For this, we say that arch $\langle i, j \rangle$ \emph{corresponds} to a production rule $p$ if they have the same pattern.
+    For any string $u$, we have a formula $\phi_u(i, j)$ which means that the substring from $i$ to $j$ is $u$.
+    This formula is easy to write as we only need to check each character one by one using the successor relation.
+    We can express correspondence to $p \equiv X \to v_{0}X_{1}v_{2}X_{2}\dots X_{s}v_{s}$ (including rules with terminal right-hand side) by the following formula:
+    \begin{align*}
+        \mathcal{X}_p(x, y) \equiv~&\exists x_1, y_1, \dots, x_s, y_s \left(\left(x < x_1 \land x_1 < y_1 \land y_1 < x_2 \land \dots \land y_s < y \right) \land \right. \\
+        &\left. \left(\phi_{v_0}(x, x_1 - 1) \land \phi_{v_1}(y_1 + 1, x_2 - 1) \land \dots \land \phi_{v_s}(y_s + 1, y)\right) \land \right. \\
+        &\left. \left(M(x_1, y_1) \land \dots \land M(x_s, y_s) \land M(x, y) \right) \land \right. \\
+        &\left. \forall k, l \left(M(k, l) \to \left((x = k \land y = l) \lor (x_1 = k \land y_1 = l) \lor \dots \lor (x_s = k \land y_s = l)\right)\right) \right)
+    \end{align*}
+    The first line means that the $v_i$ are in the right order, the second that they do correspond, the third that there are arches between the $v_i$ and the last that there are no other arches.
+
+    Now, we want to be more general, and express the that the pattern of $\langle i, j \rangle$ corresponds to some production rule with left-hand side $X$.
+    Let $\widetilde{\mathcal{X}}_X(x, y)$ be the disjunction of all $\mathcal{X}_p$ with left-hand side $X$.
+    Because our normal form says that the pattern uniquely determines the left-hand side, for each arch which has arches underneath, we have a unique corresponding nonterminal.
+
+    Now, we want to have a formula which expresses not only correspondence for a production rule $p$, but also that the nonterminals are correct.
+    For this, we supplement our formula $\mathcal{X}_p$ with a new line, expressing that the nonterminals correspond.
+    \begin{align*}
+        \widetilde{\mathcal{X}}_p(x, y) \equiv~&\exists x_1, y_1, \dots, x_s, y_s \left(\left(x < x_1 \land x_1 < y_1 \land y_1 < x_2 \land \dots \land y_s < y \right) \land \right. \\
+        &\left. \left(\phi_{v_0}(x, x_1 - 1) \land \phi_{v_1}(y_1 + 1, x_2 - 1) \land \dots \land \phi_{v_s}(y_s + 1, y)\right) \land \right. \\
+        &\left. \left(M(x_1, y_1) \land \dots \land M(x_s, y_s) \land M(x, y) \right) \land \right. \\
+        &\left. \forall k, l \left(M(k, l) \to \left((x = k \land y = l) \lor (x_1 = k \land y_1 = l) \lor \dots \lor (x_s = k \land y_s = l)\right)\right) \right. \\
+        &\left. \left(\widetilde{\mathcal{X}}_{X_1}(x_1, y_1) \land \dots \land \widetilde{\mathcal{X}}_{X_s}(x_s, y_s)\right)\right)
+    \end{align*}
+
+    Finally, with $P$ being our set of rules, we have a formula that tells us a word can be derived from the start symbol:
+    \[
+        \exists M \left(\widetilde{\mathcal{X}}_S(0, \text{max}) \land \forall x, y \left(M(x, y) \to \bigvee_{p \in P} \widetilde{\mathcal{X}}_p(x, y) \right) \right)
+    \]
+
+    Now, by construction, if and only if a word satisfies the formula, there is a derivation from $S$ for the word, as each arch can be seen as a derivation step, which we check is valid with our formula.
+    We used our assumption from the normal form to show that the $\widetilde{\mathcal{X}}_p$ are only satisfied when the arches which are nonterminal do not belong to any other nonterminal symbol then the one in the rule.
+    If two terminal rules coincide, we do not care as no further derivation is possible.
+
+    \vspace{5mm}
+
+    Now, we come to the other direction.
+\end{proof}
+
+
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages}
 
 \subsection{Recursive Languages}\label{subsec:des-recursive-languages}
 
+The most general case is interesting as it gives us a logical formalism for all problems which are computable at all.
+
+The proof relies on Diophantine sets.
+Those sets are the sets that correspond to the tuples which have a solution for some Diophantine equation.
+A Diophantine equation is a polynomial equation $P$ with a tuple $\overline{x}$ of parameters and a tuple $\overline{y}$ of variables.
+A tuple $\overline{x}$ has a solution if there exists a tuple $\overline{y}$ such that the $P(\overline{x}, \overline{y}) = 0$.
+The famous MRDP Theorem states that the Diophantine sets are exactly the computable sets.
+At the same time, this shows that Hilberts 10$^{th}$ problem is unsolvable.
+A full proof of these facts can be found in~\cite{Matijasevic1996}.
+
+With this new characterisation, there is a quite straightforward characterisation of computable sets.
+The logic $FO(\exists \mathbb{N})$ consists of all formulas $\phi(\overline{x}) \equiv \exists \overline{y} (\varphi(\overline{x}, \overline{y}))$ with $\varphi$ having only bounded quantifiers (of the form $\exists x < y$ or $\forall x < y$), addition, multiplication, equality, and any constant natural number~\cite{Entropy2020}.
+The existential quantifiers at the beginning are allowed to range over all the natural numbers.
+
+These formulas can define exactly the diophantine sets, as the formulas we present are exactly those that mean "there is a tuple $\overline{y}$ of natural numbers such that some polynomial is satisfied".
+Thus, they also define exactly all computable sets.
 
 \section{Open questions}\label{sec:open-questions}
 
