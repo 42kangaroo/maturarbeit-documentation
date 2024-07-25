@@ -35,7 +35,7 @@ Complexity classes can then be defined as all the problems which have a turing m
 Now we will define some common and important complexity classes.
 
 \begin{define}
-    [{DTIME[$\mathcal{O}(t)$]}]
+[{DTIME[$\mathcal{O}(t)$]}]
     We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f \in \mathcal{O}(t)$.
 \end{define}
 
@@ -44,7 +44,7 @@ Now we will define some common and important complexity classes.
 \end{define}
 
 \begin{define}
-    [{DSPACE[$\mathcal{O}(t)$]}]
+[{DSPACE[$\mathcal{O}(t)$]}]
     We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f \in \mathcal{O}(t)$.
 \end{define}
 
@@ -121,6 +121,7 @@ As this is a zero-sum game of full information, one of the two players must have
 It can be proven that if the duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with less or equal to $k$ nested quantifiers.
 We can use these facts to prove inexpressibility of some problems in first-order logic by exhibiting two structures $\mathcal{A}_k$ and $\mathcal{B}_k$ for each $k$ with one satisfying the problem constraints and the other not and a winning strategy for the duplicator on these two structures.
 This methodology can be extended to other logics by adding new moves or restrictions to the game.
+
 
 \section{Important Results}\label{sec:important-results}
 
@@ -241,7 +242,6 @@ Now that we have seen most of the required theory, we can start to apply it to t
 For this section, we define the vocabulary on strings to be $\sigma = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \text{max} \rangle$.
 The universe consists of the numbers from $0$ to $n - 1$, we have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\text{max} = n - 1$.
 
-
 \subsection{Regular Languages}\label{subsec:des-regular-languages}
 
 Here, we will show that the regular languages are captured exactly by second-order logic where we restrict ourselves to quantify only over predicates of arity one and do not include $\leq$.
@@ -359,7 +359,7 @@ The proof that every context-free grammar can be converted to this form can be f
     \begin{itemize}
         \item All rules are of one of the two forms
         \begin{itemize}
-            \item $X \to \alpha$ with $\alpha \in \Sigma$
+            \item $S \to \alpha$ with $\alpha \in \Sigma$
             \item $X \to \alpha u \beta$ with $\alpha, \beta \in \Sigma$ and $u \in (\Sigma \cup V)^{*}$
         \end{itemize}
         \item For all production rules with a right hand side that has at least one nonterminal we define its \emph{pattern}.
@@ -384,7 +384,7 @@ Now, we can start with the proof of our theorem.
         \mathcal{X}_p(x, y) \equiv~&\exists x_1, y_1, \dots, x_s, y_s \left(\left(x < x_1 \land x_1 < y_1 \land y_1 < x_2 \land \dots \land y_s < y \right) \land \right. \\
         &\left. \left(\phi_{v_0}(x, x_1 - 1) \land \phi_{v_1}(y_1 + 1, x_2 - 1) \land \dots \land \phi_{v_s}(y_s + 1, y)\right) \land \right. \\
         &\left. \left(M(x_1, y_1) \land \dots \land M(x_s, y_s) \land M(x, y) \right) \land \right. \\
-        &\left. \forall k, l \left(M(k, l) \to \left((x = k \land y = l) \lor (x_1 = k \land y_1 = l) \lor \dots \lor (x_s = k \land y_s = l)\right)\right) \right)
+        &\left. \forall k, l \left(M(k, l) \to \left((x \leq k \land l \leq y) \lor (x_1 \leq k \land l \leq y_1) \lor \dots \lor (x_s \leq k \land l \leq y_s)\right)\right) \right)
     \end{align*}
     The first line means that the $v_i$ are in the right order, the second that they do correspond, the third that there are arches between the $v_i$ and the last that there are no other arches.
 
@@ -398,7 +398,7 @@ Now, we can start with the proof of our theorem.
         \widetilde{\mathcal{X}}_p(x, y) \equiv~&\exists x_1, y_1, \dots, x_s, y_s \left(\left(x < x_1 \land x_1 < y_1 \land y_1 < x_2 \land \dots \land y_s < y \right) \land \right. \\
         &\left. \left(\phi_{v_0}(x, x_1 - 1) \land \phi_{v_1}(y_1 + 1, x_2 - 1) \land \dots \land \phi_{v_s}(y_s + 1, y)\right) \land \right. \\
         &\left. \left(M(x_1, y_1) \land \dots \land M(x_s, y_s) \land M(x, y) \right) \land \right. \\
-        &\left. \forall k, l \left(M(k, l) \to \left((x = k \land y = l) \lor (x_1 = k \land y_1 = l) \lor \dots \lor (x_s = k \land y_s = l)\right)\right) \right. \\
+        &\left. \forall k, l \left(M(k, l) \to \left((x \leq k \land l \leq y) \lor (x_1 \leq k \land l \leq y_1) \lor \dots \lor (x_s \leq k \land l \leq y_s)\right)\right) \right. \\
         &\left. \left(\widetilde{\mathcal{X}}_{X_1}(x_1, y_1) \land \dots \land \widetilde{\mathcal{X}}_{X_s}(x_s, y_s)\right)\right)
     \end{align*}
 
@@ -414,10 +414,116 @@ Now, we can start with the proof of our theorem.
     \vspace{5mm}
 
     Now, we come to the other direction.
+    This direction requires some new notation and lemmas.
+    We will use the notion of tree languages.
+    \begin{define}[Tree Language]
+        In a tree language, we have a rooted tree, which has an order on its vertices in leftmost depth-first way\footnote{The order which we find by doing a depth-first search on the tree, entering the leftmost node first}.
+        Each node has a label, and each label has an arity which corresponds to the out-degree of the node.
+        A tree language is the set of all trees over a finite label set.
+
+        We define the \emph{leaf alphabet} of a tree language to be the set of $0$-ary labels.
+        For any tree $T$ in a tree language, we define the \emph{yield} of $T$ to be the leaf labels concatenated according to the order relation from left to right.
+
+        The vocabulary of a tree language $\mathcal{T}$ is $\tau = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \text{max} , C^2 \rangle$
+        In addition to the relations for each label, there is a child relation $C(i, j)$ which means "node $i$ is a child of node $j$".
+    \end{define}
+
+    Now, we present two lemmas for recognisable tree languages and their relation to context-free languages.
+    \begin{lemma}[\cite{Mezei1967}]
+        A language $L \subseteq \Sigma^{*}$ is context free if and only if there is a recognisable tree language $T$ with leaf alphabet $\Sigma$ for which a word is in $L$ if and only if it is the yield of some tree in $T$.
+    \end{lemma}
+
+    \begin{lemma}[\cite{Thatcher1968}]
+        A tree language $T$ is recognisable if and only if there is a monadic second order sentence that recognises it.
+    \end{lemma}
+
+    We now present some relations that can be written in MSO on trees.
+    \begin{description}
+        \item[Lf($i$)] Node $i$ is a leaf $\text{Lf}(i) \equiv \forall x \neq C(x, i)$
+        \item[Lc($i, j$)] Node $i$ is the leftmost child of $j$ $\text{Lc}(i, j) \equiv C(i, j) \land \forall x (C(x, j) \to i < x)$
+        \item[Rc($i, j$)] Node $i$ is the rightmost child of $j$ $\text{Rc}(i, j) \equiv C(i, j) \land \forall x (C(x, j) \to x < i)$
+        \item[An($i, j$)] Node $i$ is an ancestor or $j$
+        \begin{align*}
+            \text{An}(i, j) \equiv~&\exists U (U(i) \land U(j) \land \forall x (U(x) \to \\
+            &((x \neq i \leftrightarrow \exists y (C(x, y) \land U(y))) \land (x \neq j \leftrightarrow \exists y (C(y, x) \land U(y))))))
+        \end{align*}
+        \item[Pt($U, i, j$)] Node $i$ is an ancestor or $j$, $j$ is a leaf and $U$ contains all nodes in the path from $i$ to $j$.
+        \begin{align*}
+            \text{Pt}(U, i, j) \equiv~&U(i) \land U(j) \land \text{Lf}(j) \land \forall x (U(x) \to \\
+            &((x \neq i \leftrightarrow \exists y (C(x, y) \land U(y))) \land (x \neq j \leftrightarrow \exists y (C(y, x) \land U(y)))))
+        \end{align*}
+    \end{description}
+
+    Using these two lemmas, we can continue by presenting for any formula $\varphi$ in FO($\exists$Match) a formula $\phi$ in MSO over trees such that
+    \[w \models \varphi \Leftrightarrow \text{there exists a tree $T$ with yield $w$ such that } T \models \phi\]
+
+    For this, we present a class of trees which correspond to a word with a matching.
+    For any word $w$ with matching $M$, we can construct a tree over $\Sigma \cup \{\oplus^2, \odot^2\}$.
+    We do this using an intermediate step.
+    First, we construct a tree with wrong arity for nodes of type $\oplus$ by assigning one node of type $\oplus$ to each arch, with edges to every direct arch underneath it and every character directly underneath it.
+    If we have multiple trees, we add a new $\odot$ node on top with an edge to all roots of these trees.
+    To fix the arity issue, we repeat the following procedure until there are no nodes with more than outdegree 2.
+
+    Take some node with outdegree greater than 2.
+    Take the two leftmost children and add a $\odot$ node with an edge to both, and an edge from the new node to the former parent.
+    This procedure will eventually terminate as we always decrease the outdegree of some node by one and add a valid node.
+
+    We can see that this procedure can also be done backward if and only if for any node of type $\oplus$, the leaf on the leftmost and rightmost path of a node are distinct and no $\oplus$ node occurs on the path between the two.
+    We can express this property of a tree by the following formula.
+    \begin{align*}
+        \Upsilon \equiv~& \forall x ( Q_{\oplus}(x) \to ( \exists y, z, U_y, U_z (y \neq z \land \text{Pt}(U_z, x, z) \land \text{Pt}(U_y, x, y) \land \\
+        &\forall r (U_y(r) \to ((r = y \lor \exists w (U_y(w) \land \text{Rc}(w, r)))\land (r = y \lor r = x \lor Q_{\odot}(r)))) \land \\
+        &\forall r (U_z(r) \to ((r = z \lor \exists w (U_z(w) \land \text{Lc}(w, r)))\land (r = y \lor r = x \lor Q_{\odot}(r)))))))
+    \end{align*}
+    Here, in the first line we assert that for every node with label $\oplus$, we have two distinct leaves $y, z$ with paths $U_y$ and $U_z$.
+    The second and third line assert the same for $x$ and $y$, that they are the rightmost~/~leftmost leaf and that no other $\oplus$ type node lies on the path from them to $x$.
+
+    Now, we want to convert our formula $\varphi$ over strings with a matching to a formula $\gamma$ over trees.
+    Then we can assert that the tree represents a string with matching and the yield satisfies $\varphi$ using $\Upsilon \land \gamma$.
+
+    For this, we need to restrict any quantifiers in $\varphi$ to the leaves by replacing $\exists x \phi$ with $\exists x \text{Lf}(x) \land \phi$ and $\forall x \phi$ with $\forall x \text{Lf}(x) \to \phi$.
+    Further, we replace $M(z, y)$ by
+    \begin{align*}
+        m(z, y) \equiv~& \exists x ( Q_{\oplus}(x) \land ( \exists U_y, U_z (y \neq z \land \text{Pt}(U_z, x, z) \land \text{Pt}(U_y, x, y) \land \\
+        &\forall r (U_y(r) \to ((r = y \lor \exists w (U_y(w) \land \text{Rc}(w, r)))\land (r = y \lor r = x \lor Q_{\odot}(r)))) \land \\
+        &\forall r (U_z(r) \to ((r = z \lor \exists w (U_z(w) \land \text{Lc}(w, r)))\land (r = y \lor r = x \lor Q_{\odot}(r)))))))
+    \end{align*}
+    which is very similar to $\Upsilon$.
+
+    This is already everything we need to do, and thus we can conclude that
+    \[w \models \varphi \Leftrightarrow \text{there exists a tree $T$ with yield $w$ such that } T \models \Upsilon \land \gamma \]
+    Thus, we have proved both directions and see that the context free languages are exactly captured by FO($\exists$Match)
 \end{proof}
 
-
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages}
+
+This is the language class that interests us most, as it has be studied less extensively then other language classes.
+Nevertheless, there are some known formalisms.
+One of them is the linear bounded nondeterministic turing machine.
+The two directions of the proof were presented separately in~\cite{Kuroda1964} and~\cite{Landweber1963}.
+
+\begin{theorem}
+    The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic turing machine.
+\end{theorem}
+
+\begin{proof}
+
+    For the direction from grammar to turing machine, we only need to show that our turing machine can simulate a derivation backwards.
+    We know that every context-sensitive language has a noncontracting grammar $G$.
+    Using this fact, we can construct a nondeterministic turing machine $N$ which scans the current tape and whenever it recognises a pattern of the right-hand side of a production rule in $G$, it decides whether it replaces it or not by the left-hand side of the rule.
+    If some computation branch of $N$ ends up with only the start symbol of $G$ on the tape, we accept.
+    Essentially, $N$ simulates a derivation of $w$ from the start symbol backwards.
+    Because we try all possibilities by nondeterminism, we know that if $N$ does not accept $w$, there is no derivation ending in $w$ from the start symbol of $G$.
+    As we assumed $G$ is noncontracting, replacing the right-hand side of a rule with the left-hand side never makes the word longer, and thus we only need $\mathcal{O}(|w|)$ space.
+
+    \vspace{5mm}
+
+    The other direction works by explicitly defining a grammar which simulates any linear bounded automaton backwards.
+
+
+
+\end{proof}
+
 
 \subsection{Recursive Languages}\label{subsec:des-recursive-languages}
 
