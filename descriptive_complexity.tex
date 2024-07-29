@@ -52,10 +52,10 @@ Now we will define some common and important complexity classes.
     We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE[$\mathcal{O}(q)$]
 \end{define}
 
-We can go do the same for nondeterministic turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE.
+We can go do the same for nondeterministic turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
 There, we always take the maximum of tape cells and steps over any computation branch.
 
-The complexity class P has a special meaning for computer scientists as these are the problems which are deemed "feasible" on modern computers.
+The complexity class P has a special meaning for computer scientists as these are the problems which are deemed ``feasible'' on modern computers.
 
 \subsection{Reduction and Completeness}\label{subsec:reduction}
 
@@ -125,19 +125,19 @@ This methodology can be extended to other logics by adding new moves or restrict
 
 \section{Important Results}\label{sec:important-results}
 
-\subsection{NSPACE[$s(n)$] $\subseteq$ DSPACE[$s(n)^2$]}\label{subsec:nspacesubsetdspacesquared}
+\subsection{NSPACE[$\mathcal{O}(s(n))$] $\subseteq$ DSPACE[$\mathcal{O}(s(n)^2)$]}\label{subsec:nspacesubsetdspacesquared}
 
 This result is part of Savitch's Theorem, which introduces alternating turing machines in an intermediate step.
-These TMs are a generalisation of nondeterministic TMs, which can be seen as machine taking the "or" of all it's computation paths.
+These TMs are a generalisation of nondeterministic TMs, which can be seen as machine taking the ``or'' of all it's computation paths.
 
 \begin{define}[Alternating Turing Machine]
     An alternating Turing machine is a turing machine with two types of states: the existential and universal gates.
     Now, the acceptance conditions change compared to a NTM and depends on the state we are currently in.
     If we are in an existential state, we accept if and only if \emph{at least one} of the computations leading on from this configuration is accepting.
-    If we are in an universal state, we accept if and only \emph{all} the computations leading on from this configuration are accepting.
+    If we are in a universal state, we accept if and only \emph{all} the computations leading on from this configuration are accepting.
 \end{define}
 
-These ATMs are now capable of also taking the "and" of the child states and maintain the ability to take the "or" of its children.
+These ATMs are now capable of also taking the ``and'' of the child states and maintain the ability to take the ``or'' of its children.
 
 We define ATIME[$\mathcal{O}(t)$] and ASPACE[$\mathcal{O}(t)$] analogously to NTIME[$\mathcal{O}(t)$] and NSPACE[$\mathcal{O}(t)$].
 
@@ -164,7 +164,7 @@ Now we can proceed to the (quite technical) proof of Savitch's Theorem as presen
         P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
     \]
     This formula asserts that there exists a middle vertex $z$ for which there is a $2^{d - 1}$ path from $x$ to $z$ and from $z$ to $y$.
-    Using an alternating turing machine, we can evaluate the formula using an existential state to find the middle vertex $z$, and then an universal state covering both shorter paths.
+    Using an alternating turing machine, we can evaluate the formula using an existential state to find the middle vertex $z$, and then a universal state covering both shorter paths.
 
     Now for the runtime analysis, we see that we need $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as a configuration includes the tape, which has length $\mathcal{O}(t(n))$.
     Further, we then need to evaluate some $P(d - 1, z, y)$.
@@ -182,7 +182,7 @@ Now we can proceed to the (quite technical) proof of Savitch's Theorem as presen
     Now, we can find the answer recursively.
     If we are in a halt state, we report this back to the previous state.
     In an existential state, we simulate its children, and if we get a positive result from one of them, we also return a positive result.
-    In an universal state, we simulate its children, and if we get a positive result from all of them, we return a positive result.
+    In a universal state, we simulate its children, and if we get a positive result from all of them, we return a positive result.
 
     In total, we use only $\mathcal{O}(s(n))$ space, to simulate $A$.
 
@@ -216,7 +216,7 @@ Formally, we have
 \]
 where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
 This holds for all space-constructible $t \geq \log n$.
-The same holds for NSPACE.
+The same holds for NSPACE\@.
 
 We will present a proof for deterministic space.
 \begin{proof}
@@ -252,6 +252,7 @@ First we need to present a formal definition of deterministic finite automata.
 \begin{define}[DFA]
     A deterministic finite automaton is a 5-tuple $M = \langle Q, \Sigma, \delta, q_0,  F \rangle$ where
     \begin{itemize}
+        \setlength\itemsep{0.2em}
         \item[$Q$] is the set of states
         \item[$\Sigma$] is the alphabet
         \item[$\delta$] is the transition function mapping a state and a symbol to the next state, so formally $\delta : Q\times \Sigma \to Q$.
@@ -279,13 +280,13 @@ Now we can start to prove our main theorem for regular languages.
     Now let $D_L$ have $k$ states.
     We can existentially quantify unary relations $X_1, \dots, X_k$ to have the meaning that $X_i(y)$ is true if and only if $D_L$ is in state $i$ after $y$ steps.
     Then, we need to make consistency checks.
-    We present formulas for each of the consistency checks, and then can take the "and" of those to get our final formula $\exists X_1, \dots, X_k(\varphi_1 \land \varphi_2 \land \varphi_3)$.
+    We present formulas for each of the consistency checks, and then can take the ``and'' of those to get our final formula $\exists X_1, \dots, X_k(\varphi_1 \land \varphi_2 \land \varphi_3)$.
     \begin{description}
-        \item[The start state is $q_j$] we have \[\varphi_1 \coloneqq \bigwedge_{i = 1}^{k} (i = j \leftrightarrow X_j(0))\]
+        \item[The start state is $q_j$] We have \[\varphi_1 \coloneqq \bigwedge_{i = 1}^{k} (i = j \leftrightarrow X_j(0))\]
         \item[We end in an accepting state] Let $T_i$ be the set of all characters which lead from $q_i$ to an accepting state.
         Then we have
         \[
-            \varphi_2 \coloneqq \bigwedge_{i = 1}^{k}\left(X_i(\text{max}) \to \bigvee_{a \in T_i} Q_a(max)\right)
+            \varphi_2 \coloneqq \bigwedge_{i = 1}^{k}\left(X_i(\text{max}) \to \bigvee_{a \in T_i} Q_a(\text{max})\right)
         \]
         \item[We move according to the transition function] We have
         \begin{align*}
@@ -293,7 +294,7 @@ Now we can start to prove our main theorem for regular languages.
             \left. \left. \left.\land \bigwedge_{i = 1}^{k}\bigwedge_{a \in \Sigma} \left(\left(X_i(y) \land Q_a(x)\right) \to \bigvee_{r = 1}^{k}\left(X_r(x) \land \delta(r, a) = j\right)\right)  \right)  \right) \right)
         \end{align*}
     \end{description}
-    By induction we can show that always exactly one $i$ satisfies $X_i(x)$ for any $x$.
+    By induction, we can show that always exactly one $i$ satisfies $X_i(x)$ for any $x$.
     Thus, if the created formula is satisfied, we know that $D_L$ accepts the word, and thus we have described $L$ in SOM[$+1$].
 
     \vspace{5mm}
@@ -307,7 +308,7 @@ Now we can start to prove our main theorem for regular languages.
     These structures are generalisations of our former vocabulary $\sigma$ as they have characters in $A \times \mathcal{P}(\mathcal{V}_1)\times \mathcal{P}(\mathcal{V}_2)$.
     These structures are useful as we can make $\mathcal{V}_1$ to be the set of free first-order variables in a formula $\varphi$ and $\mathcal{V}_2$ be the set of free second-order variables in the formula.
     If at a position $i$ in our $(\mathcal{V}_1, \mathcal{V}_2)$-structures we have $x$ in the first-order component of its character, we see this as meaning that $x = i$.
-    For the second-order variables in the third component, a $X$ at position $i$ means that $X(i)$ holds.
+    For the second-order variables in the third component, an $X$ at position $i$ means that $X(i)$ holds.
 
     Now, we can prove by induction that all formulas in SOM[$+1$] with free variables in $\mathcal{V}_1$ and $\mathcal{V}_2$ are regular.
     Sentences, the formulas without free variables are the special case where $\mathcal{V}_1, \mathcal{V}_2 = \emptyset$.
@@ -324,7 +325,7 @@ Now we can start to prove our main theorem for regular languages.
     The most difficult case is a formula of the form $\exists x \varphi$ (as $\forall x \varphi \equiv \neg \exists x \neg \varphi)$).
     If $\exists x \varphi$ is over $(\mathcal{V}_1, \mathcal{V}_2)$-structures, then $\varphi$ is over $(\mathcal{V}_1 \cup \{x\}, \mathcal{V}_2)$-structures.
     By induction, we know that $\varphi$ defines a regular language and thus there is a NFA $N$ which recognises it.
-    For the new automaton, we duplicate our states, with the meanings "used $x$" and "not used $x$".
+    For the new automaton, we duplicate our states, with the meanings ``used $x$'' and ``not used $x$''.
     If we are in a state where $x$ was used, we can not take any transition with $x$ in the second set.
     If we are in a state where $x$ was not used, we can take a transition with $x$ in the second set and go to the corresponding state with $x$ used or take a transition where $x$ is not used and go to the corresponding state where $x$ was not used.
 
@@ -357,8 +358,10 @@ The proof that every context-free grammar can be converted to this form can be f
 \begin{lemma}
     Every context free language has a grammar which satisfies
     \begin{itemize}
+        \setlength\itemsep{0.2em}
         \item All rules are of one of the two forms
         \begin{itemize}
+            \setlength\itemsep{0.2em}
             \item $S \to \alpha$ with $\alpha \in \Sigma$
             \item $X \to \alpha u \beta$ with $\alpha, \beta \in \Sigma$ and $u \in (\Sigma \cup V)^{*}$
         \end{itemize}
@@ -425,7 +428,7 @@ Now, we can start with the proof of our theorem.
         For any tree $T$ in a tree language, we define the \emph{yield} of $T$ to be the leaf labels concatenated according to the order relation from left to right.
 
         The vocabulary of a tree language $\mathcal{T}$ is $\tau = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \text{max} , C^2 \rangle$
-        In addition to the relations for each label, there is a child relation $C(i, j)$ which means "node $i$ is a child of node $j$".
+        In addition to the relations for each label, there is a child relation $C(i, j)$ which means ``node $i$ is a child of node $j$''.
     \end{define}
 
     Now, we present two lemmas for recognisable tree languages and their relation to context-free languages.
@@ -502,7 +505,7 @@ Nevertheless, there are some known formalisms.
 One of them is the linear bounded nondeterministic turing machine.
 The two directions of the proof were presented separately in~\cite{Kuroda1964} and~\cite{Landweber1963}.
 
-\begin{theorem}
+\begin{theorem}\label{thm:nspacecontextsensitive}
     The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic turing machine.
 \end{theorem}
 
@@ -519,9 +522,93 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
     \vspace{5mm}
 
     The other direction works by explicitly defining a grammar which simulates any linear bounded automaton backwards.
+    Without loss of generality, we include an end marker $\#$.
 
+    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a NSPACE[$\mathcal{O}(n)$] turing machine.
+    Then, we construct a grammar $G = \langle V, \Sigma, P, S \rangle$ with $V = \bigcup_{q_i \in Q} \bigcup_{a_j \in \Gamma} \{b_{q_i, a_j}\} \cup \{S, L, R, \#\} \cup \bigcup_{a_w \in \Gamma \setminus \Sigma} \{a_w\}$.
+    The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition we also have the start state, the end marker and some utility nonterminals.
 
+    We now add the following rules to $P$:
+    \begin{itemize}
+        \setlength\itemsep{0.2em}
+        \item For each $a_i \in \Gamma$, we add a rule $S \to Lb_{q_{accept}, a_i}R$ to $P$.
+        These rules mean that we are in a final accept state.
+        To extend the final tape, we add again for each $a_i \in \Gamma$ rules $L \to La_i$, $L \to \#$, $R \to a_{i}R$ and $R \to \#$ to our rule set.
+        These rules allow derivations from $S$ to an end tape of the form $\#a_{i_1}\dots b_{q_{accept}, a_{i_j}}\dots a_{i_k}\#$.
+        \item For each rule $\langle a_k, q_l, L \rangle \in \delta(q_i, a_j)$, we add rule $b_{a_w, q_l}a_k \to a_{w}b_{a_j, q_i}$ for every $a_w \in \Gamma$.
+        Similarly, for each rule $\langle a_k, q_l, R \rangle \in \delta(q_i, a_j)$, we add rule $a_{k}b_{a_w, q_l} \to b_{a_j, q_i}a_{w}$ for every $a_w \in \Gamma$.
+        We can clearly see that these rules simulate the NTM backwards.
+        \item For the start, we include $\#b_{a_i, q_0} \to \#a_i$ for all $a_i \in \Sigma$
+        This rule allows us to say that we are at the start of our computation and ``remove'' the read-write head to get our initial input word.
+    \end{itemize}
+    As for any word in $G$ we can follow back the derivation to an accept state, we have that both $N$ and $G$ define the same language.
 
+    Thus, we are done and have proven the equivalence of context-sensitive languages and linear bounded automata.
+\end{proof}
+
+Now that we showed this equivalence, we will show that the context-sensitive languages are equivalent to the languages definable in MSO(TC), where we supplement monadic second order logic with a transitive closure operator.
+
+For this, we first define the transitive closure of a formula.
+
+\begin{define}[Transitive closure]
+    Let $\phi\left(\overset{k}{a}, \overset{k}{b}\right)$ be a formula with $2k$ free variables.
+    We can see this formula as an edge relation over the graph with vertices $\overset{k}{c}$.
+    Then, the transitive closure of the formula $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$ is true if and only if there is a path in the $\overset{k}{c}$ graph from $\overset{k}{u}$ to $\overset{k}{v}$ using edges from $\phi$.
+    Equivalently, we can also define it to be the minimal relation such that if $R(x, y)$ and $R(y, z)$, the $R(x, z)$.
+\end{define}
+
+\begin{theorem}\label{thm:contextsensitveMSOTC}
+    A language $L$ is context-sensitive if and only if it can be described by a formula in $MSO(TC)$.
+\end{theorem}
+
+\begin{proof}
+    We use~\cref{thm:nspacecontextsensitive} and show the equivalence of MSO(TC) and NSPACE[$\mathcal{O}(n)$] Turing machines.
+    Then the theorem will follow immediately.
+
+    First, we show that any formula in MSO(TC) can be evaluated by NSPACE[$\mathcal{O}(n)$] turing machine.
+    The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
+    So, for any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertice.
+    Then, we can check if the transition is valid by evaluating phi.
+    We can repeat this process until we reach $\overset{k}{v}$.
+    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that there is also a NSPACE[$\mathcal{O}(n)$] turing machine that computes any formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
+    The other parts of the formula can be evaluated easily in linear space as we just need to write down relations when quantifying and otherwise remember in which part of the constant-size formula we are actually.
+
+    \vspace{5mm}
+
+    For the other direction, consider a NSPACE[$\mathcal{O}(n)$] Machine $N$.
+    As in the previous proof with the grammars, we enrich our logic with new symbols $b_{a_i, q_i}$ for all pairs of states and symbols, which means that we add a relation $Q_{b}$ for all such $b$ to our vocabulary.
+
+    Now consider a tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$.
+    This tuple completely represents an instantaneous configuration of the tape and the machine.
+    We can now write a formula $\varphi(\overline{X}, \overline{Y})$ which means that a transition from state $\overline{X}$ to $\overline{Y}$ is possible in $N$.
+    This can be done by a big disjunction over all rules of $N$.
+    As a transition a new character $b_i$ is only determined by the actual character and the two characters left and right of it\footnote{we include end markers for this to work without modification for the ends of the tape}, we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
+    If $P$ is the set of all transitions, we have
+    \begin{multline*}
+        \varphi(\overline{X}, \overline{Y}) \equiv \exists i \left(\forall j \left(|i - j| > 1 \to \bigwedge_{b_i}\left(Y_{Q_{b_i}}(j) \leftrightarrow X_{Q_{b_i}}(j)\right)\right) \land \right. \\
+        \left. \bigvee_{\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{u}, b_{v}, b_{w} \rangle \in P} \left(X_{Q_{b_{k}}}(i - 1) \land X_{Q_{b_{l}}}(i) \land X_{Q_{b_{m}}}(i + 1) \land Y_{Q_{b_{u}}}(i - 1) \land Y_{Q_{b_{v}}}(i) \land Y_{Q_{b_{w}}}(i + 1) \right)\right)
+    \end{multline*}
+    The first line asserts that apart from the indices where the head is and thus where we change something, the tape stays unchanged.
+    The second line tells us that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
+
+    Now, we can take the transitive closure over $\varphi$, starting with the input relations, and ending at an accept position.
+    Without loss of generality we can assume that $N$ clears its tape after accepting, so the end position is unique.
+    Now, our formula of the transitive closure over $\varphi$ holds if and only if there is an accepting path in $N$ starting at the input word $w$.
+
+    This concludes the equivalence of MSO(TC) and context-sensitive languages.
+\end{proof}
+
+An interesting normal form for MSO(TC) can be derived from the proof.
+\begin{corollary}
+    Every formula in MSO(TC) can be written in the form
+    \[
+        \left( TC_{\overline{X}, \overline{Y}} \varphi(\overline{X}, \overline{Y}) \right)\left( \overline{U}, \overline{V} \right)
+    \]
+\end{corollary}
+
+\begin{proof}
+    We have given an explicit way to convert any formula into a turing machine and back in \cref{thm:contextsensitveMSOTC}.
+    By construction this always gives us a formula of the required form.
 \end{proof}
 
 
@@ -538,10 +625,10 @@ At the same time, this shows that Hilberts 10$^{th}$ problem is unsolvable.
 A full proof of these facts can be found in~\cite{Matijasevic1996}.
 
 With this new characterisation, there is a quite straightforward characterisation of computable sets.
-The logic $FO(\exists \mathbb{N})$ consists of all formulas $\phi(\overline{x}) \equiv \exists \overline{y} (\varphi(\overline{x}, \overline{y}))$ with $\varphi$ having only bounded quantifiers (of the form $\exists x < y$ or $\forall x < y$), addition, multiplication, equality, and any constant natural number~\cite{Entropy2020}.
+The logic FO$(\exists \mathbb{N})$ consists of all formulas $\phi(\overline{x}) \equiv \exists \overline{y} (\varphi(\overline{x}, \overline{y}))$ with $\varphi$ having only bounded quantifiers (of the form $\exists x < y$ or $\forall x < y$), addition, multiplication, equality, and any constant natural number~\cite{Entropy2020}.
 The existential quantifiers at the beginning are allowed to range over all the natural numbers.
 
-These formulas can define exactly the diophantine sets, as the formulas we present are exactly those that mean "there is a tuple $\overline{y}$ of natural numbers such that some polynomial is satisfied".
+These formulas can define exactly the diophantine sets, as the formulas we present are exactly those that mean ``there is a tuple $\overline{y}$ of natural numbers such that some polynomial is satisfied''.
 Thus, they also define exactly all computable sets.
 
 \section{Open questions}\label{sec:open-questions}
@@ -550,9 +637,9 @@ The domain of descriptive complexity is full of open questions as the proofs of 
 Further, even separation between complexity classes wich seem to take an exponential amount of resources compared to another one in practice can not be shown to be different.
 
 \subsection{P$\overset{?}{=}$NP}\label{subsec:pnp}
-The P vs. NP question is the most emblematic question in descriptive complexity theory.
+The P vs.~NP question is the most emblematic question in descriptive complexity theory.
 In practice, for any NP-complete problem, only exponential worst-case algorithms are known.
-This leads to the widely believed conjuncture that P $\neq$ NP.
+This leads to the widely believed conjuncture that P $\neq$ NP\@.
 The problem is one of the seven Millennium Problems and a solution of equality or inequality is worth 1 Million US dollars.
 
 The consequences of a solution stating that P $=$ NP could have many practical advantages if it was constructive and had a low constant, as many important problems in research and logistics could be solved quickly.
@@ -560,7 +647,7 @@ It would also mean the breakdown of most of modern cryptography, which relies on
 On a conceptual level, it would mean that finding a proof to a problem is not harder than verifying its correctness, which would greatly impact the work of mathematicians.
 If a proof of the contrary would be known, this would focus the research more on the average case complexity of NP problems, but because of the continued lack of success on the question, this shift has already widely taken place.
 
-\subsection{NSPACE[$O(n)$]$\overset{?}{=}$DSPACE[$O(n)$]}\label{subsec:nspacedspace}
+\subsection{NSPACE[$\mathcal{O}(n)$]$\overset{?}{=}$DSPACE[$\mathcal{O}(n)$]}\label{subsec:nspacedspace}
 
 This problem is known under the name first Linear bounded automaton problem since its proposal by Kuroda in~\cite{Kuroda1964}, and asks if nondeterminism adds power in the context of bounded space.
 This comes from the fact that a NSPACE[$\mathcal{O}(n)$] turing machine can be seen as a TM with a linear bound on its space usage.
