@@ -1,1 +1,40 @@
 \chapter{Introduction}\label{ch:intro}
+
+In our daily lives, we are in contact with various kinds of algorithms at all times.
+From searching on Google to sending texts, over asking questions to AI chatbots and searching for the fastest route with a navy, all of these consume resources in energy, storage space and time.
+According to a report from 2021, 3.7 \% of global carbon emissions came from the IT domain, with an upward tendency.
+This is similar to that of the airline industry~\cite{webFootprint}.
+At this scale, it is thus vitally important to understand and find out if the actual resource consumption can be reduced.
+
+To be able to understand how we can improve, we first need to understand how computers work, what we can compute, and why some problems are more difficult than others to solve.
+The field of study that looks into this is called Complexity Theory.
+This is done by abstraction of computational models and of the problems themselves.
+It is then often possible to find classes of similar problems which allow for generalisations.
+However, it has proven to be very hard to find proofs of either optimality of algorithms, separations of complexity classes and general faster algorithms.
+One of the emblematic such open problems is the P versus NP question, of which we will speak more in~\cref{subsec:pnp}.
+Nevertheless, some important results concerning complexity of problems on average in the real world and most importantly in cryptography have been made.
+
+One of the subfields of Complexity Theory is descriptive complexity.
+It relates mathematical logic to different complexity classes.
+This allows us to get new insights into the underlying structure of problems of certain classes.
+Formal languages are an abstraction of computational problems which allow for multiple equivalent definitions and can be manipulated more easily then a general case.
+The famous linguist Noam Chomsky introduced the ``Chomsky Hierarch'', a hierarchy of multiple classes of formal languages.
+
+Towards the end of the 20$^{th}$ century, many equivalences where proven between fragments and extensions of various logics to complexity classes, including all the Chomsky Hierarchy.
+A great summary of all the results is found in Neil Immermans paper ``Languages that capture complexity classes''~\cite{Immerman1987}.
+
+This work consists of two big parts:
+
+Both \cref{ch:formal-languages} and \cref{ch:descriptive-complexity} present the most important theory of formal languages and of descriptive complexity, respectively.
+Additionally, in \cref{sec:results-concerning-the-chomsky-hierarchy} whole proofs concerning equivalences in the chomsky hierarchy are presented.
+These proofs are written in a way trying to show the motivation behind certain crucial steps.
+Further, they are not completely formally correct, some details have been omitted for the sake of simplicity and length of this work.
+
+After this introduction to the material, we go on in \cref{ch:personal-contribution} with a study of context-sensitive languages and formalisms in first-order logic.
+Then, the relevant results are summarised in \cref{ch:results}.
+Finally, in \cref{ch:conclusion-and-direction} we discuss further possibilities of research.
+% TODO more exactly when done
+
+For the relevant mathematical background, \cref{ch:mathematical-background} contains the basic definitions of Set Theory, first and second order logic and finally turing machines.
+
+This whole work is written in english because all mathematical literature is in english, and thus terms need not be translated.
