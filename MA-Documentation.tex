@@ -155,6 +155,9 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \newtheorem{define}{Definition}[chapter]
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[chapter]
+\addto\captionsbritish{
+\renewcommand{\contentsname}{Table of Contents}
+}
 % ========== ENDE VON METADATEN ===========
 
 
@@ -172,14 +175,19 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \input{title} %     \
 % ------------------
 
+\onehalfspacing % Zeilenabstand 1.5
+
+\pagenumbering{gobble}
+\input{vorwort}
+
 % === INHALTSVERZEICHNIS ===
+\newpage
+\pagenumbering{roman}
 \tableofcontents %          \
 \newpage %                  \
 % --------------------------
 
-
 % =========== START VON STYLING ===========
-\onehalfspacing % Zeilenabstand 1.5
 \renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\thechapter.\ #1}}{}} % Kapitel
 \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}} % Abschnitt
 \fancyhead[R]{\rightmark}
@@ -188,9 +196,8 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \fancyhead[R]{\rightmark}
 \pagestyle{fancy}
 % =========== ENDE VON STYLING ============
-
+\pagenumbering{arabic}
 % === KAPITEL DER ARBEIT ===
-\input{vorwort}
 \input{einleitung}
 \input{formal_languages}
 \input{descriptive_complexity}
