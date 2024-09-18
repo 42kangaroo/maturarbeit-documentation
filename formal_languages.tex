@@ -77,62 +77,8 @@ To generate the words, we have the concept of derivations.
 \end{exmp}
 
 Now that we have a tool to describe some infinite languages using a finite description, we can further differentiate the complexity of a language by the minimum required complexity of the rules in any grammar that describes the language.
-
-\subsection{Regular Languages}\label{subsec:regular-languages}
-
-The regular languages have the most restricted type of grammars.
-Formally, any regular language can be described by a grammar with rules in $V\times(\Sigma \cup \Sigma V \cup \varepsilon)$.
-This means that we only have exactly one non-terminal on the left-hand side and the right hand side is either a terminal, the empty word or a terminal symbol followed by a non-terminal symbol.
-
-\begin{exmp}
-    Consider the grammar $\langle \{S, O\}, \{a\}, R, S \rangle$ with
-    \[
-        R = \begin{Bmatrix*}[l]
-                S \to aO,
-                &S \to \varepsilon, \\
-                O \to aS
-        \end{Bmatrix*}
-    \]
-    The generated language are exactly all words with even length.
-\end{exmp}
-
-These languages have been studied quite thoroughly and have multiple equivalent formalisms:
-\begin{itemize}
-    \setlength\itemsep{0.2em}
-    \item The language is recognised by a Deterministic finite automaton, which process the input word one character at a time
-    \item The language can be decided by a read-only turing machine, that is a turing machine that can not modify it's tape
-    \item The language can be described by a regular expression
-\end{itemize}
-
-For a more in-depth analysis of regular languages and equivalent formalisms refer to~\cref{subsec:des-regular-languages} and~\cite{Straubing1994}.
-
-\subsection{Context-Free Languages}\label{subsec:context-free-languages}
-
-The context-free languages extend the regular languages by allowing arbitrary right-hand sides for the rules of the defining grammar.
-Formally, that gives us rules in $V\times(\Sigma \cup V)^{*}$.
-Most valid arithmetic expressions, logical formulas and formally correct code in programming languages are context-free, as we can see the non-terminal symbols as types wich are then converted to specific expressions of that type.
-
-\begin{exmp}
-    Consider the grammar $\langle \{\bold{Exp}, \bold{NumF}, \bold{Num}\}, \{0, 1, (, ), -, +\}, R, \bold{Exp} \rangle$ with
-    \[
-        R = \begin{Bmatrix*}[l]
-                \bold{Exp} \to \bold{NumF},
-                &\bold{Exp} \to (\bold{Exp} + \bold{Exp}), \\
-                \bold{Exp} \to (\bold{Exp} - \bold{Exp}),
-                &\bold{Exp} \to (-\bold{Exp}), \\
-                \bold{Num} \to 0\bold{Num},
-                &\bold{Num} \to 1\bold{Num}, \\
-                \bold{Num} \to \varepsilon,
-                &\bold{NumF} \to 0, \\
-                \bold{NumF} \to 1\bold{Num}
-        \end{Bmatrix*}
-    \]
-    This generates the language of all well-formed formulas using addition and subtraction over binary numbers.
-    For clarity, $\bold{Exp}$ denotes an arbitrary expression, $\bold{NumF}$ any number without leading zeroes and $\bold{Num}$ any number (possibly empty or with leading zeroes).
-\end{exmp}
-
-Those languages have less known formalisms, the Push-Down Automaton (again see~\cite{theory-cs}) being the most common.
-For a characterisation of the context-free languages using logic, see~\cref{subsec:des-context-free-languages}.
+In the main section, we will only present the context-sensitive languages as they are important for the personal contribution.
+In the context appendix explanations for regular languages (\cref{subsec:regular-languages}), context-free langauges (\cref{subsec:context-free-languages}) and recursive languages (\cref{subsec:recursive-languages}) are provided.
 
 \subsection{Context-Sensitive Languages}\label{subsec:context-sensitive-languages}
 
@@ -167,14 +113,3 @@ where $A, B, C, S \in V$ and $a \in \Sigma$.
 
 The corresponding formalism for these languages are the linearly bounded nondeterministic Turing machines which can only write on the tape cells that contained a non-blank symbol.
 This and an equivalent extension of Second-Order logic will be proven in~\cref{subsec:des-context-sensitive-languages}.
-
-\subsection{Recursive Languages}\label{subsec:recursive-languages}
-
-The recursive languages are the most general languages in the hierarchy, as they don't have any restrictions on the rules.
-It can be shown that this set of languages is equivalent to the languages recognisable by a turing machine.
-By the Church-Turing thesis, this means that these are exactly the languages that can be computed by any of our computers and algorithms.
-Thus, we have a huge number of equivalent formalisms, including a RAM machine, while-programs and lambda calculus.
-
-It is worth noting that there are languages which are not recursive.
-One of the most important example of these languages is the set of all (descriptions) of turing machines which halt on every input, also known as the halting problem.
-For the characterisation using logic, again refer to~\cref{subsec:des-recursive-languages}.

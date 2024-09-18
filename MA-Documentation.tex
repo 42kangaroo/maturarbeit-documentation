@@ -117,8 +117,8 @@ pdfauthor={\paperauthor},  % Autor
 pdfsubject={\papertype},   % Thema
 pdfcreator={pdfLaTeX},     % PDF-Ersteller
 pdfproducer={\paperauthor},% Dokument-Ersteller
-pdfkeywords={\paperinstitution} {\papersupervisor} % Schlüsselwörter
-{LaTex} {Maturaarbeit} {Finite Model Theory} {Formal Languages},
+pdfkeywords={{\paperinstitution}, {\papersupervisor}, % Schlüsselwörter
+{LaTex}, {Maturaarbeit}, {Finite Model Theory}, {Formal Languages}},
 pdfnewwindow=true,         % Links in neuem Fenster?
 colorlinks=false,          % Farbige Links: true, Link-Boxen: false
 linkcolor=red,             % Farbe interner Links
@@ -129,12 +129,6 @@ bookmarks=true             % Lesezeichen erstellen?
 bookmarksdepth=section     % Lesezeichen bis zu Abschnitten
 bookmarksopen=false        % Lesezeichen öffnen?
 bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
-}
-\pdfinfo{
-/Title  (\papertitle)
-/Author (\paperauthor)
-/Subject (\papertype)
-/Keywords (\paperinstitution;\papersupervisor;LaTex;Maturaarbeit;Finite Model Theory;Formal Languages)
 }
 \makeatletter
 \def\@makechapterhead#1{%
@@ -207,20 +201,12 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \input{danksagung}
 % --------------------------
 
-
 % === ABBILDUNGSVERZEICHNIS ===
 \cleardoublepage %             \
 \phantomsection %              \
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures %               \
 % -----------------------------
-
-% === CODEBLOCKVERZEICHNIS ===
-\cleardoublepage %            \
-\phantomsection %             \
-\addcontentsline{toc}{chapter}{\lstlistlistingname}
-\lstlistoflistings %          \
-% ----------------------------
 
 % === LITERATURVERZEICHNIS ===
 \cleardoublepage %            \
@@ -229,11 +215,10 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \printbibliography %          \
 % ----------------------------
 
-
 % =========== START VON ANHÄNGE ===========
 \appendix
 \input{appendix}
-
+\input{context_appendix}
 
 % === EIGENSTÄNDIGKEITSERKLÄRUNG ===
 \chapter{Independence declaration (German)}\label{ch:appendix_independencedeclaration}
