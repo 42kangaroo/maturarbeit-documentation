@@ -1,6 +1,90 @@
+%! suppress = MissingImport
 \chapter{Personal Contribution}\label{ch:personal-contribution}
 
+In this chapter, multiple tries at searches for new first order logics and other related concepts are presented.
+The range of success as well as the range of the concrete themes are broad.
+I did not find a fundamentally new result about the characterisation of context-sensitive languages using first order logic, but managed to prove that various approaches could not work.
+Further, I also lowered some upper bounds for simulating alternating Turing machines using iterative logic.
+Using a restricted form of iterative logic, I could lower the bounds for an iterative simulation of a nondeterministic Turing Machine.
+
 \section{Direct Transformation}
+
+Similar to Immerman in~\cite{descriptive-complexity}, we will use extended variables to model second order variables in first order logic.
+This will then directly give us a characterisation of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second order logic.
+
+\begin{define}[Extended Variable]
+    The logic FO-VAR$[1, s(n)]$ has two types of variables.
+    One are the normal domain variables, which we will denote by lowercase characters, ranging from $0$ to $n - 1$.
+    Further, a formula can also include extended variables, which we will denote by uppercase characters, ranging from $0$ to $2^{s(n)\log(n)} - 1$, and thus having $s(n)\log(n)$ bits.
+    The extended variables can not appear as an input to any predicate variables and can only be used in quantification and as an argument to the BIT relation.
+    Thus, we can query if a specific bit in the binary representation is on.
+    For extended variables with more than $n$ bits, we can extend BIT to accept a tuple of domain variables encoding the position.
+    This makes polynomial extended variables possible.
+\end{define}
+
+The extended variables in FO-VAR$[1, s(n)]$ have exactly the same capabilities as second order variables in second order logic, as we can query it at a position, but can not do anything else.
+As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) = FO-VAR$[1, n^k/\log(n)]$(TC).
+
+\begin{proof}
+    We show by induction on the structures that every formula has a very similar equivalent 
+    For both, we show by induction that we can write an equivalent formula using the other logic.
+
+    Any atomic formula of SO(TC, arity $k$) which does not include any second-order variable is trivially writable in FO-VAR$[1, n^k/\log(n)]$(TC).
+    An atom of the form $Y(\overline{x})$ can be written as BIT$(Y', \overline{x})$ for $Y'$ being an extended variable.
+    We then understand this as $Y$ being true with the variables $\overline{x}$ exactly when BIT$(Y', \overline{x})$ is true.
+    This always works as we have relations of at most arity $k$, and thus $\overline{x}$ will never represent any higher number.
+
+    Using this, we then can induct.
+    Conjunction, disjunction and negation do not change anything.
+    When we quantify over a second-order variable, we can directly exchange this with quantifying over an extended variable, as by induction the subformulas without the quantification is equivalent and plugging in the new second order / extended variable will not change this.
+    Taking a transitive closure can also be done by replacing all second order variables with extended variables.
+
+    By induction, we then have that all formulas in either of the logics has an equivalent formula in the other logic.
+\end{proof}
+
+Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterisation in first order logic.
+
+\section{Analogues to Proof for DSPACE}
+
+For DSPACE$[s(n)]$, there are multiple other characterisations in logic without using the transitive closure operator.
+
+To understand the following, we first need to define the logic FO$[t(n)]$, which formalises iterative definitions, and then VAR$[k]$ which restricts the number of variable but allows for unbounded FO iterations.
+
+\begin{define}[{FO$[t(n)]$}]
+    Let $Q_1, \dots, Q_n$ be a series of quantifiers, $s_1, \dots, s_n$ variables and $M_1 \dots, M_n$ be quantifier-free formulas.
+    Then a quantifier block is $QB = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})$.
+    Here, for a universal quantifier $(\forall s.M)\varphi \equiv \forall s (M \to \varphi)$.
+    Also, for an existential quantifier $(\exists s.M)\varphi \equiv \exists s(M \land \varphi)$.
+    Then, a formula of FO$[t(n)]$ is of the form
+    \[
+        \left([QB]^{t(n)}M_{0}\right)(\overline{c}\setminus \overline{s})
+    \]
+    where $M_0$ is a quantifier-free formula, $\overline{c} = c_1, \dots, c_n$ is a tuple of constants and $\overline{s} = s_1, \dots, s_n$ are the variables occurring in the quantifier block.
+    Also, $(\overline{c} \setminus \overline{s})$ means that in the beginning, we set $s_1 \coloneqq c_n, \dots, s_n \coloneqq c_n$ and $[QB]^{t(n)}$ means $QB$ literally repeated $t(n)$ times.
+    The truth values of these formulas for a specific structure are defined by iterating the quantifier block $t(|\mathcal{A}|)$ times.
+\end{define}
+So now we have a formalism for iterative procedures.
+
+If we restrict the number of variables such that all $s_i$ need to be in $\{x_1, \dots, x_k \}$, apart from some boolean variables (variables which can only be $0$ or $1$), we get FO-VAR$[t(n), k]$.
+Additionally, we define
+\[
+    \text{VAR}[k] = \bigcup_{c = 1}^{\infty}\text{FO-VAR}[2^{cn^k}, k]
+\]
+This is the same as saying that we have unbounded iterations, as after at most $2^{cn^k}$ the truth values of the formula will loop.
+The $c$ depends on the number of boolean variables included.
+
+Now, we are ready to look at DSPACE\@.
+For DSPACE, we then have
+\[
+    \text{DSPACE}[n^k] = \text{VAR}[k + 1]
+\]
+A proof of this can be found in \cite{descriptive-complexity}.
+In the main part of the proof, a construction is made to simulate a DSPACE turing machine using VAR$[k + 1]$.
+There, the relation $C_{t}(\overline{x}, \overline{b})$
+
+\section{Restricting universal quantification}
+
+\section{Alternating bounds}
 
 \section{Arity Hierarchies}
 
@@ -8,8 +92,3 @@
 
 \subsection{Generalised Quantifiers}
 
-\section{Analogues to Proof for DSPACE}
-
-\section{Restricting universal quantification}
-
-\section{Alternating bounds}
