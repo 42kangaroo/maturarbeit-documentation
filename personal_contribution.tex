@@ -7,7 +7,7 @@ I did not find a fundamentally new result about the characterisation of context-
 Further, I also lowered some upper bounds for simulating alternating Turing machines using iterative logic.
 Using a restricted form of iterative logic, I could lower the bounds for an iterative simulation of a nondeterministic Turing Machine.
 
-\section{Direct Transformation}
+\section{Direct Transformation}\label{sec:direct-transformation}
 
 Similar to Immerman in~\cite{descriptive-complexity}, we will use extended variables to model second order variables in first order logic.
 This will then directly give us a characterisation of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second order logic.
@@ -44,7 +44,7 @@ As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) =
 
 Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterisation in first order logic.
 
-\section{Analogues to Proof for DSPACE}
+\section{Analogues to Proof for DSPACE}\label{sec:analogues-to-proof-for-dspace}
 
 For DSPACE$[s(n)]$, there are multiple other characterisations in logic without using the transitive closure operator.
 
@@ -57,10 +57,10 @@ To understand the following, we first need to define the logic FO$[t(n)]$, which
     Also, for an existential quantifier $(\exists s.M)\varphi \equiv \exists s(M \land \varphi)$.
     Then, a formula of FO$[t(n)]$ is of the form
     \[
-        \left([QB]^{t(n)}M_{0}\right)(\overline{c}\setminus \overline{s})
+        \left([QB]^{t(n)}M_{0}\right)(\overline{c} / \overline{s})
     \]
     where $M_0$ is a quantifier-free formula, $\overline{c} = c_1, \dots, c_n$ is a tuple of constants and $\overline{s} = s_1, \dots, s_n$ are the variables occurring in the quantifier block.
-    Also, $(\overline{c} \setminus \overline{s})$ means that in the beginning, we set $s_1 \coloneqq c_n, \dots, s_n \coloneqq c_n$ and $[QB]^{t(n)}$ means $QB$ literally repeated $t(n)$ times.
+    Also, $(\overline{c} / \overline{s})$ means that in the beginning, we set $s_1 \coloneqq c_n, \dots, s_n \coloneqq c_n$ and $[QB]^{t(n)}$ means $QB$ literally repeated $t(n)$ times.
     The truth values of these formulas for a specific structure are defined by iterating the quantifier block $t(|\mathcal{A}|)$ times.
 \end{define}
 So now we have a formalism for iterative procedures.
@@ -78,17 +78,69 @@ For DSPACE, we then have
 \[
     \text{DSPACE}[n^k] = \text{VAR}[k + 1]
 \]
-A proof of this can be found in \cite{descriptive-complexity}.
+A proof of this can be found in~\cite{descriptive-complexity}.
 In the main part of the proof, a construction is made to simulate a DSPACE turing machine using VAR$[k + 1]$.
-There, the relation $C_{t}(\overline{x}, \overline{b})$
+There, the relation $C_{t}(\overline{x}, \overline{b})$ is inductively defined to mean that at time $t$, the character on the tape at position $\overline{x}$ is the one coded by $\overline{b}$, where $\overline{b}$ is a tuple of boolean variables.
+Because the turing machine we are contemplating is deterministic, this character is uniquely determined.
+Further, it only depends on the previous characters at positions $\overline{x} - 1, \overline{x}$ and $\overline{x} + 1$, as we include the head position and state in the characters.
+So this makes it possible for every position to go back in time and find out if we get to an ending state after $n^k$ steps.
 
-\section{Restricting universal quantification}
+If we want to extend this to nondeterministic turing machines using $C_{t}(\overline{x}, \overline{b}) \equiv $ the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
+As we don't have the guarantee that the computation is deterministic, we can not say anymore that we depend on the $C_{t - 1}(\overline{x}, \overline{b})$ only.
+Doing this would mean that impossible states could be reached, and thus we would have false positives.
+One way to fix this is by remembering the nondeterministic choices we made in the previous steps.
+In the worst case, this would take $\mathcal{O}(2^{cn^k})$ additional bits.
+But we already know by Savitchs' Theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for DSPACE that we only need $n \cdot (k + 2)$ bits to represent a NSPACE$[n^k]$ computation.
 
-\section{Alternating bounds}
+More generally, any proof which would show that NSPACE$[n^k]$ can be expressed in VAR$[r(n)]$, where VAR$[r(n)]$ is the generalisation of VAR$[k]$ which means that a total of $r(n) + \mathcal{O}(1)$ bits are allowed, with $n \cdot (k + 1) \leq r(n) < n \cdot (k + 2)$ would be an improvement on Savitchs' theorem.
+That is because the proof for DSPACE$[n^k]$ can easily be extended to more general polynomial functions, Immerman did this in~\cite{Immerman1999}.
+Actually, this is a two-way relationship: if Savitchs' Theorem can be improved, we can describe NSPACE with less than $k + 2$ variables and unbounded iterations.
 
-\section{Arity Hierarchies}
+\section{Restricting universal quantification}\label{sec:restricting-universal-quantification}
 
-\subsection{Transitive Closure}
+One further approach that I attempted was restricting universal quantification in the FO-VAR formulas, which I called FO$\exists$-VAR\@.
+In FO$\exists$-VAR, universal quantification is only allowed over boolean variables.
+This step was motivated by the fact that nondeterministic turing machines in essence capture existential quantification.
 
-\subsection{Generalised Quantifiers}
+A similar idea to the one in Savitchs' Theorem, guessing the middle of the path and checking both shorter sides.
+A formula in FO$\exists$-VAR$[s(n), s(n)/\log(n)]$ which is equivalent to a formula in FO-VAR$[1, s(n)/\log(n)]$ of the form $\left( TC_{\overline{X}, \overline{Y}}\varphi \right)(\overline{C}, \overline{D})$ is
+\[
+\begin{aligned}
+    QB \equiv~& (\forall b_{1}.M_{1})(\exists\overline{Z}) (\forall b_{2})(\exists \overline{A}, \overline{B}.M_{2})(\exists\overline{X}, \overline{Y}.M_{3}) \\
+    M_{1} \equiv~& \neg(\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z})) \lor \varphi(\overline{X}, \overline{Y})) \\
+    M_{2} \equiv~&(b_{2} \land \forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Z}, \overline{z}))) \lor \\
+    &(\neg b_{2} \land \forall \overline{z} (\text{BIT}(\overline{Z}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))) \\
+    M_{3} \equiv~&\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))
+\end{aligned}
+\]
+and finally
+\[
+    [QB]^{cs(n)}(false)(\overline{C} / \overline{X}, \overline{D} / \overline{Y})
+\]
+for some $c$.
+This formula needs some explanation.
+We have $M_1$ be the breaking condition, being false whenever either $\overline{X}$ and $\overline{Y}$ are the same or connected directly.
+So in $QB$, the first quantification means that we break with true whenever we have a connection, as when this happens, we quantify over the empty set, which is defined as true.
+After this, a middle configuration $\overline{Z}$ is guessed, and both sides $b_2$ are checked.
+In $M_2$, we then check that $\overline{A}$ and $\overline{B}$ are the new endpoints which are defined by $b_2$ and $\overline{X}, \overline{Z}, \overline{Y}$.
+After this, we copy $\overline{A}$ to $\overline{X}$ and $\overline{B}$ to $\overline{Y}$ in $M_3$.
+When iterating this we guess a path from $\overline{C}$ to $\overline{D}$, checking every connection between adjacent states.
+
+More generally, for any function $r(n) \leq 2^{cs(n)}$, we can define a formula in \[\text{FO$\forall, \exists$-VAR$[s(n)/\log(r(n)), \log(r(n)), s(n)r(n)/\log(n)]$}\]
+Here, we define FO$\forall, \exists$-VAR$[t(n), f(n), s(n)]$ to contain all formulas wich have $t(n)$ iterations, extended variables of $f(n)$ bits which can be existentially quantified and $s(n)\log(n)$ bit extended variables which can be used in existential quantification.
+These formulas are very similar to the one defined for FO$\exists$-VAR from above.
+The only difference lies in the splitting.
+Instead of splitting paths into two parts, we split them into $r(n)$ parts.
+Thus, for a path of length $2^{cs(n)}$, we need \[\log_{r(n)}\left(2^{cs(n)}\right) = \frac{\log\left(2^{cs(n)}\right)}{\log(r(n))} = cs(n)/\log(r(n))\] iterations.
+As for simulating this formula with a turing machine, the product of the number of iterations and the size of the extended variables is important, we do not gain any tighter results from this.
+
+\section{Alternating bounds}\label{sec:alternating-bounds}
+
+\section{Arity Hierarchies}\label{sec:arity-hierarchies}
+
+\subsection{Mixing iterations and transitive closure}\label{subsec:mixing-iterations-and-transitive-closure}
+
+\subsection{Transitive Closure}\label{subsec:transitive-closure}
+
+\subsection{Generalised Quantifiers}\label{subsec:generalised-quantifiers}
 
