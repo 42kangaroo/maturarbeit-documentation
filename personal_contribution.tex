@@ -55,6 +55,7 @@ To understand the following, we first need to define the logic FO$[t(n)]$, which
     Then a quantifier block is $QB = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})$.
     Here, for a universal quantifier $(\forall s.M)\varphi \equiv \forall s (M \to \varphi)$.
     Also, for an existential quantifier $(\exists s.M)\varphi \equiv \exists s(M \land \varphi)$.
+    Both of these effectively mean that we restrict the quantifiers to range only over the elements that satisfy $M$.
     Then, a formula of FO$[t(n)]$ is of the form
     \[
         \left([QB]^{t(n)}M_{0}\right)(\overline{c} / \overline{s})
@@ -100,6 +101,8 @@ Actually, this is a two-way relationship: if Savitchs' Theorem can be improved, 
 
 One further approach that I attempted was restricting universal quantification in the FO-VAR formulas, which I called FO$\exists$-VAR\@.
 In FO$\exists$-VAR, universal quantification is only allowed over boolean variables.
+We will denote the boolean variables by $b_j$.
+Further, the requirement of the $M_i$ to be quantifier-free is dropped.
 This step was motivated by the fact that nondeterministic turing machines in essence capture existential quantification.
 
 A similar idea to the one in Savitchs' Theorem, guessing the middle of the path and checking both shorter sides.
@@ -135,6 +138,171 @@ Thus, for a path of length $2^{cs(n)}$, we need \[\log_{r(n)}\left(2^{cs(n)}\rig
 As for simulating this formula with a turing machine, the product of the number of iterations and the size of the extended variables is important, we do not gain any tighter results from this.
 
 \section{Alternating bounds}\label{sec:alternating-bounds}
+
+In the proof of Savitchs' Theorem, we use alternating turing machines as an intermediate step for proving that NSPACE$[s(n)]$ is a subset of DSPACE$[s(n)^2]$.
+We can also add another intermediate step using FO-VAR$[s(n), s(n)/\log(n)]$ with the method shown in \cref{sec:restricting-universal-quantification}.
+It is also quite easy to simulate any formula in FO-VAR$[t(n), s(n)/\log(n)]$ with an alternating turing machine in ATSR$[t(n)s(n), s(n), t(n)]$, where in this new class ATSR, we specify \emph{t}ime, \emph{s}pace and \emph{r}eversals.
+With reversals, we mean the number of times we switch from universal states to existential states and back.
+We do this by writing the current values of all variables during the iterated quantifier part and evaluating the quantifier-free FO formulas, which can be done efficiently.
+
+We will now investigate two ways of simulating an ATSR$[t(n), s(n), r(n)]$ turing machine using FO-VAR\@.
+
+The first one is a straightforward simulation of each step of the computation.
+For this, we encode the whole state of the turing machines in a tuple of $s(n)$ bit extended variables, and always guess the next step.
+Also, we assume without loss of generality that a predicate $existential(\overline{X})$ exists and that there exists exactly one accepting state, denoted by $\overline{E}$.
+\[
+    \begin{aligned}
+        QB \equiv~&(\forall b.M_{1})(\exists\overline{A}.\varphi(\overline{X}, \overline{A}))(\forall \overline{B}.M_{2})(\exists \overline{X}. \forall \overline{z}(\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{B}, \overline{z}))) \\
+        M_{1} \equiv~&\neg\forall \overline{z}(\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{E}, \overline{z})) \\
+        M_{2} \equiv~& (existential(\overline{X}) \to \forall \overline{z}(\text{BIT}(\overline{A}, \overline{z}) \leftrightarrow \text{BIT}(\overline{B}, \overline{z}))) \land \varphi(\overline{X}, \overline{B})
+    \end{aligned}
+\]
+with \[
+         \left([QB]^{t(n)}(false)\right)(\overline{S} / \overline{X})
+\]
+This gives us a formula in FO-VAR$[t(n), s(n)/\log(n)]$ which simulates the procedures of an alternating turing machine.
+To simplificate it, some of the $M_i$ are not quantifier-free.
+These can be moved out in an equivalent way, but make the formula less readable.
+The inner formulas work as follows:
+The formula $QB$ starts of with checking if the wie already achieved our goal and the actual configuration is the accepting configuration using $M_1$.
+Next, if we are not done yet, we first existentially gues the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
+In $M_2$ we either retain this existentially guessed next state if we are in an existential state (thus effectively doing nothing) or ignore the existentially quantified state and just quantify universally over all states which are connected to the current one.
+The last thing we do is copying $\overline{B}$ to $\overline{X}$, preparing it to be the new start of the path.
+
+By combining the above techniques for switching between universal and existential quantification with the path-halving method from Savitchs' Theorem, we get an even stronger result.
+
+On a high level, the plan is to do the following:
+\begin{enumerate}
+    \item From the actual starting vertex, find all reachable vertices using only vertices which have the same type as the starting vertex.
+    \begin{enumerate}
+        \item For existential states, we can use the normal technique of halving paths naively
+        \item For universal states, we need to quantify for all ending vertices and then consider two cases
+        \begin{enumerate}
+            \item We claim that there is no path using only universal states going to this vertex.
+            Then, we need to show that for each middle vertex, one of the two new paths still does not exist.
+            \item We claim that a path exists.
+            In this case, we can try to find a path normally.
+        \end{enumerate}
+    \end{enumerate}
+    \item Repeat with all the reached vertices
+\end{enumerate}
+
+Before presenting the formula, we can first think of how much iterations we need to do.
+Because of the halving trick, we use $\log(a)$ iterations for a path of length $a$ with only one quantifier type.
+To get an upper bound on the total number of iterations, we can use Jensens inequality (\cite{inequalities-math-oly}, p.28).
+We then get
+\[
+    \frac{\sum_{j = 0}^{r(n)}\log(a_{j})}{r(n)} \leq \log\left( \frac{\sum_{j= 0}^{r(n)}a_{j}}{r(n)} \right) = \log\left( \frac{t(n)}{r(n)} \right)
+\]
+because of the condition that $\sum_{j= 0}^{r(n)}a_{j} = t(n)$.
+Multiplying this with $r(n)$, we get that a path can require a maximum of $r(n)\log\left( \frac{t(n)}{r(n)} \right)$ iterations.
+Thus, the formula is in FO-VAR$\left[ r(n)\log\left( t(n)/r(n) \right), s(n)/\log(n) \right]$
+
+The formula is then as follows:
+\[
+    \begin{aligned}
+        QB \equiv&~(\forall b_{0}.M_{1})(\exists b_{0}.N_{1})(\exists b_{1}.M_{2})(\exists Z_{e}.M_{3})(\forall Z.N_{2})\\
+        &~(\exists b_{2e})(\forall b_{2}.N_{3})(\exists A, B.M_{4})(\forall S, E.M_{5})(\exists A, B.M_{6})(\exists I, X.M_{7})(\exists b_{0}.N_{4})(\exists b_{path}.N_{5}) \\
+        M_{1} \equiv&~b_{path} \to \neg(I = Y \land (S = E \lor \varphi(S, E))) \\
+        N_{1} \equiv&~\neg b_{path} \to \neg(S = E \lor \varphi(S, E)) \\
+        M_{2} \equiv&~\neg b_{1} \leftrightarrow (S = E \lor \varphi(S, E)) \\
+        M_{3} \equiv&~existential(Z_{e}) \leftrightarrow existential(X)\\
+        N_{2} \equiv&~(b_{path} \to Z = Z_{e}) \land (existential(Z) \leftrightarrow existential(X))\\
+        N_{3} \equiv&~ \neg b_{path} \to b_{2} = b_{2e}\\
+        M_{4} \equiv&~(b_{1} \land ((\neg b_{2} \land A = S  \land B = Z) \lor (b_{2} \land A = Z \land B = E))) \lor \\
+        &~(\neg b_{1} \land  A = I \land (B = Y \lor (existential(B) \leftrightarrow \neg existential(I)))) \\
+        M_{5} \equiv&~S = A \land ((( b_{1} \lor existential(S)) \land E = B) \lor \\
+        &~(\neg( b_{1} \lor existential(S)) \land (E = Y \lor (existential(E)\leftrightarrow \neg existential(S))))) \\
+        M_{6} \equiv&~(\neg b_{1}  \land S = A \land E = B) \lor (b_{1} \land X = A \land I = B)\\
+        M_{7} \equiv&~X = A \land I = B \\
+        N_{4} \equiv&~b_{0} = b_{path} \\
+        N_{5} \equiv&~(b_{1} \land b_{path} = b_{0}) \lor (\neg b_{1} \land (existential(X) \to b_{path}))
+    \end{aligned}
+\]
+and $\left([QB]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(true / b_{path}, AS / S, AS / X, AS /I, AS /S, AS / E, AE / Y)$ being the final formula.
+First, we will look at the meaning of the variables:
+\begin{itemize}
+    \item[$Y$:] the accepting configuration
+    \item[$X$:] the actual starting configuration from which we started the search
+    \item[$I$:] the vertex for which we are checking that a connection from $X$ exists
+    \item[$S$:] the start of the path we are checking right now
+    \item[$E$:] the end of the path we are checking right now
+    \item[$Z, Z_{e}$] the guessed mittle configuration of a path from $S$ to $E$
+    \item[$A, B, b_{0}$:] variables used for copying or as dummies
+    \item[$b_{path}$:] whether we are trying to show that there is a path or that there is no path from $S$ to $E$
+    \item[$b_{1}$:] remember whether $S$ and $E$ are connected
+    \item[$b_{2}, b_{2e}$:] which half of the $S \to Z \to E$ path should be checked
+\end{itemize}
+As this formula is quite intricate, it is proposed to read it in four goes.
+\begin{enumerate}
+    \item First, we look at the formula in the easiest case: We are still trying to find a path from $X$ to $I$ using $S$ and $E$, which are not connected.
+    In this case, we have $b_{path}$ and $b_1$ as true.
+    Then, $QB$ works like this:
+    First, in $M_1$, we check that we are not done, which we aren't as $S$ and $E$ are not connected.
+    As $b_{path}$ is true, $N_1$ does not affect anything.
+    In $M_2$, $b_1$ is set to true.
+    Then we guess a middle configuration between $S$ and $E$ which has the same type as $X$ in $M_3$.
+    $N_2$ just copies $Z_e$ into $Z$.
+    Next, we choose a side of the path.
+    As $b_{path}$ is true, this is done universally, because $N_3$ ignores the choice that was made with $b_{2e}$.
+    In this case, $M_4$ copies the relevant new starting and ending points to $A$ and $B$.
+    Because $b_1$ is true, we then copy $A$ and $B$ to $S$ and $E$ in $M_5$.
+    When combining $M_6$ and $M_7$, we just retain $X$ and $I$ to make them stay the same using $A$ and $B$.
+    The same happens with $b_{path}$ using $N_4$, $N_5$ and $b_0$.
+    So in the end, we get a new configuration with a guessed middle configuration replacing eiter the former ending or starting point.
+    If no path exists, this will continue until the formula $\neg b_{path}$ marks this branch as false.
+
+    \item The second option we look at is when we do not want a path to exist.
+    In that case, we have $\neg b_{path}$.
+    Because of this, $M_1$ does not have any effect.
+    In $N_1$, we check that we did not find any connection after all, and if we did find one, this logical branch will be false because of the existential quantification.
+    If we get $N_1$ is true, we get on to $M_2$, which will establish $b_1$.
+    The formula $N_2$ completely ignores $M_3$, which thus has no effect.
+    $N_2$ itself then universally quantifies over all middle vertices $Z$ which could lie on a path between $S$ and $E$.
+    The next two quantifiers have the effect of quantifying existentially which half of $S \to Z \to E$ is not connected.
+    This half must exist as otherwise a path from $S$ to $E$ exists, which we want to be false in this case.
+    Because we again have $b_1$ as true, $M_4$ will copy the relevant part of the path to $A$ and $B$.
+    These are then copied back to $S$ and $E$ in $M_5$.
+    $M6$, $M_7$, $N_4$ and $N_5$ do the same as in the conection case, which was resetting $S$, $E$, $X$ and $I$ to the same value.
+    If effectively no path exists, we will continue doing this until we hit $\neg b_{path}$.
+    At this point, the branch will then be true, as effectively, no path exists from $X$ to $I$ by making these choices.
+
+    \item The third possibility we need to consider is that we are presently trying to do a path from $X$ to $I$ and that we succeed in finding a connection between $S$ and $E$.
+    In this case, we have $b_{path}$ and $\neg b_1$.
+    In this case, we look at what happens when the current component, and thus $X$, is universal.
+    In $M_1$, if $I = Y$, we are done, as we reached the accepting configuration.
+    Otherwise, we can again ignore $N_1$, and $M_2$ will set $b_1$ to false.
+    We can ignore the quantification for $Z$ and $b_2$ as they will not be used in this iteration of the formula.
+    In $M_4$, $A$ and $B$ are guessed such that $A$ is the new starting vertex, which was the ending vertex before, and $B$ is either the ending vertex or a vertex of the other type.
+    Then, $M_5$ copies $A$ to $S$, marking it as the starting vertex.
+    Further, because we changed quantification type, we have that a valid $S$ must now be existential.
+    Thus, we also copy $B$ too $E$ directly.
+    After that, we copy back $S$ to $A$ and $E$ to $B$ in $M_6$, for them to set $X$ and $I$ accordingly.
+    The last change happens in $N_{5}$, where we set $b_{path}$ to be true.
+    Thus, the state is set for a new block of existential states.
+
+    \item The last option is similar to the third one, with the difference that the actual state $X$ is existential.
+    In this case, we have $b_{path}$ and $\neg b_1$.
+    In $M_1$, if $I = Y$, we are done, as we reached the accepting configuration.
+    Otherwise, we can again ignore $N_1$, and $M_2$ will set $b_1$ to false.
+    We can ignore the quantification for $Z$ and $b_2$ as they will not be used in this iteration of the formula.
+    In $M_4$, $A$ and $B$ are guessed such that $A$ is the new starting vertex, which was the ending vertex before, and $B$, which will be ignored later, is either the ending vertex or a vertex of the other type.
+    Then, $M_5$ copies $A$ to $S$, marking it as the starting vertex.
+    Further, because we changed quantification type, we have that a valid $S$ must now be existential.
+    Thus, we quantify universally over all vertices which are either the ending vertex or have the other type.
+    After that, we copy back $S$ to $A$ and $E$ to $B$ in $M_6$, for them to set $X$ and $I$ accordingly.
+    The last change happens in $N_{5}$, where we quantify existentially over both possibilities we set for that new ending vertex, having a path, or not.
+    Thus, the state is set for a new block of universal states.
+\end{enumerate}
+The complete formula sets the starting conditions to be such that we are trying to find a path with $b_{path} = true$, and that all of $X, S, E$ and $I$ are set to the staring configuration $AS$.
+The ending $Y$ is set to the desired ending $AE$.
+This starting configuration will trigger either case three or four and make the first cycle possible.
+
+These results allow for enclosing the ATSR class quite with only a logarithmic overhead between two FO-VAR classes.
+\[
+    \text{FO-VAR}\left[ a(n), s(n)/\log n \right] \subseteq \text{ATSR}[a(n)s(n), s(n), a(n)] \subseteq \text{FO-VAR}\left[ a(n)\log(s(n)), s(n)/\log n \right]
+\]
+
 
 \section{Arity Hierarchies}\label{sec:arity-hierarchies}
 
