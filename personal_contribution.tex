@@ -173,6 +173,7 @@ By combining the above techniques for switching between universal and existentia
 
 On a high level, the plan is to do the following:
 \begin{enumerate}
+    \setlength\itemsep{0.2em}
     \item From the actual starting vertex, find all reachable vertices using only vertices which have the same type as the starting vertex.
     \begin{enumerate}
         \item For existential states, we can use the normal technique of halving paths naively
@@ -221,18 +222,19 @@ The formula is then as follows:
 \]
 and $\left([QB]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(true / b_{path}, AS / S, AS / X, AS /I, AS /S, AS / E, AE / Y)$ being the final formula.
 First, we will look at the meaning of the variables:
-\begin{itemize}
+\begin{description}
+    \setlength\itemsep{0.2em}
     \item[$Y$:] the accepting configuration
     \item[$X$:] the actual starting configuration from which we started the search
     \item[$I$:] the vertex for which we are checking that a connection from $X$ exists
     \item[$S$:] the start of the path we are checking right now
     \item[$E$:] the end of the path we are checking right now
-    \item[$Z, Z_{e}$] the guessed mittle configuration of a path from $S$ to $E$
+    \item[$Z, Z_{e}$:] the guessed mittle configuration of a path from $S$ to $E$
     \item[$A, B, b_{0}$:] variables used for copying or as dummies
     \item[$b_{path}$:] whether we are trying to show that there is a path or that there is no path from $S$ to $E$
     \item[$b_{1}$:] remember whether $S$ and $E$ are connected
     \item[$b_{2}, b_{2e}$:] which half of the $S \to Z \to E$ path should be checked
-\end{itemize}
+\end{description}
 As this formula is quite intricate, it is proposed to read it in four goes.
 \begin{enumerate}
     \item First, we look at the formula in the easiest case: We are still trying to find a path from $X$ to $I$ using $S$ and $E$, which are not connected.
@@ -303,12 +305,45 @@ These results allow for enclosing the ATSR class quite with only a logarithmic o
     \text{FO-VAR}\left[ a(n), s(n)/\log n \right] \subseteq \text{ATSR}[a(n)s(n), s(n), a(n)] \subseteq \text{FO-VAR}\left[ a(n)\log(s(n)), s(n)/\log n \right]
 \]
 
+\section{Mixing iterations and transitive closure}\label{sec:mixing-iterations-and-transitive-closure}
 
-\section{Arity Hierarchies}\label{sec:arity-hierarchies}
+One question that came up during the process of finding a logic which is smaller than FO-VAR$[s(n), s(n)/\log(n)]$ but still captures NSPACE$[s(n)]$.
+This led to the idea of mixing up iterative procedures with the transitive closure operator.
+I will now show that this approach will not help much and any restriction done this way would be mean that there exists a restriction using only iterative procedures that also contains NSPACE$[s(n)]$.
 
-\subsection{Mixing iterations and transitive closure}\label{subsec:mixing-iterations-and-transitive-closure}
+The first is surrounding a formula in FO-VAR$[t(n), r(n)/\log(n)]$ with a TC operator using variables of size $r(n)$.
+For this to contain NSPACE$[s(n)]$, we need for any formula of the form $(\text{TC}_{a, b}\varphi)(c, d)$ that there exists a quantifier block, a formula $\phi$ and some constants $\overline{e}, f, g$ such that
+\[
+    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv (\text{TC}_{a, b}\varphi)(c, d)
+\]
+We know that we can simulate any TC formula with variables of size $r(n)$ using $r(n)$ iterations of a quantifier block.
+Thus, we can rewrite the formula as
+\[
+    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv [QB_1]^{r(n)}[QB_2]^{t(n)}\phi(\overline{e}/\overline{s}, c/a, d/b)
+\]
+The two quantifier blocks can then be merged into one by additionally maintaining a counter variable of size $\log(r(n))$ so that the quantifier block acts as the first one would during the first $r(n)$ round and then acts like the other one.
 
-\subsection{Transitive Closure}\label{subsec:transitive-closure}
+The other case where we write the TC formula after the quantifier block is similar, then we have
+\[
+    \left([QB]^{t(n)}\left(\text{TC}_{a, b}\phi\right)(f, g)\right)(\overline{e}/\overline{s}) \equiv (\text{TC}_{a, b}\varphi)(c, d)
+\]
+For $c \ctod r(n) > \log(t(n))$ for some fixed $c$, we can do the same counting trick.
+As a $t(n) > 2^{cr(n)}$ does not add any expressive power, we can assume that this is true.
 
-\subsection{Generalised Quantifiers}\label{subsec:generalised-quantifiers}
+Thus, in both cases, we have a formula in FO-VAR$[r(n) + t(n), r(n)/\log(n)]$.
+Now, there are multiple cases
+\begin{description}
+    \setlength\itemsep{0.2em}
+    \item[$r(n) \leq t(n)$]  Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[t(n), r(n)/\log(n)]$.
+    This is only interesting in the case where $r(n) < s(n)$
+    \item[$r(n) > t(n)$] Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[r(n), r(n)/\log(n)]$.
+    This is again only interesting when $r(n) < s(n)$.
+\end{description}
 
+We thus get that anything interesting in this case happens only when we have less variable bits than $s(n)$.
+Using Savitch's Theorem once more, we also get that $r(n) > \sqrt{n}$.
+Another interesting result is that Savitch's Theorem can be improved for some possible results as
+\[
+    \text{FO-VAR}[t(n), r(n)/\log(n)] \subset \text{DSPACE}[t(n)r(n)]
+\]
+which would be smaller than $s(n)^2$ in some of these cases.
