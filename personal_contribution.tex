@@ -26,7 +26,7 @@ The extended variables in FO-VAR$[1, s(n)]$ have exactly the same capabilities a
 As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) = FO-VAR$[1, n^k/\log(n)]$(TC).
 
 \begin{proof}
-    We show by induction on the structures that every formula has a very similar equivalent 
+    We show by induction on the structures that every formula has a very similar equivalent
     For both, we show by induction that we can write an equivalent formula using the other logic.
 
     Any atomic formula of SO(TC, arity $k$) which does not include any second-order variable is trivially writable in FO-VAR$[1, n^k/\log(n)]$(TC).
@@ -43,6 +43,7 @@ As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) =
 \end{proof}
 
 Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterisation in first order logic.
+
 
 \section{Analogues to Proof for DSPACE}\label{sec:analogues-to-proof-for-dspace}
 
@@ -97,6 +98,51 @@ More generally, any proof which would show that NSPACE$[n^k]$ can be expressed i
 That is because the proof for DSPACE$[n^k]$ can easily be extended to more general polynomial functions, Immerman did this in~\cite{Immerman1999}.
 Actually, this is a two-way relationship: if Savitchs' Theorem can be improved, we can describe NSPACE with less than $k + 2$ variables and unbounded iterations.
 
+\section{Mixing iterations and transitive closure}\label{sec:mixing-iterations-and-transitive-closure}
+
+One question that came up during the process of finding a logic which is smaller than \[\text{FO-VAR}[s(n), s(n)/\log(n)]\] but still captures NSPACE$[s(n)]$.
+This led to the idea of mixing up iterative procedures with the transitive closure operator.
+I will now show that this approach will not help much and any restriction done this way would be mean that there exists a restriction using only iterative procedures that also contains NSPACE$[s(n)]$.
+
+The first is surrounding a formula in FO-VAR$[t(n), r(n)/\log(n)]$ with a TC operator using variables of size $r(n)$.
+For this to contain NSPACE$[s(n)]$, we need for any formula of the form $(\text{TC}_{a, b}\varphi)(c, d)$ that there exists a quantifier block, a formula $\phi$ and some constants $\overline{e}, f, g$ such that
+\[
+    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv (\text{TC}_{a, b}\varphi)(c, d)
+\]
+We know that we can simulate any TC formula with variables of size $r(n)$ using $r(n)$ iterations of a quantifier block.
+Thus, we can rewrite the formula as
+\[
+    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv [QB_1]^{r(n)}[QB_2]^{t(n)}\phi(\overline{e}/\overline{s}, c/a, d/b)
+\]
+The two quantifier blocks can then be merged into one by additionally maintaining a counter variable of size $\log(r(n))$ so that the quantifier block acts as the first one would during the first $r(n)$ round and then acts like the other one.
+
+The other case where we write the TC formula after the quantifier block is similar, then we have
+\[
+    \left([QB]^{t(n)}\left(\text{TC}_{a, b}\phi\right)(f, g)\right)(\overline{e}/\overline{s}) \equiv (\text{TC}_{a, b}\varphi)(c, d)
+\]
+For $c \cdot r(n) > \log(t(n))$ for some fixed $c$, we can do the same counting trick.
+As a $t(n) > 2^{cr(n)}$ does not add any expressive power, we can assume that this is true.
+
+Thus, in both cases, we have a formula in FO-VAR$[r(n) + t(n), r(n)/\log(n)]$.
+Now, there are multiple cases
+\begin{description}
+    \setlength\itemsep{0.2em}
+    \item[$r(n) \leq t(n)$]  Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[t(n), r(n)/\log(n)]$.
+    This is only interesting in the case where $r(n) < s(n)$
+    \item[$r(n) > t(n)$] Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[r(n), r(n)/\log(n)]$.
+    This is again only interesting when $r(n) < s(n)$.
+\end{description}
+
+We thus get that anything interesting in this case happens only when we have less variable bits than $s(n)$.
+Using Savitch's Theorem once more, we also get that $r(n) > \sqrt{n}$.
+Another interesting result is that Savitch's Theorem can be improved for some possible results as
+\[
+    \text{FO-VAR}[t(n), r(n)/\log(n)] \subset \text{DSPACE}[t(n)r(n)]
+\]
+which would be smaller than $s(n)^2$ in some of these cases.
+The same method also means that $t(n)r(n) \geq s(n)$ because of Savitch's Theorem and the Space Hierearchy theorem (\cref{subsec:space-hierarchy-theorem}).
+As this is an open problem since 50 years, this seems to be a very difficult endeavour.
+
 \section{Restricting universal quantification}\label{sec:restricting-universal-quantification}
 
 One further approach that I attempted was restricting universal quantification in the FO-VAR formulas, which I called FO$\exists$-VAR\@.
@@ -108,13 +154,13 @@ This step was motivated by the fact that nondeterministic turing machines in ess
 A similar idea to the one in Savitchs' Theorem, guessing the middle of the path and checking both shorter sides.
 A formula in FO$\exists$-VAR$[s(n), s(n)/\log(n)]$ which is equivalent to a formula in FO-VAR$[1, s(n)/\log(n)]$ of the form $\left( TC_{\overline{X}, \overline{Y}}\varphi \right)(\overline{C}, \overline{D})$ is
 \[
-\begin{aligned}
-    QB \equiv~& (\forall b_{1}.M_{1})(\exists\overline{Z}) (\forall b_{2})(\exists \overline{A}, \overline{B}.M_{2})(\exists\overline{X}, \overline{Y}.M_{3}) \\
-    M_{1} \equiv~& \neg(\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z})) \lor \varphi(\overline{X}, \overline{Y})) \\
-    M_{2} \equiv~&(b_{2} \land \forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Z}, \overline{z}))) \lor \\
-    &(\neg b_{2} \land \forall \overline{z} (\text{BIT}(\overline{Z}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))) \\
-    M_{3} \equiv~&\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))
-\end{aligned}
+    \begin{aligned}
+        QB \equiv~& (\forall b_{1}.M_{1})(\exists\overline{Z}) (\forall b_{2})(\exists \overline{A}, \overline{B}.M_{2})(\exists\overline{X}, \overline{Y}.M_{3}) \\
+        M_{1} \equiv~& \neg(\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z})) \lor \varphi(\overline{X}, \overline{Y})) \\
+        M_{2} \equiv~&(b_{2} \land \forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Z}, \overline{z}))) \lor \\
+        &(\neg b_{2} \land \forall \overline{z} (\text{BIT}(\overline{Z}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))) \\
+        M_{3} \equiv~&\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))
+    \end{aligned}
 \]
 and finally
 \[
@@ -130,7 +176,7 @@ After this, we copy $\overline{A}$ to $\overline{X}$ and $\overline{B}$ to $\ove
 When iterating this we guess a path from $\overline{C}$ to $\overline{D}$, checking every connection between adjacent states.
 
 More generally, for any function $r(n) \leq 2^{cs(n)}$, we can define a formula in \[\text{FO$\forall, \exists$-VAR$[s(n)/\log(r(n)), \log(r(n)), s(n)r(n)/\log(n)]$}\]
-Here, we define FO$\forall, \exists$-VAR$[t(n), f(n), s(n)]$ to contain all formulas wich have $t(n)$ iterations, extended variables of $f(n)$ bits which can be existentially quantified and $s(n)\log(n)$ bit extended variables which can be used in existential quantification.
+Here, we define FO$\forall, \exists$-VAR$[t(n), f(n), s(n)]$ to contain all formulas wich have $t(n)$ iterations, extended variables of $f(n)$ bits which can be universally quantified and $s(n)\log(n)$ bit extended variables which can be used in existential quantification.
 These formulas are very similar to the one defined for FO$\exists$-VAR from above.
 The only difference lies in the splitting.
 Instead of splitting paths into two parts, we split them into $r(n)$ parts.
@@ -304,46 +350,3 @@ These results allow for enclosing the ATSR class quite with only a logarithmic o
 \[
     \text{FO-VAR}\left[ a(n), s(n)/\log n \right] \subseteq \text{ATSR}[a(n)s(n), s(n), a(n)] \subseteq \text{FO-VAR}\left[ a(n)\log(s(n)), s(n)/\log n \right]
 \]
-
-\section{Mixing iterations and transitive closure}\label{sec:mixing-iterations-and-transitive-closure}
-
-One question that came up during the process of finding a logic which is smaller than FO-VAR$[s(n), s(n)/\log(n)]$ but still captures NSPACE$[s(n)]$.
-This led to the idea of mixing up iterative procedures with the transitive closure operator.
-I will now show that this approach will not help much and any restriction done this way would be mean that there exists a restriction using only iterative procedures that also contains NSPACE$[s(n)]$.
-
-The first is surrounding a formula in FO-VAR$[t(n), r(n)/\log(n)]$ with a TC operator using variables of size $r(n)$.
-For this to contain NSPACE$[s(n)]$, we need for any formula of the form $(\text{TC}_{a, b}\varphi)(c, d)$ that there exists a quantifier block, a formula $\phi$ and some constants $\overline{e}, f, g$ such that
-\[
-    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv (\text{TC}_{a, b}\varphi)(c, d)
-\]
-We know that we can simulate any TC formula with variables of size $r(n)$ using $r(n)$ iterations of a quantifier block.
-Thus, we can rewrite the formula as
-\[
-    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv [QB_1]^{r(n)}[QB_2]^{t(n)}\phi(\overline{e}/\overline{s}, c/a, d/b)
-\]
-The two quantifier blocks can then be merged into one by additionally maintaining a counter variable of size $\log(r(n))$ so that the quantifier block acts as the first one would during the first $r(n)$ round and then acts like the other one.
-
-The other case where we write the TC formula after the quantifier block is similar, then we have
-\[
-    \left([QB]^{t(n)}\left(\text{TC}_{a, b}\phi\right)(f, g)\right)(\overline{e}/\overline{s}) \equiv (\text{TC}_{a, b}\varphi)(c, d)
-\]
-For $c \ctod r(n) > \log(t(n))$ for some fixed $c$, we can do the same counting trick.
-As a $t(n) > 2^{cr(n)}$ does not add any expressive power, we can assume that this is true.
-
-Thus, in both cases, we have a formula in FO-VAR$[r(n) + t(n), r(n)/\log(n)]$.
-Now, there are multiple cases
-\begin{description}
-    \setlength\itemsep{0.2em}
-    \item[$r(n) \leq t(n)$]  Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[t(n), r(n)/\log(n)]$.
-    This is only interesting in the case where $r(n) < s(n)$
-    \item[$r(n) > t(n)$] Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[r(n), r(n)/\log(n)]$.
-    This is again only interesting when $r(n) < s(n)$.
-\end{description}
-
-We thus get that anything interesting in this case happens only when we have less variable bits than $s(n)$.
-Using Savitch's Theorem once more, we also get that $r(n) > \sqrt{n}$.
-Another interesting result is that Savitch's Theorem can be improved for some possible results as
-\[
-    \text{FO-VAR}[t(n), r(n)/\log(n)] \subset \text{DSPACE}[t(n)r(n)]
-\]
-which would be smaller than $s(n)^2$ in some of these cases.
