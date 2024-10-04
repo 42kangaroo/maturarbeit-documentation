@@ -1,3 +1,5 @@
+%! suppress = UnresolvedReference
+%! suppress = MissingImport
 \chapter{Mathematical Context and further proofs}\label{ch:mathematical-context-and-further-proofs}
 
 \section{Formal Languages}\label{sec:formal-languages-app}
@@ -6,7 +8,7 @@
 
 The regular languages have the most restricted type of grammars.
 Formally, any regular language can be described by a grammar with rules in $V\times(\Sigma \cup \Sigma V \cup \varepsilon)$.
-This means that we only have exactly one non-terminal on the left-hand side and the right hand side is either a terminal, the empty word or a terminal symbol followed by a non-terminal symbol.
+This means that we only have exactly one non-terminal on the left-hand side and the right-hand side is either a terminal, the empty word or a terminal symbol followed by a non-terminal symbol.
 
 \begin{exmp}
     Consider the grammar $\langle \{S, O\}, \{a\}, R, S \rangle$ with
@@ -20,11 +22,11 @@ This means that we only have exactly one non-terminal on the left-hand side and 
     The generated language are exactly all words with even length.
 \end{exmp}
 
-These languages have been studied quite thoroughly and have multiple equivalent formalisms:
+The regular languages have been studied quite thoroughly and have multiple equivalent formalisms:
 \begin{itemize}
     \setlength\itemsep{0.2em}
-    \item The language is recognised by a Deterministic finite automaton, which process the input word one character at a time
-    \item The language can be decided by a read-only turing machine, that is a turing machine that can not modify it's tape
+    \item The language is recognized by a Deterministic finite automaton, which process the input word one character at a time
+    \item The language can be decided by a read-only Turing machine, that is a Turing machine that can not modify it's tape
     \item The language can be described by a regular expression
 \end{itemize}
 
@@ -34,7 +36,7 @@ For a more in-depth analysis of regular languages and equivalent formalisms refe
 
 The context-free languages extend the regular languages by allowing arbitrary right-hand sides for the rules of the defining grammar.
 Formally, that gives us rules in $V\times(\Sigma \cup V)^{*}$.
-Most valid arithmetic expressions, logical formulas and formally correct code in programming languages are context-free, as we can see the non-terminal symbols as types wich are then converted to specific expressions of that type.
+Most valid arithmetic expressions, logical formulas and formally correct code in programming languages are context-free, as we can see the non-terminal symbols as types which are then converted to specific expressions of that type.
 
 \begin{exmp}
     Consider the grammar $\langle \{\bold{Exp}, \bold{NumF}, \bold{Num}\}, \{0, 1, (, ), -, +\}, R, \bold{Exp} \rangle$ with
@@ -56,25 +58,25 @@ Most valid arithmetic expressions, logical formulas and formally correct code in
 \end{exmp}
 
 Those languages have less known formalisms, the Push-Down Automaton (again see~\cite{theory-cs}) being the most common.
-For a characterisation of the context-free languages using logic, see~\cref{subsec:des-context-free-languages}.
+For a characterization of the context-free languages using logic, see~\cref{subsec:des-context-free-languages}.
 
 \subsection{Recursive Languages}\label{subsec:recursive-languages}
 
 The recursive languages are the most general languages in the hierarchy, as they don't have any restrictions on the rules.
-It can be shown that this set of languages is equivalent to the languages recognisable by a turing machine.
+It can be shown that this set of languages is equivalent to the languages recognizable by a Turing machine.
 By the Church-Turing thesis, this means that these are exactly the languages that can be computed by any of our computers and algorithms.
 Thus, we have a huge number of equivalent formalisms, including a RAM machine, while-programs and lambda calculus.
 
 It is worth noting that there are languages which are not recursive.
-One of the most important example of these languages is the set of all (descriptions) of turing machines which halt on every input, also known as the halting problem.
-For the characterisation using logic, again refer to~\cref{subsec:des-recursive-languages}.
+One of the most important example of these languages is the set of all (descriptions) of Turing machines which halt on every input, also known as the halting problem.
+For the characterization using logic, again refer to~\cref{subsec:des-recursive-languages}.
 
 \section{Descriptive Complexity}\label{sec:descriptive-complexity-context}
 
 \subsection{Reduction and Completeness}\label{subsec:reduction}
 
 A reduction can informally be seen as a method of using a problem we already solved to solve a new problem by converting this new problem into an instance of the old problem.
-These reduction can be very useful to define complete problems for complexity classes, which in turn enable us to prove theorems for all problems of a specific complexity class.
+These reductions can be very useful to define complete problems for complexity classes, which in turn enables us to prove theorems for all problems of a specific complexity class.
 
 \begin{define}[first-order reduction]
     Let $\mathcal{C}$ be a complexity class and $A$ and $B$ be two problems over vocabularies $\sigma$ and $\tau$.
@@ -90,7 +92,7 @@ The converse can also be shown: for some problem $B$ which is not in some comple
 
 Using the reductions, we can define completeness.
 
-\begin{define}[Completness via first-order reductions for Complexity Class $\mathcal{C}$]
+\begin{define}[Completeness via first-order reductions for Complexity Class $\mathcal{C}$]
     We say some problem $A$ is complete for $\mathcal{C}$ via $\leq_{fo}$ if and only if
     \begin{itemize}
         \setlength\itemsep{0.2em}
@@ -132,7 +134,7 @@ We say that a DFA $D$ accepts a word $w \in \Sigma^{*}$ if when starting at the 
 
 In~\cite{theory-cs} and~\cite{Straubing1994} there is a proof of the following fact we will use in our proof for SOM[$+1$]:
 \begin{theorem}
-    For any alphabet $\Sigma$, there is a DFA recognising language $L \subseteq \Sigma^{*}$ if and only if it is regular.
+    For any alphabet $\Sigma$, there is a DFA recognizing language $L \subseteq \Sigma^{*}$ if and only if it is regular.
 \end{theorem}
 
 Now we can start to prove our main theorem for regular languages.
@@ -142,8 +144,8 @@ Now we can start to prove our main theorem for regular languages.
 
 \begin{proof}
     First we show that any regular language can be expressed in SOM[$+1$].
-    Let $L$ be regular, end $D_L$ be a DFA recognising the language.
-    We assume $L$ does not contain the empty word, otherwise we can recognise the language $L \setminus \{\varepsilon\}$ and then add $\varphi \lor \forall x(x \neq x)$, which adds the empty string back.
+    Let $L$ be regular, end $D_L$ be a DFA recognizing the language.
+    We assume $L$ does not contain the empty word, otherwise we can recognize the language $L \setminus \{\varepsilon\}$ and then add $\varphi \lor \forall x(x \neq x)$, which adds the empty string back.
 
     Now let $D_L$ have $k$ states.
     We can existentially quantify unary relations $X_1, \dots, X_k$ to have the meaning that $X_i(y)$ is true if and only if $D_L$ is in state $i$ after $y$ steps.
@@ -154,7 +156,7 @@ Now we can start to prove our main theorem for regular languages.
         \item[We end in an accepting state] Let $T_i$ be the set of all characters which lead from $q_i$ to an accepting state.
         Then we have
         \[
-            \varphi_2 \coloneqq \bigwedge_{i = 1}^{k}\left(X_i(\text{max}) \to \bigvee_{a \in T_i} Q_a(\text{max})\right)
+            \varphi_2 \coloneqq \bigwedge_{i = 1}^{k}\left(X_i(\max) \to \bigvee_{a \in T_i} Q_a(\max)\right)
         \]
         \item[We move according to the transition function] We have
         \begin{align*}
@@ -169,11 +171,11 @@ Now we can start to prove our main theorem for regular languages.
 
     For the other direction, we need to introduce two new concepts.
 
-    One of them is the nondeterministic finite automaton, which is analogous to the nondeterministic turing machine as it can also have multiple transitions going from the same state.
-    As with the NTM and the TM, both the DFA and the NFA have the same expressive power.
+    One of them is the nondeterministic finite automaton, which is analogous to the nondeterministic Turing machine as it can also have multiple transitions going from the same state.
+    As with the nondeterministic Turing machine and the Turing machine, both the DFA and the NFA have the same expressive power.
 
     The other concept is that of $(\mathcal{V}_1, \mathcal{V}_2)$-structures.
-    These structures are generalisations of our former vocabulary $\sigma$ as they have characters in $A \times \mathcal{P}(\mathcal{V}_1)\times \mathcal{P}(\mathcal{V}_2)$.
+    These structures are generalizations of our former vocabulary $\sigma$ as they have characters in $A \times \mathcal{P}(\mathcal{V}_1)\times \mathcal{P}(\mathcal{V}_2)$.
     These structures are useful as we can make $\mathcal{V}_1$ to be the set of free first-order variables in a formula $\varphi$ and $\mathcal{V}_2$ be the set of free second-order variables in the formula.
     If at a position $i$ in our $(\mathcal{V}_1, \mathcal{V}_2)$-structures we have $x$ in the first-order component of its character, we see this as meaning that $x = i$.
     For the second-order variables in the third component, an $X$ at position $i$ means that $X(i)$ holds.
@@ -188,11 +190,11 @@ Now we can start to prove our main theorem for regular languages.
     Then, we see that the atomic formulas can be checked, as $x = y$, $x = y + 1$ and $Q_a(x)$ are easy to check, and checking $X(x)$ is equivalent to looking if the occurrence of $x$ has $X$ in the third component.
     We always need to take the intersection with the NFA which checks if the structure is valid.
 
-    All boolean connective are also valid as regular languages are closed under complement, intersection and union as seen in~\cite{theory-cs}.
+    All boolean connectives are also valid, as regular languages are closed under complement, intersection and union as seen in~\cite{theory-cs}.
 
     The most difficult case is a formula of the form $\exists x \varphi$ (as $\forall x \varphi \equiv \neg \exists x \neg \varphi)$).
     If $\exists x \varphi$ is over $(\mathcal{V}_1, \mathcal{V}_2)$-structures, then $\varphi$ is over $(\mathcal{V}_1 \cup \{x\}, \mathcal{V}_2)$-structures.
-    By induction, we know that $\varphi$ defines a regular language and thus there is a NFA $N$ which recognises it.
+    By induction, we know that $\varphi$ defines a regular language and thus there is a NFA $N$ which recognizes it.
     For the new automaton, we duplicate our states, with the meanings ``used $x$'' and ``not used $x$''.
     If we are in a state where $x$ was used, we can not take any transition with $x$ in the second set.
     If we are in a state where $x$ was not used, we can take a transition with $x$ in the second set and go to the corresponding state with $x$ used or take a transition where $x$ is not used and go to the corresponding state where $x$ was not used.
@@ -233,7 +235,7 @@ The proof that every context-free grammar can be converted to this form can be f
             \item $S \to \alpha$ with $\alpha \in \Sigma$
             \item $X \to \alpha u \beta$ with $\alpha, \beta \in \Sigma$ and $u \in (\Sigma \cup V)^{*}$
         \end{itemize}
-        \item For all production rules with a right hand side that has at least one non-terminal we define its \emph{pattern}.
+        \item For all production rules with a right-hand side that has at least one non-terminal we define its \emph{pattern}.
         The pattern of rule $X \to v_{0}X_{1}v_{2}X_{2}\dots X_{s}v_{s}$ is defined to be $v_{0}|v_{1}|\dots|v_{s}$, where $|$ is a new symbol not in $\Sigma$
         We require that for any two rules with the same pattern, they have the same left-hand side and thus the source non-terminal can be uniquely identified by the pattern.
     \end{itemize}
@@ -245,7 +247,7 @@ If we are at a starting point of some arch $\langle k, l \rangle$, instead of ad
 
 Now, we can start with the proof of our theorem.
 \begin{proof}
-    We want to find a formula such that for all archs $\langle i, j \rangle$ in $M$, the substring from $i$ to $j$ can be derived from the non-terminal for which we have a rule with the pattern of $\langle i, j \rangle$.
+    We want to find a formula such that for all arches $\langle i, j \rangle$ in $M$, the substring from $i$ to $j$ can be derived from the non-terminal for which we have a rule with the pattern of $\langle i, j \rangle$.
 
     For this, we say that arch $\langle i, j \rangle$ \emph{corresponds} to a production rule $p$ if they have the same pattern.
     For any string $u$, we have a formula $\phi_u(i, j)$ which means that the substring from $i$ to $j$ is $u$.
@@ -275,7 +277,7 @@ Now, we can start with the proof of our theorem.
 
     Finally, with $P$ being our set of rules, we have a formula that tells us a word can be derived from the start symbol:
     \[
-        \exists M \left(\widetilde{\mathcal{X}}_S(0, \text{max}) \land \forall x, y \left(M(x, y) \to \bigvee_{p \in P} \widetilde{\mathcal{X}}_p(x, y) \right) \right)
+        \exists M \left(\widetilde{\mathcal{X}}_S(0, \max) \land \forall x, y \left(M(x, y) \to \bigvee_{p \in P} \widetilde{\mathcal{X}}_p(x, y) \right) \right)
     \]
 
     Now, by construction, if and only if a word satisfies the formula, there is a derivation from $S$ for the word, as each arch can be seen as a derivation step, which we check is valid with our formula.
@@ -295,17 +297,17 @@ Now, we can start with the proof of our theorem.
         We define the \emph{leaf alphabet} of a tree language to be the set of $0$-ary labels.
         For any tree $T$ in a tree language, we define the \emph{yield} of $T$ to be the leaf labels concatenated according to the order relation from left to right.
 
-        The vocabulary of a tree language $\mathcal{T}$ is $\tau = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \text{max} , C^2 \rangle$
+        The vocabulary of a tree language $\mathcal{T}$ is $\tau = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max , C^2 \rangle$
         In addition to the relations for each label, there is a child relation $C(i, j)$ which means ``node $i$ is a child of node $j$''.
     \end{define}
 
-    Now, we present two lemmas for recognisable tree languages and their relation to context-free languages.
+    Now, we present two lemmas for recognizable tree languages and their relation to context-free languages.
     \begin{lemma}[\cite{Mezei1967}]
-        A language $L \subseteq \Sigma^{*}$ is context free if and only if there is a recognisable tree language $T$ with leaf alphabet $\Sigma$ for which a word is in $L$ if and only if it is the yield of some tree in $T$.
+        A language $L \subseteq \Sigma^{*}$ is context free if and only if there is a recognizable tree language $T$ with leaf alphabet $\Sigma$ for which a word is in $L$ if and only if it is the yield of some tree in $T$.
     \end{lemma}
 
     \begin{lemma}[\cite{Thatcher1968}]
-        A tree language $T$ is recognisable if and only if there is a monadic second order sentence that recognises it.
+        A tree language $T$ is recognizable if and only if there is a monadic second order sentence that recognizes it.
     \end{lemma}
 
     We now present some relations that can be written in MSO on trees.
@@ -373,24 +375,24 @@ The most general case is interesting as it gives us a logical formalism for all 
 The proof relies on Diophantine sets.
 Those sets are the sets that correspond to the tuples which have a solution for some Diophantine equation.
 A Diophantine equation is a polynomial equation $P$ with a tuple $\overline{x}$ of parameters and a tuple $\overline{y}$ of variables.
-A tuple $\overline{x}$ has a solution if there exists a tuple $\overline{y}$ such that the $P(\overline{x}, \overline{y}) = 0$.
+A tuple $\overline{x}$ has a solution if there exists a tuple $\overline{y}$ such that $P(\overline{x}, \overline{y}) = 0$.
 The famous MRDP Theorem states that the Diophantine sets are exactly the computable sets.
-At the same time, this shows that Hilberts 10$^{th}$ problem is unsolvable.
+At the same time, this shows that Hilbert's 10$^{th}$ problem is unsolvable.
 A full proof of these facts can be found in~\cite{Matijasevic1996}.
 
-With this new characterisation, there is a quite straightforward characterisation of computable sets.
+With this new characterization, there is a quite straightforward characterization of computable sets.
 The logic FO$(\exists \mathbb{N})$ consists of all formulas $\phi(\overline{x}) \equiv \exists \overline{y} (\varphi(\overline{x}, \overline{y}))$ with $\varphi$ having only bounded quantifiers (of the form $\exists x < y$ or $\forall x < y$), addition, multiplication, equality, and any constant natural number~\cite{Entropy2020}.
 The existential quantifiers at the beginning are allowed to range over all the natural numbers.
 
-These formulas can define exactly the diophantine sets, as the formulas we present are exactly those that mean ``there is a tuple $\overline{y}$ of natural numbers such that some polynomial is satisfied''.
+These formulas can define exactly the Diophantine sets, as the formulas we present are exactly those that mean ``there is a tuple $\overline{y}$ of natural numbers such that some polynomial is satisfied''.
 Thus, they also define exactly all computable sets.
 
-\subsection{Open questions}\label{sec:open-questions}
+\subsection{Open questions}\label{subsec:open-questions}
 
 The domain of descriptive complexity is full of open questions as the proofs of lower bounds seems to be very difficult in most cases.
-Further, even separation between complexity classes wich seem to take an exponential amount of resources compared to another one in practice can not be shown to be different.
+Further, even separation between complexity classes which seem to take an exponential amount of resources compared to another one in practice can not be shown to be different.
 
-\subsubsection{P$\overset{?}{=}$NP}\label{subsec:pnp}
+\subsubsection{P$\overset{?}{=}$NP}\label{subsubsec:pnp}
 The P vs.~NP question is the most emblematic question in descriptive complexity theory.
 In practice, for any NP-complete problem, only exponential worst-case algorithms are known.
 This leads to the widely believed conjuncture that P $\neq$ NP\@.
@@ -401,16 +403,16 @@ It would also mean the breakdown of most of modern cryptography, which relies on
 On a conceptual level, it would mean that finding a proof to a problem is not harder than verifying its correctness, which would greatly impact the work of mathematicians.
 If a proof of the contrary would be known, this would focus the research more on the average case complexity of NP problems, but because of the continued lack of success on the question, this shift has already widely taken place.
 
-\subsubsection{NSPACE[$\mathcal{O}(n)$]$\overset{?}{=}$DSPACE[$\mathcal{O}(n)$]}\label{subsec:nspacedspace}
+\subsubsection{NSPACE[$\mathcal{O}(n)$]$\overset{?}{=}$DSPACE[$\mathcal{O}(n)$]}\label{subsubsec:nspacedspace}
 
 This problem is known under the name first Linear bounded automaton problem since its proposal by Kuroda in~\cite{Kuroda1964}, and asks if nondeterminism adds power in the context of bounded space.
-This comes from the fact that a NSPACE[$\mathcal{O}(n)$] turing machine can be seen as a TM with a linear bound on its space usage.
+This comes from the fact that a NSPACE[$\mathcal{O}(n)$] Turing machine can be seen as a Turing machine with a linear bound on its space usage.
 This theorem is of interest as we know that NSPACE[$\mathcal{O}(n)$] is equivalent to the context-sensitive languages by~\cref{subsec:des-context-sensitive-languages}.
 
 Since the proposal, there were two advances.
 One is the proof that NSPACE is closed under complement.
 The contrary would have implied $\text{NSPACE}[\mathcal{O}(n)] \neq \text{DSPACE}[\mathcal{O}(n)]$ as DSPACE is closed under complement.
 The second advance is Savitch's Theorem in~\cref{subsec:nspacesubsetdspacesquared} which already gives a bound for simulating NSPACE using DSPACE machines.
-It is not known if this theorem is optimal, that is whether the blowup by a power of 2 is optimal or if we can do better.
+It is not known if this theorem is optimal, that is whether the blow-up by a power of 2 is optimal or if we can do better.
 
-An equality would imply that the context-sensitive languages can be recognised by a deterministic linear bounded automaton, which could make recognising words in context-sensitive langauges easier and faster.
+An equality would imply that the context-sensitive languages can be recognized by a deterministic linear bounded automaton, which could make recognizing words in context-sensitive languages easier and faster.

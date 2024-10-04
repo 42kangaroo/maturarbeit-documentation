@@ -1,3 +1,4 @@
+%! suppress = UnresolvedReference
 %! suppress = MissingImport
 \chapter{Descriptive Complexity}\label{ch:descriptive-complexity}
 
@@ -8,7 +9,7 @@ In mathematics, abstraction is one of the most important tools as it enables us 
 Formal Logic takes this even further and makes it possible to abstract mathematical thought itself.
 In Computer science, we are often interested in the amount of resources needed to compute a certain function or solve a certain problem, speaking in terms of time and storage space.
 Different forms of logic have the power to describe different types of problems.
-By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean querry meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can say a corresponding logical characterisation of a problem is a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
+By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean querry meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can say a corresponding logical characterization of a problem is a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
 By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
 
 Using these results, many insights into the underlying structure of real-world problems can be made which in turn can give us better ways to deal with them.
@@ -22,7 +23,7 @@ Definition are again taken and modified from~\cite{theory-cs} and~\cite{descript
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
 
-Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume turing machines}.
+Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines}.
 Also, we do not really care about constants in the computation, and thus use a notation which omits these.
 
 \begin{define}[Big-O notation]
@@ -31,12 +32,12 @@ Also, we do not really care about constants in the computation, and thus use a n
     We say that $f \in \mathcal{O}(g)$ if there exists positive integers $n_0, c$ such that for all $n \geq n_0$ we have \[f(n) \leq c\cdot g(n)\]
 \end{define}
 
-Complexity classes can then be defined as all the problems which have a turing machine satisfying some bounds that can compute their solutions.
+Complexity classes can then be defined as all the problems which have a Turing machine satisfying some bounds that can compute their solutions.
 Now we will define some common and important complexity classes.
 
 \begin{define}
 [{DTIME[$\mathcal{O}(t)$]}]
-    We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f \in \mathcal{O}(t)$.
+    We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f \in \mathcal{O}(t)$.
 \end{define}
 
 \begin{define}[P]
@@ -45,14 +46,14 @@ Now we will define some common and important complexity classes.
 
 \begin{define}
 [{DSPACE[$\mathcal{O}(t)$]}]
-    We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f \in \mathcal{O}(t)$.
+    We say that a decision problem is in DSPACE[$\mathcal{O}(t)$] if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f \in \mathcal{O}(t)$.
 \end{define}
 
 \begin{define}[PSPACE]
     We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE[$\mathcal{O}(q)$]
 \end{define}
 
-We can go do the same for nondeterministic turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
+We can go do the same for nondeterministic Turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
 There, we always take the maximum of tape cells and steps over any computation branch.
 
 The complexity class P has a special meaning for computer scientists as these are the problems which are deemed ``feasible'' on modern computers.
@@ -88,12 +89,12 @@ This methodology can be extended to other logics by adding new moves or restrict
 
 \subsection{NSPACE[$\mathcal{O}(s(n))$] $\subseteq$ DSPACE[$\mathcal{O}(s(n)^2)$]}\label{subsec:nspacesubsetdspacesquared}
 
-This result is part of Savitch's Theorem, which introduces alternating turing machines in an intermediate step.
-These TMs are a generalisation of nondeterministic TMs, which can be seen as machine taking the ``or'' of all it's computation paths.
+This result is part of Savitch's Theorem, which introduces alternating Turing machines in an intermediate step.
+These Turing machines are a generalization of nondeterministic Turing machines, which can be seen as machine taking the ``or'' of all its computation paths.
 
 \begin{define}[Alternating Turing Machine]
-    An alternating Turing machine is a turing machine with two types of states: the existential and universal gates.
-    Now, the acceptance conditions change compared to a NTM and depends on the state we are currently in.
+    An alternating Turing machine is a Turing machine with two types of states: the existential and universal gates.
+    Now, the acceptance conditions change compared to a nondeterministic Turing machine and depends on the state we are currently in.
     If we are in an existential state, we accept if and only if \emph{at least one} of the computations leading on from this configuration is accepting.
     If we are in a universal state, we accept if and only \emph{all} the computations leading on from this configuration are accepting.
 \end{define}
@@ -105,7 +106,7 @@ We define ATIME[$\mathcal{O}(t)$] and ASPACE[$\mathcal{O}(t)$] analogously to NT
 Now we can proceed to the (quite technical) proof of Savitch's Theorem as presented in~\cite{descriptive-complexity}.
 
 \begin{theorem}[Savitch's Theorem]
-    For all space-constructible functions $t \geq \log n$ we have
+    For all space constructible functions $t \geq \log n$ we have
     \[
         \text{NSPACE}[\mathcal{O}(t)] \subseteq \text{ATIME}[\mathcal{O}(t^2)] \subseteq \text{DSPACE}[\mathcal{O}(t^2)]
     \]
@@ -113,8 +114,8 @@ Now we can proceed to the (quite technical) proof of Savitch's Theorem as presen
 
 \begin{proof}
     We start with the first inclusion, $\text{NSPACE[$\mathcal{O}(t)$]} \subseteq \text{ATIME[$\mathcal{O}(t^2)$]}$.
-    We now need to show that any NSPACE[$\mathcal{O}(t)$] turing machine can be simulated by a ATIME[$\mathcal{O}(t^2)$] alternating turing machine.
-    Let $N$ be a NSPACE[$\mathcal{O}(t)$] turing machine.
+    We now need to show that any NSPACE[$\mathcal{O}(t)$] Turing machine can be simulated by a ATIME[$\mathcal{O}(t^2)$] alternating Turing machine.
+    Let $N$ be a NSPACE[$\mathcal{O}(t)$] Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
     Now consider $G_w$, the computation graph of $N$ on input $w$.
@@ -125,7 +126,7 @@ Now we can proceed to the (quite technical) proof of Savitch's Theorem as presen
         P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
     \]
     This formula asserts that there exists a middle vertex $z$ for which there is a $2^{d - 1}$ path from $x$ to $z$ and from $z$ to $y$.
-    Using an alternating turing machine, we can evaluate the formula using an existential state to find the middle vertex $z$, and then a universal state covering both shorter paths.
+    Using an alternating Turing machine, we can evaluate the formula using an existential state to find the middle vertex $z$, and then a universal state covering both shorter paths.
 
     Now for the runtime analysis, we see that we need $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as a configuration includes the tape, which has length $\mathcal{O}(t(n))$.
     Further, we then need to evaluate some $P(d - 1, z, y)$.
@@ -170,23 +171,23 @@ From this theorem, we also get the following interesting corollary.
 
 \subsection{SPACE Hierarchy theorem}\label{subsec:space-hierarchy-theorem}
 
-The SPACE hierarchy theorem states that for both nondeterministic and deterministic space, we have problems that can be solved in some space $t(n)$, but not in less.
+The SPACE hierarchy theorem states that for both nondeterministic and deterministic space, we have problems that can be solved using $t(n)$ space, but not with any tighter space bound.
 Formally, we have
 \[
     \text{DSPACE}[o(t)] \subsetneq \text{DSPACE}[\mathcal{O}(t)]
 \]
 where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
-This holds for all space-constructible $t \geq \log n$.
+This holds for all space constructible $t \geq \log n$.
 The same holds for NSPACE\@.
 
 We will present a proof for deterministic space.
 \begin{proof}
-    The proof uses a diagonalization argument by presenting some machine $D$ that takes a turing machine $M$ and an input size in unary as input and does the opposite of $M$ if it halts.
+    The proof uses a diagonalization argument by presenting some machine $D$ that takes a Turing machine $M$ and an input size in unary as input and does the opposite of $M$ if it halts.
     We want to show that for all $M$ which run in space $f(n) \in o(t(n))$, we have an input on which $D$ and $M$ do not agree.
     This would show that the language computed by $D$ is not in DSPACE[$o(t)$], and thus the strict containment.
 
     On input $\langle M, 1^{k} \rangle$ our machine $D$ marks of $t(|\langle M, 1^{k} \rangle|)$ tape cells, which are the cells that are allowed for the computation.
-    Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a TM can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
+    Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a Turing machine can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
     Then, we simulate $M$ on input $\langle M, 1^{k} \rangle$.
     If we transcend any bound, we reject.
     For all $M$ in DSPACE[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
@@ -200,8 +201,8 @@ We will present a proof for deterministic space.
 \section{Results concerning the Chomsky hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
 Now that we have seen most of the required theory, we can start to apply it to the main theme of this work, the Chomsky hierarchy.
-For this section, we define the vocabulary on strings to be $\sigma = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \text{max} \rangle$.
-The universe consists of the numbers from $0$ to $n - 1$, we have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\text{max} = n - 1$.
+For this section, we define the vocabulary on strings to be $\sigma = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
+The universe consists of the numbers from $0$ to $n - 1$, we have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max = n - 1$.
 Again, only the results for context-sensitive languages are discussed in this section.
 Further results can be found in the context appendix under \cref{sec:descriptive-complexity-context}.
 
@@ -209,18 +210,18 @@ Further results can be found in the context appendix under \cref{sec:descriptive
 
 This is the language class that interests us most, as it has be studied less extensively then other language classes.
 Nevertheless, there are some known formalisms.
-One of them is the linear bounded nondeterministic turing machine.
+One of them is the linear bounded nondeterministic Turing machine.
 The two directions of the proof were presented separately in~\cite{Kuroda1964} and~\cite{Landweber1963}.
 
 \begin{theorem}\label{thm:nspacecontextsensitive}
-    The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic turing machine.
+    The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic Turing machine.
 \end{theorem}
 
 \begin{proof}
 
-    For the direction from grammar to turing machine, we only need to show that our turing machine can simulate a derivation backwards.
+    For the direction from grammar to Turing machine, we only need to show that our Turing machine can simulate a derivation backwards.
     We know that every context-sensitive language has a noncontracting grammar $G$.
-    Using this fact, we can construct a nondeterministic turing machine $N$ which scans the current tape and whenever it recognises a pattern of the right-hand side of a production rule in $G$, it decides whether it replaces it or not by the left-hand side of the rule.
+    Using this fact, we can construct a nondeterministic Turing machine $N$ which scans the current tape and whenever it recognizes a pattern of the right-hand side of a production rule in $G$, it decides whether it replaces it or not by the left-hand side of the rule.
     If some computation branch of $N$ ends up with only the start symbol of $G$ on the tape, we accept.
     Essentially, $N$ simulates a derivation of $w$ from the start symbol backwards.
     Because we try all possibilities by nondeterminism, we know that if $N$ does not accept $w$, there is no derivation ending in $w$ from the start symbol of $G$.
@@ -231,7 +232,7 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
     The other direction works by explicitly defining a grammar which simulates any linear bounded automaton backwards.
     Without loss of generality, we include an end marker $\#$.
 
-    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a NSPACE[$\mathcal{O}(n)$] turing machine.
+    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a NSPACE[$\mathcal{O}(n)$] Turing machine.
     Then, we construct a grammar $G = \langle V, \Sigma, P, S \rangle$ with $V = \bigcup_{q_i \in Q} \bigcup_{a_j \in \Gamma} \{b_{q_i, a_j}\} \cup \{S, L, R, \#\} \cup \bigcup_{a_w \in \Gamma \setminus \Sigma} \{a_w\}$.
     The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition we also have the start state, the end marker and some utility non-terminals.
 
@@ -240,15 +241,15 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
         \setlength\itemsep{0.2em}
         \item For each $a_i \in \Gamma$, we add a rule $S \to Lb_{q_{accept}, a_i}R$ to $P$.
         These rules mean that we are in a final accept state.
-        To extend the final tape, we add again for each $a_i \in \Gamma$ rules $L \to La_i$, $L \to \#$, $R \to a_{i}R$ and $R \to \#$ to our rule set.
+        To extend the final tape, we add again for each $a_i \in \Gamma$ the rules $L \to La_i$, $L \to \#$, $R \to a_{i}R$ and $R \to \#$ to our rule set.
         These rules allow derivations from $S$ to an end tape of the form $\#a_{i_1}\dots b_{q_{accept}, a_{i_j}}\dots a_{i_k}\#$.
         \item For each rule $\langle a_k, q_l, L \rangle \in \delta(q_i, a_j)$, we add rule $b_{a_w, q_l}a_k \to a_{w}b_{a_j, q_i}$ for every $a_w \in \Gamma$.
         Similarly, for each rule $\langle a_k, q_l, R \rangle \in \delta(q_i, a_j)$, we add rule $a_{k}b_{a_w, q_l} \to b_{a_j, q_i}a_{w}$ for every $a_w \in \Gamma$.
-        We can clearly see that these rules simulate the NTM backwards.
+        We can clearly see that these rules simulate the nondeterministic Turing machine backwards.
         \item For the start, we include $\#b_{a_i, q_0} \to \#a_i$ for all $a_i \in \Sigma$
         This rule allows us to say that we are at the start of our computation and ``remove'' the read-write head to get our initial input word.
     \end{itemize}
-    As for any word in $G$ we can follow back the derivation to an accept state, we have that both $N$ and $G$ define the same language.
+    As for any word in $G$ we can follow back the derivation to an accepting state, we have that both $N$ and $G$ define the same language.
 
     Thus, we are done and have proven the equivalence of context-sensitive languages and linear bounded automata.
 \end{proof}
@@ -261,7 +262,7 @@ For this, we first define the transitive closure of a formula.
     Let $\phi\left(\overset{k}{a}, \overset{k}{b}\right)$ be a formula with $2k$ free variables.
     We can see this formula as an edge relation over the graph with vertices $\overset{k}{c}$.
     Then, the transitive closure of the formula $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$ is true if and only if there is a path in the $\overset{k}{c}$ graph from $\overset{k}{u}$ to $\overset{k}{v}$ using edges from $\phi$.
-    Equivalently, we can also define it to be the minimal relation such that if $R(x, y)$ and $R(y, z)$, the $R(x, z)$.
+    Equivalently, we can also define it to be the minimal relation such that if $R(x, y)$ and $R(y, z)$, then $R(x, z)$.
 \end{define}
 
 \begin{theorem}\label{thm:contextsensitveMSOTC}
@@ -272,18 +273,19 @@ For this, we first define the transitive closure of a formula.
     We use~\cref{thm:nspacecontextsensitive} and show the equivalence of MSO(TC) and NSPACE[$\mathcal{O}(n)$] Turing machines.
     Then the theorem will follow immediately.
 
-    First, we show that any formula in MSO(TC) can be evaluated by NSPACE[$\mathcal{O}(n)$] turing machine.
+    First, we show that any formula in MSO(TC) can be evaluated by NSPACE[$\mathcal{O}(n)$] Turing machine.
     The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
-    So, for any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertice.
+    So, for any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertex.
     Then, we can check if the transition is valid by evaluating phi.
     We can repeat this process until we reach $\overset{k}{v}$.
-    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that there is also a NSPACE[$\mathcal{O}(n)$] turing machine that computes any formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
-    The other parts of the formula can be evaluated easily in linear space as we just need to write down relations when quantifying and otherwise remember in which part of the constant-size formula we are actually.
+    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that there is also a NSPACE[$\mathcal{O}(n)$] Turing machine that computes any formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
+    The other parts of the formula can be evaluated easily in linear space as we just need to write down relations when quantifying and otherwise remember in which part of the constant-size formula we are at this moment.
 
     \vspace{5mm}
 
     For the other direction, consider a NSPACE[$\mathcal{O}(n)$] Machine $N$.
     As in the previous proof with the grammars, we enrich our logic with new symbols $b_{a_i, q_i}$ for all pairs of states and symbols, which means that we add a relation $Q_{b}$ for all such $b$ to our vocabulary.
+
 
     Now consider a tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$.
     This tuple completely represents an instantaneous configuration of the tape and the machine.
@@ -298,7 +300,7 @@ For this, we first define the transitive closure of a formula.
     The first line asserts that apart from the indices where the head is and thus where we change something, the tape stays unchanged.
     The second line tells us that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
 
-    Now, we can take the transitive closure over $\varphi$, starting with the input relations, and ending at an accept position.
+    Now, we can take the transitive closure over $\varphi$, starting with the input relations, and ending at an accepting position.
     Without loss of generality we can assume that $N$ clears its tape after accepting, so the end position is unique.
     Now, our formula of the transitive closure over $\varphi$ holds if and only if there is an accepting path in $N$ starting at the input word $w$.
 
@@ -314,7 +316,7 @@ An interesting normal form for MSO(TC) can be derived from the proof.
 \end{corollary}
 
 \begin{proof}
-    We have given an explicit way to convert any formula into a turing machine and back in \cref{thm:contextsensitveMSOTC}.
+    We have given an explicit way to convert any formula into a Turing machine and back in \cref{thm:contextsensitveMSOTC}.
     By construction this always gives us a formula of the required form.
 \end{proof}
 

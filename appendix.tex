@@ -1,3 +1,4 @@
+%! suppress = UnresolvedReference
 \chapter{Mathematical Background}\label{ch:mathematical-background}
 
 The definitions are taken from the lectures Discrete Mathematics in Computer Science~\cite{discrete-maths} and Theory of Computer Science~\cite{theory-cs} and also from the book Descriptive Complexity~\cite{descriptive-complexity}.
@@ -12,7 +13,7 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
         \item[Union] denoted as $\cup$, an element is in $A \cup B$ if and only if it is in $A$ or $B$
         \item[Intersection] denoted as $\cap$, an element is in $A \cap B$ if and only if it is in $A$ and $B$
         \item[Cartesian product] denoted as $\times$, $A \times B$ is the set of tuples with an element of $A$ and an element of $B$
-        \item[Cartesian power] $A^k$ denotes the cartesian product of $A$ with itself repeated $k$ times
+        \item[Cartesian power] $A^k$ denotes the Cartesian product of $A$ with itself repeated $k$ times
         \item[Power set] denoted as $\mathcal{P}(A)$ contains all subsets of $A$
     \end{description}
 \end{description}
@@ -23,29 +24,33 @@ We abbreviate first order logic as FO\@.
 \begin{description}
     \item[Variable] A variable is an element that can have a value from a set
     \item[Universe] The set over which variables and constants can range
-    \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables. In this work we always consider equality($=$), an ordering relation $\leq$, and $BIT(x, y)$, which means that the $y^{th}$ bit of $x$ is set in binary notation, to exist.
+    \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables.
+    In this work we always consider equality($=$), an ordering relation $\leq$, and $BIT(x, y)$, which means that the $y^{th}$ bit of $x$ is set in binary notation, to exist.
     \item[Vocabulary] A tuple $\tau = \langle R_1^{a_1}, \dots, R_r^{a_r}, c_1, \dots, c_s \rangle$ of relations $R_i$ with arity $a_i$ and constants $c_j$ (We omit functions as they can be simulated by a relation in our case)
-    \item[Structure] A tuple $\mathcal{A} = \langle |\mathcal{A}|, R_1^{\mathcal{A}}, \dots, R_r^{\mathcal{A}}, c_1^{\mathcal{A}}, \dots, c_s^{\mathcal{A}} \rangle$ where $|\mathcal{A}|$ is the universe, the constants are assigned a value from $|\mathcal{A}|$ and the truth of the relations have a truth value for each $a_i$-tuple from $|\mathcal{A}|^{a_i}$. The set of all Structures for a given universe is denoted as $STRUCT[\tau]$
+    \item[Structure] A tuple $\mathcal{A} = \langle |\mathcal{A}|, R_1^{\mathcal{A}}, \dots, R_r^{\mathcal{A}}, c_1^{\mathcal{A}}, \dots, c_s^{\mathcal{A}} \rangle$ where $|\mathcal{A}|$ is the universe, the constants are assigned a value from $|\mathcal{A}|$ and the truth of the relations have a truth value for each $a_i$-tuple from $|\mathcal{A}|^{a_i}$.
+    The set of all Structures for a given universe is denoted as $STRUCT[\tau]$
     \item[First Order Formula] A first order formula is inductively defined as follows:
     \begin{description}
         \item[Atoms] Any formula of the form $R(x_1, \dots, x_k)$ for some relation of arity $k$ is called an atomic formula
-        \item[conjuction] If $\varphi$ and $\psi$ are formulas, $(\varphi \land \psi)$ is a formula
-        \item[disjuction] If $\varphi$ and $\psi$ are formulas, $(\varphi \lor \psi)$ is a formula
+        \item[conjunction] If $\varphi$ and $\psi$ are formulas, $(\varphi \land \psi)$ is a formula
+        \item[disjunction] If $\varphi$ and $\psi$ are formulas, $(\varphi \lor \psi)$ is a formula
         \item[negation] If $\varphi$ is a formula, $\lnot \varphi$ is a formula
-        \item[Existencial Quantification] If $\varphi$ is a formula, $\exists x \varphi$ is a formula
+        \item[Existential Quantification] If $\varphi$ is a formula, $\exists x \varphi$ is a formula
         \item[Universal Quantification] If $\varphi$ is a formula, $\forall x \varphi$ is a formula
     \end{description}
-    \item[Semantics] For any structure, we can assign a truth value to any formula (by assigning values from the universe to free variables if they exist in the formula). We say $\mathcal{A}$ satisfies $\phi$ (where $\phi$ is taken over the vocabulary of $\mathcal{A}$), denoted $\mathcal{A} \models \phi$ if and only if $\phi$ is true under the interpretation of the constant and relations of $\mathcal{A}$. This is inductively defined as follows:
+    \item[Semantics] For any structure, we can assign a truth value to any formula (by assigning values from the universe to free variables if they exist in the formula).
+    We say $\mathcal{A}$ satisfies $\phi$ (where $\phi$ is taken over the vocabulary of $\mathcal{A}$), denoted $\mathcal{A} \models \phi$ if and only if $\phi$ is true under the interpretation of the constant and relations of $\mathcal{A}$.
+    This is inductively defined as follows:
     \begin{description}
         \item[Atoms] For a formula $\phi$ of the form $R(x_1, \dots, x_k)$, we have $\mathcal{A} \models \phi$ if and only if the interpretation of the relation maps $\langle x_1, \dots, x_k \rangle$ to true
-        \item[conjuction] We have $\mathcal{A} \models (\varphi \land \psi)$ if and only if $\mathcal{A} \models \varphi$ and $\mathcal{A} \models \psi$
-        \item[disjuction]  We have $\mathcal{A} \models (\varphi \lor \psi)$ if and only if $\mathcal{A} \models \varphi$ or $\mathcal{A} \models \psi$
+        \item[conjunction] We have $\mathcal{A} \models (\varphi \land \psi)$ if and only if $\mathcal{A} \models \varphi$ and $\mathcal{A} \models \psi$
+        \item[disjunction]  We have $\mathcal{A} \models (\varphi \lor \psi)$ if and only if $\mathcal{A} \models \varphi$ or $\mathcal{A} \models \psi$
         \item[negation] We have $\mathcal{A} \models \lnot \varphi$ if and only if $\mathcal{A} \not\models \varphi$
-        \item[Existencial Quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y)$ (where $\varphi(y)$ denotes $\varphi$ with any occurrence of $x$ replaced with the element $y$)
+        \item[Existential Quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y)$ (where $\varphi(y)$ denotes $\varphi$ with any occurrence of $x$ replaced with the element $y$)
         \item[Universal Quantification] We have $\mathcal{A} \models \forall x\varphi$ if and only if for all $y \in |\mathcal{A}|$ we have $\mathcal{A} \models \varphi(y)$
     \end{description}
     \item[Free variables] A variable is called free if there is an occurrence of it which is not bound by a quantifier whose scope surrounds it
-    \item[First-Order Querries] A first order query is a map from structures over one vocabulary $\sigma$ to structures from another vocabulary $\tau$.
+    \item[First-Order Queries] A first order query is a map from structures over one vocabulary $\sigma$ to structures from another vocabulary $\tau$.
     The mapping is done in such a way that we have first-order formulas for the universe (which is a subset of $|\mathcal{A}|^k$ for some $k$), the relation symbols and all the constants.
     For a more formally thorough definition see~\cite{descriptive-complexity}
     \item[Isomorphism] An isomorphism is a map $i: |\mathcal{A}| \to |\mathcal{B}|$ with $\mathcal{A}, \mathcal{B}$ over the same vocabulary which satisfies the following properties:
@@ -60,40 +65,49 @@ We abbreviate first order logic as FO\@.
 
 
 \section{Second Order Logic}\label{sec:second-order-logic}
-In second order logic, we extend the capabilities of first order logic with the ability to quantify over relations. We thus also need to extend our definitions. We abbreviate second order logic as SO\@.
+In second order logic, we extend the capabilities of first order logic with the ability to quantify over relations.
+We thus also need to extend our definitions.
+We abbreviate second order logic as SO\@.
 \begin{description}
     \item[SO variables] A relation that is not given in the vocabulary and can be substituted with a specific interpretation
     \item[SO formula] In addition to the inductive rules from the FO formulas, we can quantify over second order formulas
     \begin{description}
-        \item[SO Existencial Quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
+        \item[SO Existential Quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
         \item[SO Universal Quantification] If $\varphi$ is a formula, then $\forall V\varphi$ is a formula
     \end{description}
     \item[SO Semantics] Here we also need to extend the FO semantics
     \begin{description}
-        \item[SO Existencial Quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U)$ (where $\varphi(U)$ denotes $\varphi$ with any occurrence of $V$ replaced with $U$)
+        \item[SO Existential Quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U)$ (where $\varphi(U)$ denotes $\varphi$ with any occurrence of $V$ replaced with $U$)
         \item[SO Universal Quantification] We have $\mathcal{A} \models \forall V\varphi$ if and only if for all relations $U$ over $|\mathcal{A}|$ we have $\mathcal{A} \models \varphi(U)$
     \end{description}
 \end{description}
 
 
 \section{Turing Machines}\label{sec:turing-machines}
-Turing machines are the most common model of computation. We abbreviate Turing Machines as TM
+Turing machines are the most common model of computation.
 \begin{description}
-    \item[Informal definition] A turing machine is an automaton with a finite number of states and an infinite tape. Using a read/write head, which can read one symbol on the tape, modify one symbol on the tape and move left and right, a Turing Machine can compute functions
+    \item[Informal definition] A Turing machine is an automaton with a finite number of states and an infinite tape. Using a read/write head, which can read one symbol on the tape, modify one symbol on the tape and move left and right, a Turing Machine can compute functions
     \item[Formal definition] Formally, a Turing machine is a 7-tuple $M = \langle  Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}\rangle$, where
     \begin{description}
         \item[$Q$] is the set of states
         \item[$\Sigma$] is the set representing the symbols of which the input word on the tape can consist
         \item[$\Gamma$] is the set of symbols which can be written or read on the tape
-        \item[$\delta$] is the transition function, with $\delta : \Gamma \times Q \to \Gamma \times Q \times \{L, R\}$. So when a TM is in state $n$ and reads $a$ on the tape, $\delta$ tells us to which state we should transition, which symbol we should write and which direction we should move the read/write head
+        \item[$\delta$] is the transition function, with $\delta : \Gamma \times Q \to \Gamma \times Q \times \{L, R\}$.
+        So when a Turing machine is in state $n$ and reads $a$ on the tape, $\delta$ tells us to which state we should transition, which symbol we should write and which direction we should move the read/write head
         \item[$q_0$] the start state
-        \item[$q_{accept}$] the accept state
+        \item[$q_{accept}$] the accepting state
         \item[$q_{reject}$] the reject state
     \end{description}
-    \item[Turing computation] At the beginning, the TM is in the start state, the input is written in a consecutive way on the tape and the read/write head is on the first character of the input word. In consecutive steps, the machine state then changes according to the transition function. If at some point the machine enters the accept or the reject state, the computation halts, and the TM is said to have accepted / rejected the input. In this work we will ignore the tape content after the computation and focus on decision problems.
-    \item[Decidability] If a TM halts on all inputs, we say that it decides a problem, as we can always be sure that the machine will accept or reject an input in finite time.
-    \item[Nondetermenistic TM (NTM)] We can extend the transition function $\delta$ to allow multiple transitions from a given state. Formally, we then have $\delta : \Gamma \times Q \to \mathcal{P}(\Gamma \times Q \times \{L, R\})$. If there exists any computational path which leads to an accept state, the NTM accepts. This is not analog to how real sequential computers work, but allows interesting results, and is as powerful as a normal deterministic TM\@.
-    \item[Space/Time-Constructible functions] A function $f(n)$ is time constructible if there exists a TM which on input $1^{n}$ writes $f(n)$ in binary on its tape in time $f(n)$.
+    \item[Turing computation] At the beginning, the Turing machine is in the start state, the input is written in a consecutive way on the tape and the read/write head is on the first character of the input word.
+    In consecutive steps, the machine state then changes according to the transition function.
+    If at some point the machine enters the accepting or the rejecting state, the computation halts, and the Turing machine is said to have accepted / rejected the input.
+    In this work we will ignore the tape content after the computation and focus on decision problems.
+    \item[Decidability] If a Turing machine halts on all inputs, we say that it decides a problem, as we can always be sure that the machine will accept or reject an input in finite time.
+    \item[Nondeterministic Turing machine] We can extend the transition function $\delta$ to allow multiple transitions from a given state.
+    Formally, we then have $\delta : \Gamma \times Q \to \mathcal{P}(\Gamma \times Q \times \{L, R\})$.
+    If there exists any computational path which leads to an accepting state, the nondeterministic Turing machine accepts.
+    This is not analogous to how real sequential computers work, but allows interesting results, and is as powerful as a normal deterministic Turing machine.
+    \item[Space/Time-Constructible functions] A function $f(n)$ is time constructible if there exists a Turing machine which on input $1^{n}$ writes $f(n)$ in binary on its tape in time $f(n)$.
     Space-constructible are analogous.
     \item[Church-Turing Thesis] According to the Church-Turing Thesis, this formalism is equivalent to what any computer can compute.
 \end{description}

@@ -1,24 +1,26 @@
+%! suppress = UnresolvedReference
+%! suppress = MissingImport
 \chapter{Conclusion and Direction}\label{ch:conclusion-and-direction}
 
 \section{Conclusion}\label{sec:conclusion}
 In this work, we investigated multiple logics in relation to Savitch's Theorem.
-This has led us to have a better notion of how all these logics are related to NSPACE$[s(n)]$ and thus also to linear-bounded automata and context-sensitive langauges.
+This has led us to have a better notion of how all these logics are related to NSPACE$[s(n)]$ and thus also to linear-bounded automata and context-sensitive languages.
 
-In the beginning, we introduced the theory of formal languages and the chomsky hierarchy.
+In the beginning, we introduced the theory of formal languages and the Chomsky hierarchy.
 Afterward, the main tools of descriptive complexity, including complexity theory and Ehrenfeucht-Fraïssé Games where presented.
 Savitch's Theorem is the next proof included in this work which is then present throughout the work.
 Then, the equivalence between context-sensitive languages and linear bounded automata is shown, giving a framework for what comes next.
 
 Personally, I investigated multiple ideas I got during the time I read the theory.
 
-The first one was a direct transformation of the results of connections between second order transitive closure logic and nondeterministic space turing machines to first order logic.
-This approach does not contain any new insights, but is a good showcase of the close corelation between first- and second-order logic.
+The first one was a direct transformation of the results of connections between second order transitive closure logic and nondeterministic space Turing machines to first order logic.
+This approach does not contain any new insights, but is a good showcase of the close correlation between first- and second-order logic.
 
 After this, I wanted to explicitly prove that some methods could not work.
 This branch of the work started with the investigation of the proof that DSPACE is equivalent to VAR$[k + 1]$.
 There, I showed that naively applying this method gives wrong results, and that a natural extension by remembering decisions is suboptimal.
-A full proof was impossible to make as it is unclear how to generalise this direction of work.
-The difficulty of this problem is again illustrated by Savitch's Theorem, which has not been improved for a long time and thus makes it seem unlikely that a simulation of NSPACE machines with nonquandratic DSPACE machines is possible.
+A full proof was impossible to make as it is unclear how to generalize this direction of work.
+The difficulty of this problem is again illustrated by Savitch's Theorem, which has not been improved for a long time and thus makes it seem unlikely that a simulation of NSPACE machines with subquadratic DSPACE machines is possible.
 
 The next method I tried was mixing transitive closure logic with iterative logic.
 This turned out to be not very powerful, as any interesting result in one of the mixed logics would imply one in pure iterative logic.
@@ -26,11 +28,11 @@ Nevertheless, some upper and lower bounds were shown using Savitch's Theorem and
 
 In an attempt to make FO-VAR less powerful, I then considered restricting universal quantification.
 A new formula made this possible, but also for this restriction, I was unable to find a way to simulate it using the transitive closure.
-The generalisation of this idea by adding more bits to the extended variables and decreasing the iteration count gives an interesting space-time tradeoff, but does not solve the inherent problem of simulating this formula by NSPACE machines.
+The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gives an interesting space-time tradeoff, but does not solve the inherent problem of simulating this formula by NSPACE machines.
 
 The most complicated result I was able to get does not really have any connection to context-sensitive languages at all.
-It concerns the simulation of alternating turing machines using FO-VAR\@.
-There a quite tight containment could be found which bounds some alternating turing machine class from above and below by a factor of only $\log(s(n))$.
+It concerns the simulation of alternating Turing machines using FO-VAR\@.
+There a quite tight containment could be found which bounds some alternating Turing machine class from above and below by a factor of only $\log(s(n))$.
 This result involved the combination of different techniques used in the results described above.
 This result could lead onto a path to describe alternating space-time classes exactly using logic.
 
@@ -48,13 +50,13 @@ During the months that followed, I tried multiple directions and read a lot of p
 Quite soon, Ms. Sprunger and I discussed that starting to write the theoretical part of the project would be good so that I would not have too much stress in the end.
 I did this during the summer break, experiencing some difficulties in the simplification of the proofs enough while still maintaining there correctness.
 Afterward, I continued doing research.
-Two months before handing in, the international olympiad in informatics took place.
+Two months before handing in, the International Olympiad in Informatics took place.
 My time plan did not account for this very well, so I had to work quite a lot in the last two weeks to write down what I had done.
 
 Overall, I think that there are three main points which could be improved:
 \begin{itemize}
     \setlength\itemsep{0.2em}
-    \item First of all, I often feel that my proofs are not explained in a way that is clear and concise.
+    \item First, I often feel that my proofs are not explained in a way that is clear and concise.
     This makes it difficult for the reader to follow the arguments and understand the underlying thought process.
     \item Another point is the methods of research.
     I found it difficult to find any resources on this matter for the highly abstract field of mathematics.
@@ -67,21 +69,21 @@ Overall, I think that there are three main points which could be improved:
 In the future, multiple topics could be investigated further to get an even deeper understanding on what happens in Savitch's Theorem.
 
 In all proofs concerning equivalences between transitive closure logics and NSPACE$[s(n)]$, we assumed that $s(n)$ is at most polynomial.
-This is still a quite profound limitation, and no characterisation for superpolynomial bounds is known to me.
-Finding a generalisation could lead to new insights that would help in the polynomial case and in the end to the case where $s(n) = n$ and we have exactly the context-sensitive languages.
+This is still a quite profound limitation, and no characterization for superpolynomial bounds is known to me.
+Finding a generalization could lead to new insights that would help in the polynomial case, and in the end to the case where $s(n) = n$ and we have exactly the context-sensitive languages.
 
 In the context of Savitch's Theorem, it is interesting to investigate the computation graphs of NSPACE and DSPACE machines.
-This has been discussed on the theoretical computer science stack exchange in \cite{Barak2010}.
+This has been discussed on the theoretical computer science stack exchange in~\cite{Barak2010}.
 A motivation for this is that the number of nodes in both graphs are the same, only the number of edges vary.
 
 Another direction that could be investigated is looking at normal forms.
-One that seems to have some potential is the Kuroda Normal Form described in \cite{Kuroda1964}.
+One that seems to have some potential is the Kuroda Normal Form described in~\cite{Kuroda1964}.
 This approach could yield a semantic restriction similar to the one for context-free languages described in \cref{subsec:des-context-free-languages}.
 
-After showing that mixing TC and iterative procedures does not give any strong characterisations in \cref{sec:mixing-iterations-and-transitive-closure} and seeing that all interesting cases happen when the extended variables have less than $s(n)$ bits, one direction that took up most of the time and yielded very little results came up.
+After showing that mixing TC and iterative procedures does not give any strong characterizations in \cref{sec:mixing-iterations-and-transitive-closure} and seeing that all interesting cases happen when the extended variables have less than $s(n)$ bits, one direction that took up most of the time and yielded very little results came up.
 A very interesting result would have been to show that any iterative formula simulating a TC computation needs to have at least variables of the same size, as this would have shown that the path of investigating any logic which is a subset of these logics.
-To do this I read multiple papers concerning hierarchies over the transitive closure, Generalised quantifiers and alternating space-time.
-One of the most interesting of these is "A double arity hierarchy theorem for transitive closure logic" \cite{Grohe1996} which combines both and shows strict hierarchies on unordered graphs.
-The main problem with these approaches is that they can not be generalised to include string structures, which are inherently ordered.
-This makes it impossible to connect them to turing machines which work with these structures.
-Some steps in this direction were made in the chapter about proving lower bounds in \cite{descriptive-complexity}.
+To do this I read multiple papers concerning hierarchies over the transitive closure, Generalized quantifiers and alternating space-time.
+One of the most interesting of these is ``A double arity hierarchy theorem for transitive closure logic''~\cite{Grohe1996} which combines both and shows strict hierarchies on unordered graphs.
+The main problem with these approaches is that they can not be generalized to include string structures, which are inherently ordered.
+This makes it impossible to connect them to Turing machines which work with these structures.
+Some steps in this direction were made in the chapter about proving lower bounds in~\cite{descriptive-complexity}.

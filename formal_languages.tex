@@ -1,3 +1,4 @@
+%! suppress = UnresolvedReference
 %! suppress = MissingImport
 \chapter{Formal Languages}\label{ch:formal-languages}
 
@@ -5,7 +6,7 @@
 \section{Definition}\label{sec:definition}
 
 In informatics, we often get an input as a string of characters, and want to compute some function on it.
-In complexity Theory, we mostly focus on decision problems where we only want to find out if some input fulfills some given property.
+In complexity Theory, we mostly focus on decision problems where we only want to find out if some input fulfils some given property.
 To formalize this, there is the concept of formal languages.
 The following definitions are taken from the lecture Theory of Computer Science~\cite{theory-cs}.
 For the mathematical background, refer to \autoref{ch:mathematical-background}.
@@ -78,7 +79,7 @@ To generate the words, we have the concept of derivations.
 
 Now that we have a tool to describe some infinite languages using a finite description, we can further differentiate the complexity of a language by the minimum required complexity of the rules in any grammar that describes the language.
 In the main section, we will only present the context-sensitive languages as they are important for the personal contribution.
-In the context appendix explanations for regular languages (\cref{subsec:regular-languages}), context-free langauges (\cref{subsec:context-free-languages}) and recursive languages (\cref{subsec:recursive-languages}) are provided.
+In the context appendix explanations for regular languages (\cref{subsec:regular-languages}), context-free languages (\cref{subsec:context-free-languages}) and recursive languages (\cref{subsec:recursive-languages}) are provided.
 
 \subsection{Context-Sensitive Languages}\label{subsec:context-sensitive-languages}
 
@@ -87,7 +88,7 @@ The most important category of languages for this work have multiple restriction
 One restriction is that all rules are of the form $\alpha\beta\gamma \to \alpha\varphi\gamma$ with $\alpha, \gamma \in (\Sigma \cup V)^{*}$, $\beta \in V$ and $\varphi \in (\Sigma \cup V)^{+}$.
 Additionally, if $S$ is the start variable and never occurs on the right-hand side of any rule, we may include $S \to \varepsilon$.
 
-Equivalently, we can have all grammars with $u \leq v$ for any rule $u \to v$, in addition to the special case with the start variable mentioned above.
+Equivalently, we can have all grammars with $|u| \leq |v|$ for any rule $u \to v$, in addition to the special case with the start variable mentioned above.
 These grammars are called noncontracting.
 
 The last, most useful form for proofs is the Kuroda normal form~\cite{Pettorossi2022}, where all rules have one of the following forms:

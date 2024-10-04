@@ -1,16 +1,17 @@
+%! suppress = UnresolvedReference
 %! suppress = MissingImport
 \chapter{Personal Contribution}\label{ch:personal-contribution}
 
 In this chapter, multiple tries at searches for new first order logics and other related concepts are presented.
 The range of success as well as the range of the concrete themes are broad.
-I did not find a fundamentally new result about the characterisation of context-sensitive languages using first order logic, but managed to prove that various approaches could not work.
+I did not find a fundamentally new result about the characterization of context-sensitive languages using first order logic, but managed to prove that various approaches could not work.
 Further, I also lowered some upper bounds for simulating alternating Turing machines using iterative logic.
 Using a restricted form of iterative logic, I could lower the bounds for an iterative simulation of a nondeterministic Turing Machine.
 
 \section{Direct Transformation}\label{sec:direct-transformation}
 
 Similar to Immerman in~\cite{descriptive-complexity}, we will use extended variables to model second order variables in first order logic.
-This will then directly give us a characterisation of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second order logic.
+This will then directly give us a characterization of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second order logic.
 
 \begin{define}[Extended Variable]
     The logic FO-VAR$[1, s(n)]$ has two types of variables.
@@ -42,14 +43,14 @@ As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) =
     By induction, we then have that all formulas in either of the logics has an equivalent formula in the other logic.
 \end{proof}
 
-Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterisation in first order logic.
+Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterization in first order logic.
 
 
 \section{Analogues to Proof for DSPACE}\label{sec:analogues-to-proof-for-dspace}
 
-For DSPACE$[s(n)]$, there are multiple other characterisations in logic without using the transitive closure operator.
+For DSPACE$[s(n)]$, there are multiple other characterizations in logic without using the transitive closure operator.
 
-To understand the following, we first need to define the logic FO$[t(n)]$, which formalises iterative definitions, and then VAR$[k]$ which restricts the number of variable but allows for unbounded FO iterations.
+To understand the following, we first need to define the logic FO$[t(n)]$, which formalizes iterative definitions, and then VAR$[k]$ which restricts the number of variable but allows for unbounded FO iterations.
 
 \begin{define}[{FO$[t(n)]$}]
     Let $Q_1, \dots, Q_n$ be a series of quantifiers, $s_1, \dots, s_n$ variables and $M_1 \dots, M_n$ be quantifier-free formulas.
@@ -81,22 +82,22 @@ For DSPACE, we then have
     \text{DSPACE}[n^k] = \text{VAR}[k + 1]
 \]
 A proof of this can be found in~\cite{descriptive-complexity}.
-In the main part of the proof, a construction is made to simulate a DSPACE turing machine using VAR$[k + 1]$.
+In the main part of the proof, a construction is made to simulate a DSPACE Turing machine using VAR$[k + 1]$.
 There, the relation $C_{t}(\overline{x}, \overline{b})$ is inductively defined to mean that at time $t$, the character on the tape at position $\overline{x}$ is the one coded by $\overline{b}$, where $\overline{b}$ is a tuple of boolean variables.
-Because the turing machine we are contemplating is deterministic, this character is uniquely determined.
+Because the Turing machine we are contemplating is deterministic, this character is uniquely determined.
 Further, it only depends on the previous characters at positions $\overline{x} - 1, \overline{x}$ and $\overline{x} + 1$, as we include the head position and state in the characters.
 So this makes it possible for every position to go back in time and find out if we get to an ending state after $n^k$ steps.
 
-If we want to extend this to nondeterministic turing machines using $C_{t}(\overline{x}, \overline{b}) \equiv $ the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
-As we don't have the guarantee that the computation is deterministic, we can not say anymore that we depend on the $C_{t - 1}(\overline{x}, \overline{b})$ only.
+If we want to extend this to nondeterministic Turing machines using $C_{t}(\overline{x}, \overline{b}) \equiv $ the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
+As we don't have the guarantee that the computation is deterministic, we can not say any more that we depend on the $C_{t - 1}(\overline{x}, \overline{b})$ only.
 Doing this would mean that impossible states could be reached, and thus we would have false positives.
 One way to fix this is by remembering the nondeterministic choices we made in the previous steps.
 In the worst case, this would take $\mathcal{O}(2^{cn^k})$ additional bits.
-But we already know by Savitchs' Theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for DSPACE that we only need $n \cdot (k + 2)$ bits to represent a NSPACE$[n^k]$ computation.
+But we already know by Savitch's Theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for DSPACE that we only need $n \cdot (k + 2)$ bits to represent a NSPACE$[n^k]$ computation.
 
-More generally, any proof which would show that NSPACE$[n^k]$ can be expressed in VAR$[r(n)]$, where VAR$[r(n)]$ is the generalisation of VAR$[k]$ which means that a total of $r(n) + \mathcal{O}(1)$ bits are allowed, with $n \cdot (k + 1) \leq r(n) < n \cdot (k + 2)$ would be an improvement on Savitchs' theorem.
+More generally, any proof which would show that NSPACE$[n^k]$ can be expressed in VAR$[r(n)]$, where VAR$[r(n)]$ is the generalization of VAR$[k]$ which means that a total of $r(n) + \mathcal{O}(1)$ bits are allowed, with $n \cdot (k + 1) \leq r(n) < n \cdot (k + 2)$ would be an improvement on Savitch's Theorem.
 That is because the proof for DSPACE$[n^k]$ can easily be extended to more general polynomial functions, Immerman did this in~\cite{Immerman1999}.
-Actually, this is a two-way relationship: if Savitchs' Theorem can be improved, we can describe NSPACE with less than $k + 2$ variables and unbounded iterations.
+Actually, this is a two-way relationship: if Savitch's Theorem can be improved, we can describe NSPACE with less than $k + 2$ variables and unbounded iterations.
 
 \section{Mixing iterations and transitive closure}\label{sec:mixing-iterations-and-transitive-closure}
 
@@ -120,7 +121,7 @@ The other case where we write the TC formula after the quantifier block is simil
 \[
     \left([QB]^{t(n)}\left(\text{TC}_{a, b}\phi\right)(f, g)\right)(\overline{e}/\overline{s}) \equiv (\text{TC}_{a, b}\varphi)(c, d)
 \]
-For $c \cdot r(n) > \log(t(n))$ for some fixed $c$, we can do the same counting trick.
+For $c \cdot r(n) > \log(t(n))$ with some fixed $c$, we can do the same counting trick.
 As a $t(n) > 2^{cr(n)}$ does not add any expressive power, we can assume that this is true.
 
 Thus, in both cases, we have a formula in FO-VAR$[r(n) + t(n), r(n)/\log(n)]$.
@@ -140,7 +141,7 @@ Another interesting result is that Savitch's Theorem can be improved for some po
     \text{FO-VAR}[t(n), r(n)/\log(n)] \subset \text{DSPACE}[t(n)r(n)]
 \]
 which would be smaller than $s(n)^2$ in some of these cases.
-The same method also means that $t(n)r(n) \geq s(n)$ because of Savitch's Theorem and the Space Hierearchy theorem (\cref{subsec:space-hierarchy-theorem}).
+The same method also means that $t(n)r(n) \geq s(n)$ because of Savitch's Theorem and the Space Hierarchy theorem (\cref{subsec:space-hierarchy-theorem}).
 As this is an open problem since 50 years, this seems to be a very difficult endeavour.
 
 \section{Restricting universal quantification}\label{sec:restricting-universal-quantification}
@@ -149,9 +150,9 @@ One further approach that I attempted was restricting universal quantification i
 In FO$\exists$-VAR, universal quantification is only allowed over boolean variables.
 We will denote the boolean variables by $b_j$.
 Further, the requirement of the $M_i$ to be quantifier-free is dropped.
-This step was motivated by the fact that nondeterministic turing machines in essence capture existential quantification.
+This step was motivated by the fact that nondeterministic Turing machines in essence capture existential quantification.
 
-A similar idea to the one in Savitchs' Theorem, guessing the middle of the path and checking both shorter sides.
+A similar idea to the one in Savitch's Theorem, guessing the middle of the path and checking both shorter sides.
 A formula in FO$\exists$-VAR$[s(n), s(n)/\log(n)]$ which is equivalent to a formula in FO-VAR$[1, s(n)/\log(n)]$ of the form $\left( TC_{\overline{X}, \overline{Y}}\varphi \right)(\overline{C}, \overline{D})$ is
 \[
     \begin{aligned}
@@ -168,7 +169,7 @@ and finally
 \]
 for some $c$.
 This formula needs some explanation.
-We have $M_1$ be the breaking condition, being false whenever either $\overline{X}$ and $\overline{Y}$ are the same or connected directly.
+We let $M_1$ be the breaking condition, being false whenever either $\overline{X}$ and $\overline{Y}$ are the same or connected directly.
 So in $QB$, the first quantification means that we break with true whenever we have a connection, as when this happens, we quantify over the empty set, which is defined as true.
 After this, a middle configuration $\overline{Z}$ is guessed, and both sides $b_2$ are checked.
 In $M_2$, we then check that $\overline{A}$ and $\overline{B}$ are the new endpoints which are defined by $b_2$ and $\overline{X}, \overline{Z}, \overline{Y}$.
@@ -176,25 +177,25 @@ After this, we copy $\overline{A}$ to $\overline{X}$ and $\overline{B}$ to $\ove
 When iterating this we guess a path from $\overline{C}$ to $\overline{D}$, checking every connection between adjacent states.
 
 More generally, for any function $r(n) \leq 2^{cs(n)}$, we can define a formula in \[\text{FO$\forall, \exists$-VAR$[s(n)/\log(r(n)), \log(r(n)), s(n)r(n)/\log(n)]$}\]
-Here, we define FO$\forall, \exists$-VAR$[t(n), f(n), s(n)]$ to contain all formulas wich have $t(n)$ iterations, extended variables of $f(n)$ bits which can be universally quantified and $s(n)\log(n)$ bit extended variables which can be used in existential quantification.
+Here, we define FO$\forall, \exists$-VAR$[t(n), f(n), s(n)]$ to contain all formulas which have $t(n)$ iterations, extended variables of $f(n)$ bits which can be universally quantified and $s(n)\log(n)$ bit extended variables which can be used in existential quantification.
 These formulas are very similar to the one defined for FO$\exists$-VAR from above.
 The only difference lies in the splitting.
 Instead of splitting paths into two parts, we split them into $r(n)$ parts.
 Thus, for a path of length $2^{cs(n)}$, we need \[\log_{r(n)}\left(2^{cs(n)}\right) = \frac{\log\left(2^{cs(n)}\right)}{\log(r(n))} = cs(n)/\log(r(n))\] iterations.
-As for simulating this formula with a turing machine, the product of the number of iterations and the size of the extended variables is important, we do not gain any tighter results from this.
+As for simulating this formula with a Turing machine, the product of the number of iterations and the size of the extended variables is important, we do not gain any tighter results from this.
 
 \section{Alternating bounds}\label{sec:alternating-bounds}
 
-In the proof of Savitchs' Theorem, we use alternating turing machines as an intermediate step for proving that NSPACE$[s(n)]$ is a subset of DSPACE$[s(n)^2]$.
+In the proof of Savitch's Theorem, we use alternating Turing machines as an intermediate step for proving that NSPACE$[s(n)]$ is a subset of DSPACE$[s(n)^2]$.
 We can also add another intermediate step using FO-VAR$[s(n), s(n)/\log(n)]$ with the method shown in \cref{sec:restricting-universal-quantification}.
-It is also quite easy to simulate any formula in FO-VAR$[t(n), s(n)/\log(n)]$ with an alternating turing machine in ATSR$[t(n)s(n), s(n), t(n)]$, where in this new class ATSR, we specify \emph{t}ime, \emph{s}pace and \emph{r}eversals.
+It is also quite easy to simulate any formula in FO-VAR$[t(n), s(n)/\log(n)]$ with an alternating Turing machine in ATSR$[t(n)s(n), s(n), t(n)]$, where in this new class ATSR, we specify \emph{t}ime, \emph{s}pace and \emph{r}eversals.
 With reversals, we mean the number of times we switch from universal states to existential states and back.
 We do this by writing the current values of all variables during the iterated quantifier part and evaluating the quantifier-free FO formulas, which can be done efficiently.
 
-We will now investigate two ways of simulating an ATSR$[t(n), s(n), r(n)]$ turing machine using FO-VAR\@.
+We will now investigate two ways of simulating an ATSR$[t(n), s(n), r(n)]$ Turing machine using FO-VAR\@.
 
 The first one is a straightforward simulation of each step of the computation.
-For this, we encode the whole state of the turing machines in a tuple of $s(n)$ bit extended variables, and always guess the next step.
+For this, we encode the whole state of the Turing machines in a tuple of $s(n)$ bit extended variables, and always guess the next step.
 Also, we assume without loss of generality that a predicate $existential(\overline{X})$ exists and that there exists exactly one accepting state, denoted by $\overline{E}$.
 \[
     \begin{aligned}
@@ -206,16 +207,16 @@ Also, we assume without loss of generality that a predicate $existential(\overli
 with \[
          \left([QB]^{t(n)}(false)\right)(\overline{S} / \overline{X})
 \]
-This gives us a formula in FO-VAR$[t(n), s(n)/\log(n)]$ which simulates the procedures of an alternating turing machine.
-To simplificate it, some of the $M_i$ are not quantifier-free.
+This gives us a formula in FO-VAR$[t(n), s(n)/\log(n)]$ which simulates the procedures of an alternating Turing machine.
+To simplify it, some $M_i$ are not quantifier-free.
 These can be moved out in an equivalent way, but make the formula less readable.
 The inner formulas work as follows:
-The formula $QB$ starts of with checking if the wie already achieved our goal and the actual configuration is the accepting configuration using $M_1$.
-Next, if we are not done yet, we first existentially gues the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
+The formula $QB$ starts of with checking if we already achieved our goal and the actual configuration is the accepting configuration using $M_1$.
+Next, if we are not done yet, we first existentially guess the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
 In $M_2$ we either retain this existentially guessed next state if we are in an existential state (thus effectively doing nothing) or ignore the existentially quantified state and just quantify universally over all states which are connected to the current one.
 The last thing we do is copying $\overline{B}$ to $\overline{X}$, preparing it to be the new start of the path.
 
-By combining the above techniques for switching between universal and existential quantification with the path-halving method from Savitchs' Theorem, we get an even stronger result.
+By combining the above techniques for switching between universal and existential quantification with the path-halving method from Savitch's Theorem, we get an even stronger result.
 
 On a high level, the plan is to do the following:
 \begin{enumerate}
@@ -236,7 +237,7 @@ On a high level, the plan is to do the following:
 
 Before presenting the formula, we can first think of how much iterations we need to do.
 Because of the halving trick, we use $\log(a)$ iterations for a path of length $a$ with only one quantifier type.
-To get an upper bound on the total number of iterations, we can use Jensens inequality (\cite{inequalities-math-oly}, p.28).
+To get an upper bound on the total number of iterations, we can use Jensen's inequality (\cite{inequalities-math-oly}, p.28).
 We then get
 \[
     \frac{\sum_{j = 0}^{r(n)}\log(a_{j})}{r(n)} \leq \log\left( \frac{\sum_{j= 0}^{r(n)}a_{j}}{r(n)} \right) = \log\left( \frac{t(n)}{r(n)} \right)
@@ -275,7 +276,7 @@ First, we will look at the meaning of the variables:
     \item[$I$:] the vertex for which we are checking that a connection from $X$ exists
     \item[$S$:] the start of the path we are checking right now
     \item[$E$:] the end of the path we are checking right now
-    \item[$Z, Z_{e}$:] the guessed mittle configuration of a path from $S$ to $E$
+    \item[$Z, Z_{e}$:] the guessed middle configuration of a path from $S$ to $E$
     \item[$A, B, b_{0}$:] variables used for copying or as dummies
     \item[$b_{path}$:] whether we are trying to show that there is a path or that there is no path from $S$ to $E$
     \item[$b_{1}$:] remember whether $S$ and $E$ are connected
@@ -297,7 +298,7 @@ As this formula is quite intricate, it is proposed to read it in four goes.
     Because $b_1$ is true, we then copy $A$ and $B$ to $S$ and $E$ in $M_5$.
     When combining $M_6$ and $M_7$, we just retain $X$ and $I$ to make them stay the same using $A$ and $B$.
     The same happens with $b_{path}$ using $N_4$, $N_5$ and $b_0$.
-    So in the end, we get a new configuration with a guessed middle configuration replacing eiter the former ending or starting point.
+    So in the end, we get a new configuration with a guessed middle configuration replacing either the former ending or starting point.
     If no path exists, this will continue until the formula $\neg b_{path}$ marks this branch as false.
 
     \item The second option we look at is when we do not want a path to exist.
@@ -311,7 +312,7 @@ As this formula is quite intricate, it is proposed to read it in four goes.
     This half must exist as otherwise a path from $S$ to $E$ exists, which we want to be false in this case.
     Because we again have $b_1$ as true, $M_4$ will copy the relevant part of the path to $A$ and $B$.
     These are then copied back to $S$ and $E$ in $M_5$.
-    $M6$, $M_7$, $N_4$ and $N_5$ do the same as in the conection case, which was resetting $S$, $E$, $X$ and $I$ to the same value.
+    $M6$, $M_7$, $N_4$ and $N_5$ do the same as in the connection case, which was resetting $S$, $E$, $X$ and $I$ to the same value.
     If effectively no path exists, we will continue doing this until we hit $\neg b_{path}$.
     At this point, the branch will then be true, as effectively, no path exists from $X$ to $I$ by making these choices.
 
