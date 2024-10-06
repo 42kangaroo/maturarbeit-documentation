@@ -13,7 +13,7 @@ By focusing on decision problems\footnote{Any problem can be reduced to boolean 
 By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
 
 Using these results, many insights into the underlying structure of real-world problems can be made which in turn can give us better ways to deal with them.
-Further, descriptive complexity has applications in database theory and computer aided verification and proofs.
+Further, Descriptive Complexity has applications in database theory and computer aided verification and proofs.
 
 
 \section{Tools}\label{sec:tools}
@@ -23,7 +23,7 @@ Definition are again taken and modified from~\cite{theory-cs} and~\cite{descript
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
 
-Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines}.
+Complexity Theory is the study of the resources, measured mostly in time and space, needed to compute certain problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines}.
 Also, we do not really care about constants in the computation, and thus use a notation which omits these.
 
 \begin{define}[Big-O notation]
@@ -169,9 +169,9 @@ From this theorem, we also get the following interesting corollary.
     \end{align*}
 \end{proof}
 
-\subsection{Space hierarchy theorem}\label{subsec:space-hierarchy-theorem}
+\subsection{Space Hierarchy Theorem}\label{subsec:space-hierarchy-theorem}
 
-The Space hierarchy theorem states that for both nondeterministic and deterministic space, we have problems that can be solved using $t(n)$ space, but not with any tighter space bound.
+The Space Hierarchy Theorem states that for both nondeterministic and deterministic space, we have problems that can be solved using $t(n)$ space, but not with any tighter space bound.
 Formally, we have
 \[
     \text{DSPACE}[o(t)] \subsetneq \text{DSPACE}[\mathcal{O}(t)]
@@ -198,9 +198,9 @@ We will present a proof for deterministic space.
 \end{proof}
 
 
-\section{Results concerning the Chomsky hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
+\section{Results concerning the Chomsky Hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
-Now that we have seen most of the required theory, we can start to apply it to the main theme of this work, the Chomsky hierarchy.
+Now that we have seen most of the required theory, we can start to apply it to the main theme of this work, the Chomsky Hierarchy.
 For this section, we define the vocabulary on strings to be $\sigma = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
 The universe consists of the numbers from $0$ to $n - 1$, we have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max = n - 1$.
 Again, only the results for context-sensitive languages are discussed in this section.

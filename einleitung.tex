@@ -3,48 +3,50 @@
 \chapter{Introduction}\label{ch:intro}
 
 In our daily lives, we are in contact with various kinds of algorithms at all times.
-From searching on Google to sending texts, over asking questions to AI chatbots and searching for the fastest route with a navy, all of these consume resources in energy, storage space and time.
-According to a report from 2021, 3.7 \% of global carbon emissions came from the IT domain, with an upward tendency.
+Searching on Google, sending texts, asking questions to AI chatbots, searching for the fastest route with a navy; all of these consume resources in energy, storage space and time.
+According to a report from 2021, 3.7 \% of global carbon emissions come from the IT domain, with an upward tendency.
 This is similar to that of the airline industry~\cite{webFootprint}.
-At this scale, it is thus vitally important to understand and find out if the actual resource consumption can be reduced.
+At this scale, it is thus vitally important to understand and find out if the resource consumption can be reduced.
 
-To be able to understand how we can improve, we first need to understand how computers work, what we can compute, and why some problems are more difficult than others to solve.
-The field of study that looks into this is called Complexity Theory.
+To find out how we can improve, we first need to understand how computers work, what we can compute, and why solving some problems is more difficult than solving others.
+The field of study that investigates this is called Complexity Theory.
 This is done by abstraction of computational models and of the problems themselves.
 It is then often possible to find classes of similar problems which allow for generalizations.
-However, it has proven to be very hard to find proofs of either optimality of algorithms, separations of complexity classes and general faster algorithms.
+However, it has proven to be very hard to find proofs of either optimality of algorithms or the separations of complexity classes.
 One of the emblematic open problems is the P versus NP question, of which we will speak more in~\cref{subsubsec:pnp}.
-Nevertheless, some important results concerning complexity of problems on average in the real world and most importantly in cryptography have been made.
+Nevertheless, some significant results concerning the complexity of problems on average in the real world and most importantly in cryptography have been made.
 
-One of the subfields of Complexity Theory is descriptive complexity.
+One of the subfields of Complexity Theory is Descriptive Complexity.
 It relates mathematical logic to different complexity classes.
 This allows us to get new insights into the underlying structure of problems of certain classes.
-Formal languages are an abstraction of computational problems which allow for multiple equivalent definitions and can be manipulated more easily then a general case.
-The famous linguist Noam Chomsky introduced the ``Chomsky Hierarch'', a hierarchy of multiple classes of formal languages.
+The other main field present in this work, formal languages, is concerned with the abstraction of computational problems as sets, which is often helpful for proofs.
+This then allows us to define multiple formalisms which describe these sets.
+Our formal language class of focus, context-sensitive languages, is part of the ``Chomsky Hierarchy'' introduced by the famous linguist Noam Chomsky.
 
-Towards the end of the 20$^{\text{th}}$ century, many equivalences where proven between fragments and extensions of various logics to complexity classes, including all the Chomsky hierarchy.
+Towards the end of the 20$^{\text{th}}$ century, many equivalences were proven between fragments and extensions of various logics to complexity classes, including all classes in the Chomsky hierarchy.
 A great summary of all the results is found in Neil Immermans paper ``Languages that capture complexity classes''~\cite{Immerman1987}.
 
-This work consists of two big parts:
+In this work, we will first introduce the relevant theory.
+After this, a personal study of connections between first-order logic and context-sensitive languages is presented.
 
-Both \cref{ch:formal-languages} and \cref{ch:descriptive-complexity} present the most important theory of formal languages and of descriptive complexity, respectively.
-Additionally, in \cref{sec:results-concerning-the-chomsky-hierarchy} a full proofs concerning equivalence of context-sensitive languages with logics and automata are presented.
+Both \cref{ch:formal-languages} and \cref{ch:descriptive-complexity} present the most important theory of formal languages and Descriptive Complexity, respectively.
+Additionally, in \cref{sec:results-concerning-the-chomsky-hierarchy} full proofs concerning equivalence of context-sensitive languages with logics and automata are presented.
 These proofs are written in a way trying to show the motivation behind certain crucial steps.
-Further, they are not completely formally correct, some details have been omitted for the sake of simplicity and length of this work.
-For the same purpose, a lot of other proofs for other languages in the Chomsky hierarchy and explanations about the context of these domains where moved to \cref{ch:mathematical-context-and-further-proofs}.
+Further, some details have been omitted for the sake of simplicity and length of this work.
+For the same purpose, many proofs, explanation, and examples for other languages in the Chomsky hierarchy were moved to \cref{ch:mathematical-context-and-further-proofs}.
 
 After this introduction to the material, we go on in \cref{ch:personal-contribution} with my personal studies about connections between first order logic and context-sensitive language.
 In this process, different paths that I tried are presented and investigated.
 Towards the end of the chapter, the direct connection to context-sensitive languages fades and the objects of study becomes more related to Savitch's Theorem, which plays a great role in the theory of space-bounded computation.
 The most complicated proof is given in \cref{sec:alternating-bounds} and concerns a simulation of alternating Turing machines using iterative logic.
 This divergence from the original working question was due to the hope that researching other, more loosely connected problems would help in the end for the core problem.
-Also, I tried to pursue ideas I had instead of trying paths I had no insights in.
+Also, I tried to pursue ideas I had instead of trying paths where I did not make any progress.
 
-Finally, in \cref{ch:conclusion-and-direction} we look back onto what we did in this work.
-A reflection about the working process is presented, and finally we discuss further possibilities of research.
+Finally, in \cref{ch:conclusion-and-direction} we reflect on what was accomplished in this work.
+A review about the working process is presented, and finally we discuss further possibilities of research.
 
-For the relevant mathematical background, \cref{ch:mathematical-background} contains the basic definitions of Set Theory, first and second order logic and finally Turing machines.
+For the relevant mathematical background, \cref{ch:mathematical-background} contains the basic definitions of Set Theory, first and second order logic, and Turing machines.
 
-A full collection of description, proofs and context information about descriptive complexity and languages in the Chomsky hierarchy is given in \cref{ch:mathematical-context-and-further-proofs}.
+A full collection of description, proofs, techniques, and context information about Descriptive Complexity and languages in the Chomsky Hierarchy is given in \cref{ch:mathematical-context-and-further-proofs}.
 
-This whole work is written in English because all mathematical literature is in English, and thus terms need not be translated.
+The entire work is written in English because all mathematical literature is in that language.

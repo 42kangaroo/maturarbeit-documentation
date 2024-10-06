@@ -1,12 +1,12 @@
 %! suppress = UnresolvedReference
 %! suppress = MissingImport
-\chapter{Formal Languages}\label{ch:formal-languages}
+\chapter{Formal languages}\label{ch:formal-languages}
 
 
 \section{Definition}\label{sec:definition}
 
 In informatics, we often get an input as a string of characters, and want to compute some function on it.
-In complexity Theory, we mostly focus on decision problems where we only want to find out if some input fulfils some given property.
+In Complexity Theory, we mostly focus on decision problems where we only want to find out if some input fulfils some given property.
 To formalize this, there is the concept of formal languages.
 The following definitions are taken from the lecture Theory of Computer Science~\cite{theory-cs}.
 For the mathematical background, refer to \autoref{ch:mathematical-background}.
@@ -22,14 +22,14 @@ For the mathematical background, refer to \autoref{ch:mathematical-background}.
 
 The concatenation of two words or symbol is written after each other, examples are $ab$ and $\Sigma^*a\Sigma^*$ (the set of all words containing at least one $a$).
 
-\begin{define}[Formal Language]
+\begin{define}[Formal language]
     A formal language is a set of words over some alphabet $\Sigma$, that is a subset of $\Sigma^*$
 \end{define}
 
 For any computational decision problem, we can then reformulate it as the problem of deciding if the input word is contained in the formal language consisting of all words which have the required property.
 
 
-\section{Chomsky hierarchy}\label{sec:chromsky-hierarchy}
+\section{Chomsky Hierarchy}\label{sec:chromsky-hierarchy}
 
 One of the multiple ways to categorize formal languages was invented by Avram Noam Chomsky, a modern linguist.
 It is based on the complexity of defining the language in some finite way, namely using grammars, but other formalisms are equivalent.
