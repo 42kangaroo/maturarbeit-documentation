@@ -2,16 +2,16 @@
 %! suppress = MissingImport
 \chapter{Personal Contribution}\label{ch:personal-contribution}
 
-In this chapter, multiple tries at searches for new first order logics and other related concepts are presented.
+In this chapter, multiple tries at searches for new first-order logics and other related concepts are presented.
 The range of success as well as the range of the concrete themes are broad.
-I did not find a fundamentally new result about the characterization of context-sensitive languages using first order logic, but managed to prove that various approaches could not work.
+I did not find a fundamentally new result about the characterization of context-sensitive languages using first-order logic, but managed to prove that various approaches could not work.
 Further, I also lowered some upper bounds for simulating alternating Turing machines using iterative logic.
 Using a restricted form of iterative logic, I could lower the bounds for an iterative simulation of a nondeterministic Turing Machine.
 
 \section{Direct Transformation}\label{sec:direct-transformation}
 
-Similar to Immerman in~\cite{descriptive-complexity}, we will use extended variables to model second order variables in first order logic.
-This will then directly give us a characterization of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second order logic.
+Similar to Immerman in~\cite{descriptive-complexity}, we will use extended variables to model second-order variables in first-order logic.
+This will then directly give us a characterization of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second-order logic.
 
 \begin{define}[Extended Variable]
     The logic FO-VAR$[1, s(n)]$ has two types of variables.
@@ -23,7 +23,7 @@ This will then directly give us a characterization of NSPACE$[s(n)]$ without req
     This makes polynomial extended variables possible.
 \end{define}
 
-The extended variables in FO-VAR$[1, s(n)]$ have exactly the same capabilities as second order variables in second order logic, as we can query it at a position, but can not do anything else.
+The extended variables in FO-VAR$[1, s(n)]$ have exactly the same capabilities as second-order variables in second-order logic, as we can query it at a position, but can not do anything else.
 As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) = FO-VAR$[1, n^k/\log(n)]$(TC).
 
 \begin{proof}
@@ -37,13 +37,13 @@ As we want to capture NSPACE$[s(n)]$, we will now prove that SO(TC, arity $k$) =
 
     Using this, we then can induct.
     Conjunction, disjunction and negation do not change anything.
-    When we quantify over a second-order variable, we can directly exchange this with quantifying over an extended variable, as by induction the subformulas without the quantification is equivalent and plugging in the new second order / extended variable will not change this.
-    Taking a transitive closure can also be done by replacing all second order variables with extended variables.
+    When we quantify over a second-order variable, we can directly exchange this with quantifying over an extended variable, as by induction the subformulas without the quantification is equivalent and plugging in the new second-order / extended variable will not change this.
+    Taking a transitive closure can also be done by replacing all second-order variables with extended variables.
 
     By induction, we then have that all formulas in either of the logics has an equivalent formula in the other logic.
 \end{proof}
 
-Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterization in first order logic.
+Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n^k/\log(n)]$(TC) describes exactly the context-sensitive languages, and thus have our first characterization in first-order logic.
 
 
 \section{Analogues to Proof for DSPACE}\label{sec:analogues-to-proof-for-dspace}

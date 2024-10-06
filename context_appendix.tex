@@ -84,10 +84,10 @@ These reductions can be very useful to define complete problems for complexity c
     \[
         \mathcal{A} \in A \Leftrightarrow I(\mathcal{A}) \in B
     \]
-    Then $I$ is a first order reduction from $A$ to $B$, denoted as $A \leq_{fo} B$.
+    Then $I$ is a first-order reduction from $A$ to $B$, denoted as $A \leq_{fo} B$.
 \end{define}
 
-First order reductions can then be used to show that some problem is also a member in some complexity class, as in most complexity classes, we can compute the first order query, and then we are left with a problem that we already know is in the required class.
+First-order reductions can then be used to show that some problem is also a member in some complexity class, as in most complexity classes, we can compute the first-order query, and then we are left with a problem that we already know is in the required class.
 The converse can also be shown: for some problem $B$ which is not in some complexity class $\mathcal{C}$, if we have $B \leq_{fo} A$, then $A$ is also not in $\mathcal{C}$, as otherwise $B$ would also be in $\mathcal{C}$, which is a contradiction.
 
 Using the reductions, we can define completeness.
@@ -217,7 +217,7 @@ A matching relation is a binary relation $M$ on the universe $\{0, \dots, n - 1\
 \end{description}
 Visually, we can think of these relations as nested ranges over the universe.
 
-With matchings, we can define FO($\exists$Match) as the first order logic extended with existential quantification over matching relations.
+With matchings, we can define FO($\exists$Match) as the first-order logic extended with existential quantification over matching relations.
 
 \begin{theorem}
     For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in FO($\exists$Match) if and only if it is context-free.
@@ -307,7 +307,7 @@ Now, we can start with the proof of our theorem.
     \end{lemma}
 
     \begin{lemma}[\cite{Thatcher1968}]
-        A tree language $T$ is recognizable if and only if there is a monadic second order sentence that recognizes it.
+        A tree language $T$ is recognizable if and only if there is a monadic second-order sentence that recognizes it.
     \end{lemma}
 
     We now present some relations that can be written in MSO on trees.
