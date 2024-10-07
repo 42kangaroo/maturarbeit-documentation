@@ -1,93 +1,106 @@
 %! suppress = UnresolvedReference
 %! suppress = MissingImport
+
+
 \chapter{Descriptive Complexity}\label{ch:descriptive-complexity}
 
 
 \section{Aims}\label{sec:aims}
 
-In mathematics, abstraction is one of the most important tools as it enables us to make general statements and prove them for all the concrete instantiations of a concept.
-Formal Logic takes this even further and makes it possible to abstract mathematical thought itself.
-In Computer science, we are often interested in the amount of resources needed to compute a certain function or solve a certain problem, speaking in terms of time and storage space.
-Different forms of logic have the power to describe different types of problems.
-By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean querry meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can say a corresponding logical characterization of a problem is a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
+In mathematics, abstraction is one of the most important tools, as it enables us to make general statements and prove them for all the concrete instances of a concept.
+Formal logic takes this even further and makes it possible to abstract mathematical thought itself.
+In computer science, we are always interested in the amount of resources needed to compute a certain function or solve a certain problem, speaking in terms of time and storage space.
+By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean query meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can define a logical characterization of a problem as a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
+Different forms of logic have the power to describe different classes of problems.
 By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
 
-Using these results, many insights into the underlying structure of real-world problems can be made which in turn can give us better ways to deal with them.
-Further, Descriptive Complexity has applications in database theory and computer aided verification and proofs.
+Using these results, many insights into the underlying structure of real-world problems can be made, which in turn can give us better ways to tackle them.
+Further, Descriptive Complexity has applications in database theory, computer aided verification, and proofs.
 
 
 \section{Tools}\label{sec:tools}
 
-As always, we first need to present some tools and techniques which will be used later in the proofs.
-Definition are again taken and modified from~\cite{theory-cs} and~\cite{descriptive-complexity}.
+As always, we first need to present some tools and techniques which will be used later for proofs.
+Definition are again taken from~\cite{theory-cs} and~\cite{descriptive-complexity}.
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
 
-Complexity Theory is the study of the resources, measured mostly in time and space, needed to compute certain problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines}.
-Also, we do not really care about constants in the computation, and thus use a notation which omits these.
+Complexity Theory is the study of the resources, measured mostly in time and space, needed to compute certain classes of problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines.}.
+As different computers can handle tasks at various speeds, a notation which only considers the asymptotic use of resources is used.
 
 \begin{define}[Big-O notation]
     Let $f, g$ be functions $f, g: \mathbb{N} \to \mathbb{R}_+$.
 
-    We say that $f \in \mathcal{O}(g)$ if there exists positive integers $n_0, c$ such that for all $n \geq n_0$ we have \[f(n) \leq c\cdot g(n)\]
+    We say that $f(n) \in \mathcal{O}(g(n))$ if there exists positive integers $n_0, c$ such that for all $n \geq n_0$ we have \[f(n) \leq c\cdot g(n)\]
 \end{define}
 
-Complexity classes can then be defined as all the problems which have a Turing machine satisfying some bounds that can compute their solutions.
-Now we will define some common and important complexity classes.
+Complexity classes can be defined as the set of all the problems for which there exists a Turing machine satisfying some bounds that computes the answer to the problem.
+Now we will define some common complexity classes.
 
 \begin{define}
-[{DTIME[$\mathcal{O}(t)$]}]
-    We say that a decision problem is in DTIME[$\mathcal{O}(t)$] if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f \in \mathcal{O}(t)$.
+[{DTIME$[\mathcal{O}(t(n))]$}]
+    We say that a decision problem is in DTIME$[\mathcal{O}(t(n))]$ if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
 \end{define}
 
 \begin{define}[P]
-    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME[$\mathcal{O}(q)$]
+    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME$[\mathcal{O}(q(n))]$
 \end{define}
 
 \begin{define}
-[{DSPACE[$\mathcal{O}(t)$]}]
-    We say that a decision problem is in DSPACE[$\mathcal{O}(t)$] if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f \in \mathcal{O}(t)$.
+[{DSPACE$[\mathcal{O}(t(n))]$}]
+    We say that a decision problem is in DSPACE$[\mathcal{O}(t(n))]$ if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
 \end{define}
 
 \begin{define}[PSPACE]
-    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE[$\mathcal{O}(q)$]
+    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE$[\mathcal{O}(q(n))]$
 \end{define}
 
 We can go do the same for nondeterministic Turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
 There, we always take the maximum of tape cells and steps over any computation branch.
 
-The complexity class P has a special meaning for computer scientists as these are the problems which are deemed ``feasible'' on modern computers.
+The complexity class P has a special meaning for computer scientists, as the problems in P are deemed ``feasible'' on modern computers.
 
 \subsection{Ehrenfeucht-Fraïssé Games}\label{subsec:ehrenfeucht-fraisse-games}
 
-Ehrenfeucht-Fraïssé games are combinatorial games which are equivalent to first-order formulas and their extensions.
+Ehrenfeucht-Fraïssé games are combinatorial games which have a strong connection to first-order formulas and their extensions.
 Using these games, it is often possible to show inexpressibility results for certain problems in some logic $\mathcal{L}$.
 
 As a motivation, we can look at what it means for a formula to hold on some structure.
-Assume the formula has the form $\forall x\varphi(x)$.
-Then this can be seen as some opponent choosing some element $a \in |\mathcal{A}|$ and us now needing to show that $\varphi(a)$ holds.
-The case where the formula has the form $\exists x\psi(x)$ can be treated similarly, but we can choose the element ourselves.
+Assume the formula has the form $\forall x\varphi$.
+This can be seen as some opponent choosing some element $a \in |\mathcal{A}|$ and us now needing to show that $\varphi(x / a)$ holds.
+The case where the formula has the form $\exists x\psi$ can be treated similarly, but we can select the element ourselves.
 
-Now for the formal definition
 \begin{define}[Ehrenfeucht-Fraïssé Game]
-    The \emph{$k$-pebble Ehrenfeucht-Fraïssé Game $\mathcal{G}_k$} is played by two players: the Spoiler and the Duplicator on a pair of structures $\mathcal{A}$ and $\mathcal{B}$ using $k$ pairs of pebbles.
-    In each move, the spoiler places one of the remaining pebbles on an element of one of the two structures.
-    Then, the duplicator tries to match the move on the other structure by placing the corresponding pebble on an element.
-    We say that the duplicator wins the $k$-pebble Ehrenfeucht-Fraïssé Game on $\mathcal{A}, \mathcal{B}$ if after the $k$ rounds, the map $i : |\mathcal{A}| \to |\mathcal{B}|$ defined as for all elements of $|\mathcal{A}|$ with a pebble and the constants as the element in $|\mathcal{B}|$ with the corresponding pebble or constant forms a partial isomorphism.
-    A partial isomorphism is an isomorphism formed for some subset of the universe, with all relations restricted to that subset.
+    The \emph{$k$-pebble Ehrenfeucht-Fraïssé Game $\mathcal{G}_k$} is played by two players, the Spoiler and the Duplicator, on a pair of structures $\mathcal{A}$ and $\mathcal{B}$ using $k$ pairs of pebbles.
+    In each move, the Spoiler places one of the remaining pebbles on an element of one of the two structures.
+    Then, the Duplicator tries to match the move by placing the corresponding pebble on an element of the other structure.
+    For a pebbled element $x$ in $\mathcal{A}$, we denote by $p(x)$ the corresponding pebbled element in $\mathcal{B}$.
+    We say that the Duplicator wins the $k$-pebble Ehrenfeucht-Fraïssé Game on $\mathcal{A}, \mathcal{B}$ if after the $k$ rounds, the map $i : |\mathcal{A}| \to |\mathcal{B}|$ defined as
+    \[
+        i(x) = \begin{cases}
+                   c_{j}^{\mathcal{B}} & x = c_{j}^{\mathcal{A}} \\
+                   p(x) & x\text{ is pebbled}\\
+                   undefined & \text{otherwise}
+        \end{cases}
+    \]
+    is a partial isomorphism.
+    A partial isomorphism is an isomorphism over some subset of the universe with all relations restricted to that subset.
 \end{define}
 
-In this context, the spoiler wants to show that $\mathcal{A}$ and $\mathcal{B}$ are different, whereas the duplicator wants to show their equivalence.
+In the Ehrenfeucht-Fraïssé Game, the Spoiler wants to show that $\mathcal{A}$ and $\mathcal{B}$ are different, whereas the Duplicator wants to show that they are equivalent.
 
-As this is a zero-sum game of full information, one of the two players must have a winning strategy.
-It can be proven that if the duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with less or equal to $k$ nested quantifiers.
-We can use these facts to prove inexpressibility of some problems in first-order logic by exhibiting two structures $\mathcal{A}_k$ and $\mathcal{B}_k$ for each $k$ with one satisfying the problem constraints and the other not and a winning strategy for the duplicator on these two structures.
+As this is a zero-sum game with full information, one of the two players must have a winning strategy.
+It can be proven that the Duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with at most $k$ nested quantifiers.
+We can use these facts to prove the inexpressibility of some problems in first-order logic.
+Assume we have a decision problem $\mathcal{C}$.
+If we can exhibit two structures $\mathcal{A}_k \in \mathcal{C}$ and $\mathcal{B}_k \not \in \mathcal{C}$ for each $k$ and a winning strategy for the Duplicator on these two structures, we show that no first-order formula defining $\mathcal{C}$ can exist.
 This methodology can be extended to other logics by adding new moves or restrictions to the game.
+
 
 
 \section{Important Results}\label{sec:important-results}
 
-\subsection{NSPACE[$\mathcal{O}(s(n))$] $\subseteq$ DSPACE[$\mathcal{O}(s(n)^2)$]}\label{subsec:nspacesubsetdspacesquared}
+\subsection{NSPACE$[\mathcal{O}(s(n))]$ $\subseteq$ DSPACE$[\mathcal{O}(s(n)^2)]$}\label{subsec:nspacesubsetdspacesquared}
 
 This result is part of Savitch's Theorem, which introduces alternating Turing machines in an intermediate step.
 These Turing machines are a generalization of nondeterministic Turing machines, which can be seen as machine taking the ``or'' of all its computation paths.
@@ -101,21 +114,21 @@ These Turing machines are a generalization of nondeterministic Turing machines, 
 
 These ATMs are now capable of also taking the ``and'' of the child states and maintain the ability to take the ``or'' of its children.
 
-We define ATIME[$\mathcal{O}(t)$] and ASPACE[$\mathcal{O}(t)$] analogously to NTIME[$\mathcal{O}(t)$] and NSPACE[$\mathcal{O}(t)$].
+We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$.
 
 Now we can proceed to the (quite technical) proof of Savitch's Theorem as presented in~\cite{descriptive-complexity}.
 
 \begin{theorem}[Savitch's Theorem]
-    For all space constructible functions $t \geq \log n$ we have
+    For all space constructible functions with $t(n) \geq \log n$ we have
     \[
-        \text{NSPACE}[\mathcal{O}(t)] \subseteq \text{ATIME}[\mathcal{O}(t^2)] \subseteq \text{DSPACE}[\mathcal{O}(t^2)]
+        \text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{ATIME}[\mathcal{O}(t(n)^2)] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]
     \]
 \end{theorem}
 
 \begin{proof}
-    We start with the first inclusion, $\text{NSPACE[$\mathcal{O}(t)$]} \subseteq \text{ATIME[$\mathcal{O}(t^2)$]}$.
-    We now need to show that any NSPACE[$\mathcal{O}(t)$] Turing machine can be simulated by a ATIME[$\mathcal{O}(t^2)$] alternating Turing machine.
-    Let $N$ be a NSPACE[$\mathcal{O}(t)$] Turing machine.
+    We start with the first inclusion, $\text{NSPACE$[\mathcal{O}(t(n))]$} \subseteq \text{ATIME$[\mathcal{O}(t(n)^2)]$}$.
+    We now need to show that any NSPACE$[\mathcal{O}(t(n))]$ Turing machine can be simulated by a ATIME$[\mathcal{O}(t(n)^2)]$ alternating Turing machine.
+    Let $N$ be a NSPACE$[\mathcal{O}(t(n))]$ Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
     Now consider $G_w$, the computation graph of $N$ on input $w$.
@@ -133,7 +146,7 @@ Now we can proceed to the (quite technical) proof of Savitch's Theorem as presen
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
     By the fact that there are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
 
-    For the second inclusion, we need to simulate a ATIME[$\mathcal{O}(s(n))$] machine $A$ using a DSPACE[$\mathcal{O}(s(n))$] machine (here, we substituted $s(n)$ for $t(n)^2$).
+    For the second inclusion, we need to simulate a ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
     Again, we consider the computation graph of $A$ on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
@@ -198,6 +211,7 @@ We will present a proof for deterministic space.
 \end{proof}
 
 
+
 \section{Results concerning the Chomsky Hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
 Now that we have seen most of the required theory, we can start to apply it to the main theme of this work, the Chomsky Hierarchy.
@@ -213,7 +227,8 @@ Nevertheless, there are some known formalisms.
 One of them is the linear bounded nondeterministic Turing machine.
 The two directions of the proof were presented separately in~\cite{Kuroda1964} and~\cite{Landweber1963}.
 
-\begin{theorem}\label{thm:nspacecontextsensitive}
+\begin{theorem}
+    \label{thm:nspacecontextsensitive}
     The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic Turing machine.
 \end{theorem}
 
@@ -265,7 +280,8 @@ For this, we first define the transitive closure of a formula.
     Equivalently, we can also define it to be the minimal relation such that if $R(x, y)$ and $R(y, z)$, then $R(x, z)$.
 \end{define}
 
-\begin{theorem}\label{thm:contextsensitveMSOTC}
+\begin{theorem}
+    \label{thm:contextsensitveMSOTC}
     A language $L$ is context-sensitive if and only if it can be described by a formula in $MSO(TC)$.
 \end{theorem}
 
