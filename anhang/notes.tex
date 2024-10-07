@@ -1,0 +1,295 @@
+\chapter{Notes}\label{sec:notes}
+
+\section{Grammars}\label{grammars}
+
+Equivalent: surrounded by context, length left \(\leq\) length right,
+\href{https://en.wikipedia.org/wiki/Kuroda_normal_form}{Kuroda normal
+Form}
+
+\section{Summary}\label{summary}
+
+\(FO[t(n)]\):
+\(A \in S \Leftrightarrow A \models \left([QB]^{t(|A|)}M_{0}\right)(\overline{c}/\overline{x})\)
+
+\noindent\(VAR[v + 1] = \bigcup_{c = 1}^{\infty}FO-VAR[2^{cn^{v}}, v + 1]\):
+Unbounded iterations, using at most \(v + 1\) vars
+
+\noindent\(ITER[\text{arity } k]\): Simultaneous iterations of relations of arity
+k as in LFP (no monoticity requirement)
+
+\noindent\(VAR[k + 1, r] / ITER[\text{arity } k, r]\): Same plus restricted
+variables of total bits \(r + \mathcal{O}(1)\)
+
+\noindent\(DSPACE[s(n)] = VAR\left[ k + 1, \log\left( \frac{s(n)}{n^{k}} \right) \right] = ITER[\text{arity } k, \log\left( \frac{s(n)}{n^{k}} \right)]\)
+with \(k = \left\lfloor \log_{n}(s(n)) \right\rfloor\) Problem for
+generalisation: For \(C_{t}(\overline{x}, \overline{b})\) (tape cell
+\(\overline{x}\) at time \(t\) is \(\overline{b}\)), for nondeterminism
+we could have the same, but other tape cells are not independent.
+
+\noindent\(FO-VAR[s(n), v(n)]\): \(VAR[s(n)]\) + constant number of
+\(v(n)\log(n)\) bit variables, which can only be tested by \(BIT\).
+
+\noindent\(SO[t(n), \text{arity }k]\): \(FO[t(n)]\), but with quantification over
+relation variables of arity at most k
+
+\noindent\(NSPACE[n^{k}] = SO(\text{arity }k)(TC) \subseteq SO(\text{arity } k)[n^{k}]\)
+
+All formulas of \(SO(\text{arity }k)(TC)\) can be written in the form \[
+(TC_{struct_{1}, struct_{2}}\alpha)(\overline{false}, \overline{true})
+\] where \(\alpha\) is quantifier-free and both structs have at most
+\(O(n^{k})\) bits
+
+
+\[SO(\text{arity } k)[t(n)] = FO-VAR\left( t(n), \frac{n^{k}}{\log(n)} \right)\]
+
+\[\text{DSPACE}[s(n)] \subseteq \text{NSPACE}[s(n)] \subseteq \text{FO-VAR}\left[ s(n), \frac{s(n)}{\log(n)} \right] \subseteq ATIME[s(n)^{2}]\subseteq \text{DSPACE}[s(n)^{2}]\]
+Proof works by looking at alternating time paths of length \(2^{r}\) in
+the \(NSPACE\) computation graph.
+
+
+
+\section{\texorpdfstring{Extending
+\(C_{t}(\overline{x}, \overline{b})\)}{Extending C\_\{t\}(\textbackslash overline\{x\}, \textbackslash overline\{b\})}}\label{extending-c_toverlinex-overlineb}
+
+Adding an additional variable for non-deterministic choices
+\(C_{t}(\overline{c}, \overline{x}, \overline{b})\), where
+\(\overline{c}\) are the non-deterministic choices, makes the states
+size grow exponentially in \(O(2^{cn^{k}})\) (one for each move of the
+NTM). So we have way more memory then \(ITER[k + 2]\), which makes it
+strictly more powerful. We need to have all the choices as we can only
+inductively define \(C_{t}\) using the previous related choices.
+
+\section{\texorpdfstring{Direct transformation of
+\(\text{SO}(\text{arity }k)(TC)\) to
+\(\text{FO-VAR}\left[ 1, \frac{n^{k}}{\log n} \right](TC)\)}{Direct transformation of SO(\textbackslash text\{arity \}k)(TC) to FO-VAR\textbackslash left{[} 1, \textbackslash frac\{n\^{}\{k\}\}\{\textbackslash log n\} \textbackslash right{]}(TC)}}\label{direct-transformation-of-sotextarity-ktc-to-fo-varleft-1-fracnklog-n-righttc}
+
+\(SO(\text{arity }k)(TC) \subseteq FO-VAR\left[ 1, \frac{n^{k}}{\log n} \right](TC)\):
+We know that any formula in \(SO(\text{arity }k)(TC)\) can be written in
+the form \[
+(TC_{struct_{1}, struct_{2}}\alpha)(\overline{false}, \overline{true})
+\] where \(\alpha\) is quantifier-free. Using the equivalence
+\(BIT(Y, \overline{x}) \Leftrightarrow Y(\overline{x})\), we can write
+anything in \(\alpha\) using
+\(FO-VAR\left[ 1, \frac{n^{k}}{\log n} \right]\). Any relation in
+\(struct_{1}, struct_{2}\) can also be rewritten using the extended
+variables. As we now any Relation with \(false\) is converted to \(0\)
+and any relation with \(true\) is converted to \(1\), we have
+\((\overline{false}, \overline{true})\) that can now be represented by
+\((\overline{0}, \overline{max})\).
+
+\(SO(\text{arity }k)(TC) \supseteq FO-VAR\left[ 1, \frac{n^{k}}{\log n} \right](TC)\):
+We know that any formula in \(FO(TC)\) can be written as
+\((TC_{struct_{1}, struct_{2}}\alpha)(\overline{0}, \overline{max})\).
+We can extend this result to include the extended variables. For the
+usage of the extended variables in \(BIT\), we have an atomic formula,
+so this is trivial. For quantification, we can handle it the same way as
+normal quantification with the modification of the ``counting'' variable
+with a tuple of \(k\) counting variables, and the successor relation on
+these \(k\) variables. We haven't shown yet that negation can be handled
+by this. In the proof that \(FO(pos~TC) = FO(TC)\), we only ask for a
+successor relation on the vertices (consisting of the extended variables
+and normal variables), which we assume from the beginning, so this also
+holds for
+\(FO-VAR\left[ 1, \frac{n^{k}}{\log n} \right](pos~TC) = FO-VAR\left[ 1, \frac{n^{k}}{\log n} \right](TC)\).
+Now, we can do the same as above for the other direction to convert a
+formula of the form
+\((TC_{struct_{1}, struct_{2}}\alpha)(\overline{0}, \overline{max})\) to
+\((TC_{struct_{1}, struct_{2}}\alpha)(\overline{false}, \overline{true})\).
+
+\section{\texorpdfstring{Can we prove that there is no way to use
+\(TC\) with a \(FO\) language that has less then \(O(n^{k})\)
+variables?}{Can we prove that there is no way to use TC with a FO language that has less then O(n\^{}\{k\}) variables?}}\label{can-we-prove-that-there-is-no-way-to-use-tc-with-a-fo-language-that-has-less-then-onk-variables}
+
+We have Arity theorems
+\href{https://pdf.sciencedirectassets.com/271596/1-s2.0-S0168007200X00292/1-s2.0-0168007295000720/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEA0aCXVzLWVhc3QtMSJHMEUCIQCZEfzPpPqb83EtF\%2BLgRMsETvrj14M6SqdN3VHcNPEkdAIgWF\%2BnohPDt8o\%2FXZc7b7P3HqFm72ZMaOoAg4MLrtTMUtYquwUIpv\%2F\%2F\%2F\%2F\%2F\%2F\%2F\%2F\%2F\%2FARAFGgwwNTkwMDM1NDY4NjUiDOiLVE0art2rY62EliqPBQbQSd\%2FAcBktlD2Axqi2hf20al4TnosyDnMOkEbqwIQAyET8IMr\%2B776j5WCIdUO85KSby8IvsXcoMaeJllnCTWiAtcQOCv0tjt1Rome20\%2B50\%2BMDR2DM6BHnHFA3gOFm3PAoX427r\%2BysNLJl2dbF4YAXE2Rb02hYUm47FnV\%2FiV6LDZgVk56JvT2yASPDa1TYaBTCUt09gepbCkOkC1Tzac2OEzReNX5RGnSGRJRwZN7QDFmHMEhiE1YO1sYOGJgnrWvjBNlgRGe66ZDXA6H9FlnP3KfXpA\%2BRlBp9SfqipL6iEj8iTLlY8Iw4Lx8SLSR4WwHt5ZSopsZj1SZlTKtBkaHqb4\%2ByS8iYsy7JUiFML1LvIE4ttxy7fM6qY5XNU0NSNb6NF\%2FStuygMbc5kU3Xs5D\%2BYtei30HQKStUmol3nJYpBbgTpaUCPZTWF1xfFeF2r0rHtT8SGvWCZNI0N78o6YYf\%2FPiFrC\%2FLb\%2BaGc0DtkdqrLP3L3Rrf2cIXsxqZ4LwlEdj6fEIKZxw71c95o1h1PlnB72qAg62JKOdNtHM3Gpw7yeuU1kAdNEctOU2WMvhqqjDHlcerDbspa39NRMVIgrKI0wHhphT42iSbZC2rVP7cgpqBFADJqrT1C3ROwrQngxGDjCqpaDgR3Lh\%2BFCvJ6Hj6aficQkrXnZKYPd2ZxF0LoEw5F0K1eEAoi\%2F31m3Wd8MhY\%2FzlDt5Owh4zIlIsv9AEG0byN\%2F\%2FEs30PT469\%2BiRlOlCAJ0iYqpvsVk3whvBPEHae8O3LFUG7gWFK50eQ\%2FFQ9KVcy0sLMCNpK286rnXOYvU18pdah3GbEt\%2BG642xb\%2F3y\%2BPNG6oMZ\%2B485zsKgusLfgILd7\%2FU7w4E8yeE8VrHFPFcw3\%2B2wswY6sQFACa99Hzo8imVILu9U2u8E7F2wa2uOniA6UidGdcybvYvso0UTqK53Ki\%2FnJ5tT6ADTd52VSNtgviQbNSxdnAdsifHTNGD4xTutf9zwfV1AVAWosXcbKwC\%2BGd1Cmoh4JMrd4uMlW2FtCpKGbmKW9pcJkmjNRHacw3IN\%2FC\%2F\%2BI4yRBQZyBwoKevOICAIRcr8XsVMxvpSFg4M6Amz3UbgG1Tf5\%2FaSW\%2BAn2\%2BHYGkfJuV5Io8OU\%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240614T123128Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYVAGA3OF6\%2F20240614\%2Fus-east-1\%2Fs3\%2Faws4_request&X-Amz-Signature=42e03b07238e340e4071f6b533897676385912b01735ff90b4ce8ee3841179f2&hash=a3824b39f0ff05985504a3e08bf09f2572a737ad6204bcb9d1f18f599e123db5&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=0168007295000720&tid=spdf-86d73916-b662-4ed3-b6de-753dfc8128db&sid=9e433d8d71f1564cc768be65fe1f9e328634gxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=070f5e5851065a5958&rr=893a566aeef5b39e&cc=ch}{Arity
+hierarchies Martin Grohe}.
+Is this applicable because ordered
+structure? Diagonalisation in logic?
+
+FO{[}\(2^{n}\){]}, SO{[}n{]} can both express REACH\(_{dl}\)
+
+\emph{Claim:} If extended variables are allowed everything, nothing
+changes.
+
+\emph{Define} Superrelations, using the extended variables. Does not
+work because input to big Not needed as we are working on string
+structures
+
+If we allow extended variables for relations we have undefined for some,
+and if we check, we could ``copy'' bits into FO variable Numerical
+relations \(\leq, SUC(X, Y), +, \times\) are definable via BIT anyways.
+
+If no further relations are added, we have already that they reflect
+exactly some NSPACE complexity class, so we can not do better.
+
+\textbf{Approach 2} We have that the FO{[}1, s(n)/log(n){]}(TC)
+correspond exactly to our complexity classes. The Space hierarchy tells
+us that we can not do better while using these constructions.
+
+Now assume we add iterated quantifier blocks. We have multiple ways of
+doing this. We can have the TC inside or outside
+
+\[
+TC_{s(n)}([QB]^{t(n)}\varphi) \equiv TC_{O(n)}(\phi )
+\] In both cases, we can replace the TC operator with a quantifier block
+iterated \(o(n)\) times. So we have formulas of the form
+
+\[
+[QB_{1}]^{s(n)}[QB_{2}]^{t(n)} \psi
+\] We can include a counting variable of which counts to \(o(n)\) and
+then switches block to get only one combined block.
+
+so we then have a formula in FO{[}s(n) + t(n), s(n)/log(n){]}, which is
+also in FO{[}t(n), s(n)/log(n){]}(TC) or FO{[}s(n), s(n)/log(n){]}(TC)
+(or TC{[}FO{[}s(n), s(n)/log(n){]}{]}, but does just not use the TC
+operator. So if s(n) \(\not\in o(n)\) then this is equivalent or more
+difficult then showing that
+\(SO(\text{arity } k)[n^{k}] = SO(\text{arity } k)(TC)\) Otherwise, if
+\(t(n) \geq s(n)\) we have to show that
+\(FO\left[ t(n), \frac{s(n)}{log(n)} \right] = SO(\text{arity } k)(TC)\).
+The only problem arises if \(s(n) > t(n)\), as then the generated new
+formula is not in the original class. What would happen is that then
+\(SO(arity~k)(TC) = FO\left[ t(n), \frac{s(n)}{\log(n)} \right](TC)\subseteq FO\left[ s(n), \frac{s(n)}{\log n} \right] \subseteq SO(\text{arity } k)[n^{k}]\)
+We know that \(s(n)\) must be in \(\Omega(\sqrt{ n })\) by Savitch's
+theorem. Also if \(s(n) \in o(n)\), we would have a stronger result then
+Savitch's theorem as then \(NSPACE[n] \subseteq DSPACE[s(n)^2]\), which
+is an open problem since almost 50 years.
+
+In the end, this proves that combining TC and quantifier iterations is
+as difficult either as showing an improvement of Savitch's theorem or is
+equivalent to having an alternative characterisation using only iterated
+quantifiers.
+
+
+\section{Generalised quantifiers}\label{generalised-quantifiers}
+
+By \href{https://link.springer.com/article/10.1007/bf01268616}{double
+arity} we have FO(TC) = FO(\(Q_{TC}\)) which is the tc quantifier. The
+tc Quantifier has type \(\langle 2, 1 ,1 \rangle\) and
+\(k\)-vectorisation to make it generalised to vectorisations. There is a
+theorem which states that no family of quantifiers of arity \(<2k\)
+suffices to express these properties. So We can effectively say that
+they are the easyest.
+
+This is true for FO-generalised quantifiers on unordered structures, but
+unclear for \href{https://core.ac.uk/download/pdf/81931656.pdf}{SO-gq}
+
+Problem is that we can query bits, so we have even more than just an
+order
+
+Can we port the results directly?
+
+\section{\texorpdfstring{FO\(\exists\){[}n{]}}{FO\textbackslash exists{[}n{]}}}\label{foexistsn}
+
+\begin{description}
+
+\item[FO\(\exists\){[}s(n){]}]
+A set \(S\subseteq \text{STRUCT}[\tau]\) is in FO\(\exists\){[}s(n){]}
+if and only if there exists formulas \(M_{i}, N_{j}\),
+\(0 \leq i \leq k, 1 \leq j \leq r\) from \(\mathcal{L}(\tau)\), a tuple
+\(\overline{c}\) of constants and a quantifier block \[
+QB = [(\exists x_{1}.M_{1})(\forall b_{1}.N_{1})\dots(\exists x_{k}.M_{k})(\forall b_{r}.N_{r})]
+\] such that for all \(\mathcal{A} \in \text{STRUCT}[\tau]\), we have \[
+\mathcal{A} \in S \Leftrightarrow \mathcal{A} \models ([QB]^{s(\left| \mathcal{A} \right|)}M_{0})(\overline{c} / \overline{x})
+\]
+\end{description}
+
+FO\(\exists\)-VAR{[}t(n), s(n){]} is the same with extended variables
+
+We can write TC as
+
+\[
+\begin{aligned}
+QB \equiv~& (\forall b_{1}.M_{1})(\exists\overline{Z}) (\forall b_{2})(\exists \overline{A}, \overline{B}.M_{2})(\exists\overline{X}, \overline{Y}.M_{3}) \\
+M_{1} \equiv~& \neg(\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z})) \lor \varphi(\overline{X}, \overline{Y})) \\
+M_{2} \equiv~&(b_{2} \land \forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Z}, \overline{z}))) \lor \\
+&(\neg b_{2} \land \forall \overline{z} (\text{BIT}(\overline{Z}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))) \\
+M_{3} \equiv~&\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))
+\end{aligned}
+\]
+
+And then
+\([QB]^{cs(n)}(false)(\overline{false} / \overline{X}, \overline{true} / \overline{Y}) \equiv (TC_{\overline{X}, \overline{Y}}\varphi(\overline{X}, \overline{Y}))(\overline{false}, \overline{true})\)
+
+Thus, we have NSPACE{[}s(n){]} \(=\) FO-VAR{[}1, s(n)/log(n){]}(TC)
+\(\subseteq\) FO\(\exists\)-VAR{[}s(n), s(n)/log(n){]}
+
+For the reverse containment, we can simulate the formula with a
+NSPACE{[}s(n){]} machine by existentially guessing the existentially
+quantified variables and remembering the universal choices in \(s(n)\)
+space. Does not work because we need some backtracking stuff, and thus
+remembering the existential vars.
+
+Also,
+\(FO-VAR[1, s(n)/log(n)](TC) \subseteq FO-VAR\left[ \frac{s(n)}{\log(r(n))}, \frac{s(n)r(n)}{\log(n)} \right]\)
+by doing multiple steps at once, and universal quantification over
+\(r(n)\) bit variables only.
+
+\section{Alternating machines and FO-VAR}\label{sec:somewhat-unrelated-stuff}
+
+\(ATIME-SPACE[s(n)^2, s(n)] \subseteq FO-VAR\left[ s(n)^2, \frac{s(n)}{\log(n)} \right]\)
+
+We have a state space of \(2^{\mathcal{O}(s(n))}\), so we need only
+\(s(n)\) bit Variables to encode it. We can assume that there exist
+formulas \(existencial(\overline{X})\) which is true if \(\overline{X}\)
+is an existential state, and one \(\varphi(\overline{X}, \overline{Y})\)
+telling us that we can transition from \(\overline{X}\) to
+\(\overline{Y}\).
+
+Then, we have \[
+\begin{aligned}
+QB \equiv~&(\forall b.M_{1})(\exists\overline{A}.\varphi(\overline{A}, \overline{X}))(\forall \overline{B}.M_{2})(\exists \overline{X}. \forall z(\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{B}, \overline{z}))) \\
+M_{1} \equiv~&\neg\forall z(\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z})) \\
+M_{2} \equiv~& (existential(\overline{X}) \to \forall z(\text{BIT}(\overline{A}, \overline{z}) \leftrightarrow \text{BIT}(\overline{B}, \overline{z}))) \land \varphi(\overline{X}, \overline{B})
+\end{aligned}
+\] and \[
+\left([QB]^{s(n)^2}(false)\right)(\overline{false} / \overline{X}, \overline{true} / \overline{Y})
+\]
+
+\[
+    \begin{aligned}
+        ATSR[t(n), s(n), r(n)] &\subseteq FO-VAR\left[ r(n)\log\left( \frac{t(n)}{r(n)} \right), \frac{s(n)}{\log n} \right] \\ &\subseteq ATSR\left[r(n)s(n)\log\left(\frac{t(n)}{r(n)}\right), s(n), r(n)\log\left( \frac{t(n)}{r(n)} \right)\right]
+    \end{aligned}
+\]
+The second containment is a consequence of how we simulate the formula
+with the alternating Turing machine, as we have
+\(FO-VAR\left[ a(n), \frac{s(n)}{\log n} \right] \subseteq ATSR[a(n)s(n), s(n), a(n)]\)
+by using the normal construction in Savitch's theorem.
+
+In the first containment, we try to use the method of simulating NSPACE
+for each alternation. First, we show that \[
+\sum_{j = 0}^{r(n)}\log(a_{j}) \leq r(n)\log\left( \frac{t(n)}{r(n)} \right)
+\] under the condition that \(\sum_{j= 0}^{r(n)}a_{j} = t(n)\).
+
+This can be shown using Jensen's inequality. \[
+\frac{\sum_{j = 0}^{r(n)}\log(a_{j})}{r(n)} \leq \log\left( \frac{\sum_{j= 0}^{r(n)}a_{j}}{r(n)} \right) = \log\left( \frac{t(n)}{r(n)} \right)
+\] as \(\log\) is concave. Multiplying with \(r(n)\) gives the claim.
+
+\(Y\) accepting \(X\) start \(I\) actual intermediate end \(S\) actual
+start \(E\) actual end \(A, B\) copy vars \(b_{path}\) if we are trying
+to find or not find a path \[
+\begin{aligned}
+QB \equiv&~(\forall b_{0}.M_{1})(\exists b_{0}.N_{1})(\exists b_{1}.M_{2})(\exists Z_{e}.M_{3})(\forall Z.N_{2})\\
+&~(\exists b_{2e})(\forall b_{2}.N_{3})(\exists A, B.M_{4})(\forall S, E.M_{5})(\exists A, B.M_{6})(\exists I, X.M_{7})(\exists b_{0}.N_{4})(\exists b_{path}.N_{5}) \\
+M_{1} \equiv&~b_{path} \to \neg(I = Y \land (S = E \lor \varphi(S, E))) \\
+N_{1} \equiv&~\neg b_{path} \to \neg(S = E \lor \varphi(S, E)) \\
+M_{2} \equiv&~\neg b_{1} \leftrightarrow (S = E \lor \varphi(S, E)) \\
+M_{3} \equiv&~existential(Z_{e}) \leftrightarrow existential(X)\\
+N_{2} \equiv&~b_{path} \to Z = Z_{e}\\
+N_{3} \equiv&~ \neg b_{path} \to b_{2} = b_{2e}\\
+M_{4} \equiv&~(b_{1} \land ((\neg b_{2} \land A = S  \land B = Z) \lor (b_{2} \land A = Z \land B = E))) \lor \\
+&~(\neg b_{1} \land  A = I \land (B = Y \lor (existential(B) \leftrightarrow \neg existential(I)))) \\
+M_{5} \equiv&~S = A \land ((( b_{1} \lor existential(S)) \land E = B) \lor \\
+&~(\neg( b_{1} \lor existential(S)) \land (E = Y \lor (existential(E)\leftrightarrow \neg existential(S))))) \\
+M_{6} \equiv&~(\neg b_{1}  \land S = A \land E = B) \lor (b_{1} \land X = A \land I = B)\\
+M_{7} \equiv&~X = A \land I = B \\
+N_{4} \equiv&~b_{0} = b_{path} \\
+N_{5} \equiv&~b_{1} \to b_{path} = b_{0}
+\end{aligned}
+\]
+
+In this formula, we have
+\(\left([QB]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(true / b_{path}, AS / S, X, I, S, E, AE / Y)\)
+is true if and only if the machine accepts.
+
+\(\implies FO-VAR\left[ a(n), \frac{s(n)}{\log n} \right] \subseteq ATSR[a(n)s(n), s(n), a(n)] \subseteq FO-VAR\left[ a(n)\log(s(n)), \frac{s(n)}{\log n} \right]\)

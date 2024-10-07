@@ -114,7 +114,8 @@ These Turing machines are a generalization of nondeterministic Turing machines, 
 
 These ATMs are now capable of also taking the ``and'' of the child states and maintain the ability to take the ``or'' of its children.
 
-We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$.
+
+\sloppy We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$.
 
 Now we can proceed to the (quite technical) proof of Savitch's Theorem as presented in~\cite{descriptive-complexity}.
 
@@ -146,7 +147,7 @@ Now we can proceed to the (quite technical) proof of Savitch's Theorem as presen
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
     By the fact that there are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
 
-    For the second inclusion, we need to simulate a ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
+    \sloppy For the second inclusion, we need to simulate a ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
     Again, we consider the computation graph of $A$ on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 

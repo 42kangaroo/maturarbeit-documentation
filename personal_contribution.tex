@@ -54,7 +54,7 @@ To understand the following, we first need to define the logic FO$[t(n)]$, which
 
 \begin{define}[{FO$[t(n)]$}]
     Let $Q_1, \dots, Q_n$ be a series of quantifiers, $s_1, \dots, s_n$ variables and $M_1 \dots, M_n$ be quantifier-free formulas.
-    Then a quantifier block is $QB = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})$.
+    Then a quantifier block is \[QB = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})\]
     Here, for a universal quantifier $(\forall s.M)\varphi \equiv \forall s (M \to \varphi)$.
     Also, for an existential quantifier $(\exists s.M)\varphi \equiv \exists s(M \land \varphi)$.
     Both of these effectively mean that we restrict the quantifiers to range only over the elements that satisfy $M$.
@@ -240,7 +240,10 @@ Because of the halving trick, we use $\log(a)$ iterations for a path of length $
 To get an upper bound on the total number of iterations, we can use Jensen's inequality (\cite{inequalities-math-oly}, p.28).
 We then get
 \[
-    \frac{\sum_{j = 0}^{r(n)}\log(a_{j})}{r(n)} \leq \log\left( \frac{\sum_{j= 0}^{r(n)}a_{j}}{r(n)} \right) = \log\left( \frac{t(n)}{r(n)} \right)
+    \begin{aligned}
+        \frac{\sum_{j = 0}^{r(n)}\log(a_{j})}{r(n)} &\leq \log\left( \frac{\sum_{j= 0}^{r(n)}a_{j}}{r(n)} \right)  \\
+        &= \log\left( \frac{t(n)}{r(n)} \right)
+    \end{aligned}
 \]
 because of the condition that $\sum_{j= 0}^{r(n)}a_{j} = t(n)$.
 Multiplying this with $r(n)$, we get that a path can require a maximum of $r(n)\log\left( \frac{t(n)}{r(n)} \right)$ iterations.
