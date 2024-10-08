@@ -1,7 +1,5 @@
 %! suppress = UnresolvedReference
 %! suppress = MissingImport
-
-
 \chapter{Descriptive Complexity}\label{ch:descriptive-complexity}
 
 
@@ -21,6 +19,9 @@ Further, Descriptive Complexity has applications in database theory, computer ai
 \section{Tools}\label{sec:tools}
 
 As always, we first need to present some tools and techniques which will be used later for proofs.
+In this section, we will only present Complexity Theory.
+In \cref{subsec:ehrenfeucht-fraisse-games} and \cref{subsec:reduction}, we also present Ehrenfeucht-Fraïssé games and first-order reductions.
+These tools are not needed for \cref{ch:personal-contribution}, but using them was tried extensively during the research phase.
 Definition are again taken from~\cite{theory-cs} and~\cite{descriptive-complexity}.
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
@@ -35,7 +36,7 @@ As different computers can handle tasks at various speeds, a notation which only
 \end{define}
 
 Complexity classes can be defined as the set of all the problems for which there exists a Turing machine satisfying some bounds that computes the answer to the problem.
-Now we will define some common complexity classes.
+Now, we will define some common complexity classes.
 
 \begin{define}
 [{DTIME$[\mathcal{O}(t(n))]$}]
@@ -60,116 +61,84 @@ There, we always take the maximum of tape cells and steps over any computation b
 
 The complexity class P has a special meaning for computer scientists, as the problems in P are deemed ``feasible'' on modern computers.
 
-\subsection{Ehrenfeucht-Fraïssé Games}\label{subsec:ehrenfeucht-fraisse-games}
-
-Ehrenfeucht-Fraïssé games are combinatorial games which have a strong connection to first-order formulas and their extensions.
-Using these games, it is often possible to show inexpressibility results for certain problems in some logic $\mathcal{L}$.
-
-As a motivation, we can look at what it means for a formula to hold on some structure.
-Assume the formula has the form $\forall x\varphi$.
-This can be seen as some opponent choosing some element $a \in |\mathcal{A}|$ and us now needing to show that $\varphi(x / a)$ holds.
-The case where the formula has the form $\exists x\psi$ can be treated similarly, but we can select the element ourselves.
-
-\begin{define}[Ehrenfeucht-Fraïssé Game]
-    The \emph{$k$-pebble Ehrenfeucht-Fraïssé Game $\mathcal{G}_k$} is played by two players, the Spoiler and the Duplicator, on a pair of structures $\mathcal{A}$ and $\mathcal{B}$ using $k$ pairs of pebbles.
-    In each move, the Spoiler places one of the remaining pebbles on an element of one of the two structures.
-    Then, the Duplicator tries to match the move by placing the corresponding pebble on an element of the other structure.
-    For a pebbled element $x$ in $\mathcal{A}$, we denote by $p(x)$ the corresponding pebbled element in $\mathcal{B}$.
-    We say that the Duplicator wins the $k$-pebble Ehrenfeucht-Fraïssé Game on $\mathcal{A}, \mathcal{B}$ if after the $k$ rounds, the map $i : |\mathcal{A}| \to |\mathcal{B}|$ defined as
-    \[
-        i(x) = \begin{cases}
-                   c_{j}^{\mathcal{B}} & x = c_{j}^{\mathcal{A}} \\
-                   p(x) & x\text{ is pebbled}\\
-                   undefined & \text{otherwise}
-        \end{cases}
-    \]
-    is a partial isomorphism.
-    A partial isomorphism is an isomorphism over some subset of the universe with all relations restricted to that subset.
-\end{define}
-
-In the Ehrenfeucht-Fraïssé Game, the Spoiler wants to show that $\mathcal{A}$ and $\mathcal{B}$ are different, whereas the Duplicator wants to show that they are equivalent.
-
-As this is a zero-sum game with full information, one of the two players must have a winning strategy.
-It can be proven that the Duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with at most $k$ nested quantifiers.
-We can use these facts to prove the inexpressibility of some problems in first-order logic.
-Assume we have a decision problem $\mathcal{C}$.
-If we can exhibit two structures $\mathcal{A}_k \in \mathcal{C}$ and $\mathcal{B}_k \not \in \mathcal{C}$ for each $k$ and a winning strategy for the Duplicator on these two structures, we show that no first-order formula defining $\mathcal{C}$ can exist.
-This methodology can be extended to other logics by adding new moves or restrictions to the game.
-
-
 
 \section{Important Results}\label{sec:important-results}
 
+In this section, we will only introduce Savitch's Theorem.
+In \cref{subsec:space-hierarchy-theorem}, we also present the space hierarchy theorem.
+
 \subsection{NSPACE$[\mathcal{O}(s(n))]$ $\subseteq$ DSPACE$[\mathcal{O}(s(n)^2)]$}\label{subsec:nspacesubsetdspacesquared}
 
-This result is part of Savitch's Theorem, which introduces alternating Turing machines in an intermediate step.
-These Turing machines are a generalization of nondeterministic Turing machines, which can be seen as machine taking the ``or'' of all its computation paths.
+This result is part of Savitch's Theorem, which introduces alternating Turing machines as an intermediate step.
+These Turing machines are a generalization of nondeterministic Turing machines, which can be seen as machines taking the ``or'' over all their computation paths.
 
 \begin{define}[Alternating Turing Machine]
-    An alternating Turing machine is a Turing machine with two types of states: the existential and universal gates.
-    Now, the acceptance conditions change compared to a nondeterministic Turing machine and depends on the state we are currently in.
-    If we are in an existential state, we accept if and only if \emph{at least one} of the computations leading on from this configuration is accepting.
-    If we are in a universal state, we accept if and only \emph{all} the computations leading on from this configuration are accepting.
+    An alternating Turing machine is a Turing machine with two types of states: existential and universal.
+    The accepting conditions change compared to a nondeterministic Turing machine and depend on the current state of the machine.
+    If it is in an existential state, the current configuration is accepting if and only if \emph{at least one} of the directly reachable configurations is accepting.
+    If the machine is in a universal state, the current configuration is accepting if and only \emph{all} the directly reachable configurations are accepting.
 \end{define}
 
-These ATMs are now capable of also taking the ``and'' of the child states and maintain the ability to take the ``or'' of its children.
-
+In addition to taking the ``or'' over its children, an alternating Turing machine can also take the ``and''.
 
 \sloppy We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$.
 
-Now we can proceed to the (quite technical) proof of Savitch's Theorem as presented in~\cite{descriptive-complexity}.
-
+We can proceed to the (quite technical) proof of Savitch's Theorem using the technique presented in~\cite{descriptive-complexity}.
 \begin{theorem}[Savitch's Theorem]
     For all space constructible functions with $t(n) \geq \log n$ we have
     \[
-        \text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{ATIME}[\mathcal{O}(t(n)^2)] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]
+        \text{\upshape NSPACE}[\mathcal{O}(t(n))] \subseteq \text{\upshape ATIME}[\mathcal{O}(t(n)^2)] \subseteq \text{\upshape DSPACE}[\mathcal{O}(t(n)^2)]
     \]
 \end{theorem}
 
 \begin{proof}
     We start with the first inclusion, $\text{NSPACE$[\mathcal{O}(t(n))]$} \subseteq \text{ATIME$[\mathcal{O}(t(n)^2)]$}$.
-    We now need to show that any NSPACE$[\mathcal{O}(t(n))]$ Turing machine can be simulated by a ATIME$[\mathcal{O}(t(n)^2)]$ alternating Turing machine.
+    We need to show that any NSPACE$[\mathcal{O}(t(n))]$ Turing machine can be simulated by a ATIME$[\mathcal{O}(t(n)^2)]$ alternating Turing machine.
     Let $N$ be a NSPACE$[\mathcal{O}(t(n))]$ Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
-    Now consider $G_w$, the computation graph of $N$ on input $w$.
-    We now see that $N$ accepts $w$ if and only if there is a path from the start configuration $s$ to the accepting configuration $t$.
+    Consider $G_w$, the computation graph of $N$ on input $w$.
+This graph consists of configurations as vertices and directed edges from each configuration to all configurations that are directly reachable from it.
+    We see that $N$ accepts $w$ if and only if there is a path from the start configuration $s$ to the accepting configuration $t$ in $G_w$.
     We now present a routine $P(d, x, y)$ which asserts that there is a path of length at most $2^{d}$ from vertex $x$ to $y$.
     Inductively, we can define $P$ as follows:
     \[
         P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
     \]
     This formula asserts that there exists a middle vertex $z$ for which there is a $2^{d - 1}$ path from $x$ to $z$ and from $z$ to $y$.
-    Using an alternating Turing machine, we can evaluate the formula using an existential state to find the middle vertex $z$, and then a universal state covering both shorter paths.
+The base case for $d = 0$ is to check if we can reach $x$ from $y$ by a transition in the transition table of $N$.
+    Using an alternating Turing machine, we can evaluate the formula using existential states to find the middle vertex $z$, and then a universal state choosing which one of the two new paths we check.
 
-    Now for the runtime analysis, we see that we need $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as a configuration includes the tape, which has length $\mathcal{O}(t(n))$.
-    Further, we then need to evaluate some $P(d - 1, z, y)$.
+For the runtime analysis, we proceed as follows.   It takes $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as each configuration includes the tape contents, which have length $\mathcal{O}(t(n))$.
+    Further, we then evaluate one of the new shorter paths $P(d - 1, z, y)$.
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
-    By the fact that there are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
-
-    \sloppy For the second inclusion, we need to simulate a ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
-    Again, we consider the computation graph of $A$ on input $w$.
+    There are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
+\vspace{5mm}
+    \sloppy For the second inclusion, we need to simulate an ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
+    Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
     We can systematically search this computation graph to get our answer.
     This is done by keeping a string of choices $c_{1}c_{2}\dots c_r$ of length $\mathcal{O}(s(n))$ made until this point.
+Each choice takes up $\mathcal{O}(1)$ place, as the number of transitions from one state is bounded by a constant depending only on $A$.
     Note that this uniquely determines which state we are in.
 
     Now, we can find the answer recursively.
     If we are in a halt state, we report this back to the previous state.
-    In an existential state, we simulate its children, and if we get a positive result from one of them, we also return a positive result.
-    In a universal state, we simulate its children, and if we get a positive result from all of them, we return a positive result.
+    In an existential state, we simulate its children, and if we get a positive result from one of them, we also report a positive result.
+    In a universal state, we simulate its children, and if we get a positive result from all of them, we report a positive result.
 
-    In total, we use only $\mathcal{O}(s(n))$ space, to simulate $A$.
+    Overall, we use only $\mathcal{O}(s(n))$ space to simulate $A$.
 
-    Thus, the second part of the theorem follows and by transitivity of $\subseteq$ we have $\text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]$.
+    Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]$.
 \end{proof}
 
-We do not know if the containment is strict or not for any of the inclusions of the theorem.
+We do not know if the containment is strict for any of the inclusions.
+Neither is it known if the quadratic overhead for simulating nondeterministic space is optimal.
 From this theorem, we also get the following interesting corollary.
 
 \begin{corollary}
-    We have $\text{PSPACE} = \text{NPSPACE}$.
+    We have $\text{\upshape PSPACE} = \text{\upshape NPSPACE}$.
 \end{corollary}
 
 \begin{proof}
@@ -183,102 +152,30 @@ From this theorem, we also get the following interesting corollary.
     \end{align*}
 \end{proof}
 
-\subsection{Space Hierarchy Theorem}\label{subsec:space-hierarchy-theorem}
-
-The Space Hierarchy Theorem states that for both nondeterministic and deterministic space, we have problems that can be solved using $t(n)$ space, but not with any tighter space bound.
-Formally, we have
-\[
-    \text{DSPACE}[o(t)] \subsetneq \text{DSPACE}[\mathcal{O}(t)]
-\]
-where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
-This holds for all space constructible $t \geq \log n$.
-The same holds for NSPACE\@.
-
-We will present a proof for deterministic space.
-\begin{proof}
-    The proof uses a diagonalization argument by presenting some machine $D$ that takes a Turing machine $M$ and an input size in unary as input and does the opposite of $M$ if it halts.
-    We want to show that for all $M$ which run in space $f(n) \in o(t(n))$, we have an input on which $D$ and $M$ do not agree.
-    This would show that the language computed by $D$ is not in DSPACE[$o(t)$], and thus the strict containment.
-
-    On input $\langle M, 1^{k} \rangle$ our machine $D$ marks of $t(|\langle M, 1^{k} \rangle|)$ tape cells, which are the cells that are allowed for the computation.
-    Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a Turing machine can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
-    Then, we simulate $M$ on input $\langle M, 1^{k} \rangle$.
-    If we transcend any bound, we reject.
-    For all $M$ in DSPACE[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
-    On this input, the simulation finishes, and we can invert the output.
-
-    This directly gives us an input for which $M$ and $D$ differ, and thus proves our claim.
-    Furthermore, $D$ runs in DSPACE[$\mathcal{O}(t)$] as by construction we assured that we do not run infinitely and that we stay within the space bound.
-\end{proof}
-
-
 
 \section{Results concerning the Chomsky Hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
-Now that we have seen most of the required theory, we can start to apply it to the main theme of this work, the Chomsky Hierarchy.
-For this section, we define the vocabulary on strings to be $\sigma = \langle \{0, \dots, n - 1\}, Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
-The universe consists of the numbers from $0$ to $n - 1$, we have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max = n - 1$.
+
+Now that we have seen most of the required theory, we can start to apply it to the main subject of this work, the Chomsky Hierarchy.
+For this section, we define the vocabulary on strings to be $\sigma = \langle Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
+We have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.For a universe $| \mathcal{A} | = \{0, 1, \dots, n\}$, we require that $\max = n$. Also, for each $a \in \Sigma$ we have $Q_a(x)$ if and only if the $x^{th}$ character of the string is $a$.
 Again, only the results for context-sensitive languages are discussed in this section.
 Further results can be found in the context appendix under \cref{sec:descriptive-complexity-context}.
 
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages}
 
-This is the language class that interests us most, as it has be studied less extensively then other language classes.
+This is the language class that interests us most, as it has been studied less extensively than other language classes.
 Nevertheless, there are some known formalisms.
 One of them is the linear bounded nondeterministic Turing machine.
-The two directions of the proof were presented separately in~\cite{Kuroda1964} and~\cite{Landweber1963}.
-
-\begin{theorem}
-    \label{thm:nspacecontextsensitive}
-    The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic Turing machine.
-\end{theorem}
-
-\begin{proof}
-
-    For the direction from grammar to Turing machine, we only need to show that our Turing machine can simulate a derivation backwards.
-    We know that every context-sensitive language has a noncontracting grammar $G$.
-    Using this fact, we can construct a nondeterministic Turing machine $N$ which scans the current tape and whenever it recognizes a pattern of the right-hand side of a production rule in $G$, it decides whether it replaces it or not by the left-hand side of the rule.
-    If some computation branch of $N$ ends up with only the start symbol of $G$ on the tape, we accept.
-    Essentially, $N$ simulates a derivation of $w$ from the start symbol backwards.
-    Because we try all possibilities by nondeterminism, we know that if $N$ does not accept $w$, there is no derivation ending in $w$ from the start symbol of $G$.
-    As we assumed $G$ is noncontracting, replacing the right-hand side of a rule with the left-hand side never makes the word longer, and thus we only need $\mathcal{O}(|w|)$ space.
-
-    \vspace{5mm}
-
-    The other direction works by explicitly defining a grammar which simulates any linear bounded automaton backwards.
-    Without loss of generality, we include an end marker $\#$.
-
-    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a NSPACE[$\mathcal{O}(n)$] Turing machine.
-    Then, we construct a grammar $G = \langle V, \Sigma, P, S \rangle$ with $V = \bigcup_{q_i \in Q} \bigcup_{a_j \in \Gamma} \{b_{q_i, a_j}\} \cup \{S, L, R, \#\} \cup \bigcup_{a_w \in \Gamma \setminus \Sigma} \{a_w\}$.
-    The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition we also have the start state, the end marker and some utility non-terminals.
-
-    We now add the following rules to $P$:
-    \begin{itemize}
-        \setlength\itemsep{0.2em}
-        \item For each $a_i \in \Gamma$, we add a rule $S \to Lb_{q_{accept}, a_i}R$ to $P$.
-        These rules mean that we are in a final accept state.
-        To extend the final tape, we add again for each $a_i \in \Gamma$ the rules $L \to La_i$, $L \to \#$, $R \to a_{i}R$ and $R \to \#$ to our rule set.
-        These rules allow derivations from $S$ to an end tape of the form $\#a_{i_1}\dots b_{q_{accept}, a_{i_j}}\dots a_{i_k}\#$.
-        \item For each rule $\langle a_k, q_l, L \rangle \in \delta(q_i, a_j)$, we add rule $b_{a_w, q_l}a_k \to a_{w}b_{a_j, q_i}$ for every $a_w \in \Gamma$.
-        Similarly, for each rule $\langle a_k, q_l, R \rangle \in \delta(q_i, a_j)$, we add rule $a_{k}b_{a_w, q_l} \to b_{a_j, q_i}a_{w}$ for every $a_w \in \Gamma$.
-        We can clearly see that these rules simulate the nondeterministic Turing machine backwards.
-        \item For the start, we include $\#b_{a_i, q_0} \to \#a_i$ for all $a_i \in \Sigma$
-        This rule allows us to say that we are at the start of our computation and ``remove'' the read-write head to get our initial input word.
-    \end{itemize}
-    As for any word in $G$ we can follow back the derivation to an accepting state, we have that both $N$ and $G$ define the same language.
-
-    Thus, we are done and have proven the equivalence of context-sensitive languages and linear bounded automata.
-\end{proof}
-
-Now that we showed this equivalence, we will show that the context-sensitive languages are equivalent to the languages definable in MSO(TC), where we supplement monadic second-order logic with a transitive closure operator.
-
-For this, we first define the transitive closure of a formula.
+This first equivalence is shown in \cref{subsec:des-context-sensitive-languages}.
+The second formalism is given by the logic MSO(TC).
+This logic is defined as second-order logic restricted to quantification over unary relations supplemented with a transitive closure operator.
+The transitive closure operator takes the transitive closure over some graph and is defined as follows:
 
 \begin{define}[Transitive closure]
     Let $\phi\left(\overset{k}{a}, \overset{k}{b}\right)$ be a formula with $2k$ free variables.
-    We can see this formula as an edge relation over the graph with vertices $\overset{k}{c}$.
-    Then, the transitive closure of the formula $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$ is true if and only if there is a path in the $\overset{k}{c}$ graph from $\overset{k}{u}$ to $\overset{k}{v}$ using edges from $\phi$.
-    Equivalently, we can also define it to be the minimal relation such that if $R(x, y)$ and $R(y, z)$, then $R(x, z)$.
+    We can see this formula as a directed edge relation over the graph with vertices $\overset{k}{c} \in | \mathcal{A} |^{k}$.
+    Then, the transitive closure $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$ is true if and only if there is a path in the graph generated by $\phi$ from $\overset{k}{u}$ to $\overset{k}{v}$.
 \end{define}
 
 \begin{theorem}
@@ -287,28 +184,25 @@ For this, we first define the transitive closure of a formula.
 \end{theorem}
 
 \begin{proof}
-    We use~\cref{thm:nspacecontextsensitive} and show the equivalence of MSO(TC) and NSPACE[$\mathcal{O}(n)$] Turing machines.
-    Then the theorem will follow immediately.
+    By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of MSO(TC) and NSPACE$[\mathcal{O}(n)]$ Turing machines.
 
-    First, we show that any formula in MSO(TC) can be evaluated by NSPACE[$\mathcal{O}(n)$] Turing machine.
+    First, we show that any formula in MSO(TC) can be evaluated by  a NSPACE$[\mathcal{O}(n)]$ Turing machine.
     The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
-    So, for any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertex.
-    Then, we can check if the transition is valid by evaluating phi.
-    We can repeat this process until we reach $\overset{k}{v}$.
-    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that there is also a NSPACE[$\mathcal{O}(n)$] Turing machine that computes any formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
-    The other parts of the formula can be evaluated easily in linear space as we just need to write down relations when quantifying and otherwise remember in which part of the constant-size formula we are at this moment.
+    For any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertex on the tape.
+    Then, we can check if the transition is valid by evaluating $\phi$.If it is, we replace $\overset{k}{u}$ with the new vertex and repeat until we reach $\overset{k}{v}$.
+    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that we can also compute any sub-formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
+    The other parts of the formula can be evaluated easily in linear space, as we just need to write down relations when quantifying and remember in which part of the constant-size formula we are.
 
     \vspace{5mm}
 
-    For the other direction, consider a NSPACE[$\mathcal{O}(n)$] Machine $N$.
-    As in the previous proof with the grammars, we enrich our logic with new symbols $b_{a_i, q_i}$ for all pairs of states and symbols, which means that we add a relation $Q_{b}$ for all such $b$ to our vocabulary.
+    For the other direction, consider a NSPACE$[\mathcal{O}(n)]$ Turing machine $N$.
+    We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states.
 
-
-    Now consider a tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$.
+    Consider the tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$ containing a unary relation for each symbol in $\Sigma$.
     This tuple completely represents an instantaneous configuration of the tape and the machine.
     We can now write a formula $\varphi(\overline{X}, \overline{Y})$ which means that a transition from state $\overline{X}$ to $\overline{Y}$ is possible in $N$.
     This can be done by a big disjunction over all rules of $N$.
-    As a transition a new character $b_i$ is only determined by the actual character and the two characters left and right of it\footnote{we include end markers for this to work without modification for the ends of the tape}, we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
+    After one step of a Turing machine, a character $b$ at position $x$ is only determined by the actual character at position $x$ and the two characters left and right of it\footnote{we include markers at the two ends of the tape, which makes this well-defined}.This means that we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
     If $P$ is the set of all transitions, we have
     \begin{multline*}
         \varphi(\overline{X}, \overline{Y}) \equiv \exists i \left(\forall j \left(|i - j| > 1 \to \bigwedge_{b_i}\left(Y_{Q_{b_i}}(j) \leftrightarrow X_{Q_{b_i}}(j)\right)\right) \land \right. \\
@@ -317,9 +211,9 @@ For this, we first define the transitive closure of a formula.
     The first line asserts that apart from the indices where the head is and thus where we change something, the tape stays unchanged.
     The second line tells us that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
 
-    Now, we can take the transitive closure over $\varphi$, starting with the input relations, and ending at an accepting position.
-    Without loss of generality we can assume that $N$ clears its tape after accepting, so the end position is unique.
-    Now, our formula of the transitive closure over $\varphi$ holds if and only if there is an accepting path in $N$ starting at the input word $w$.
+    Now, we can take the transitive closure over $\varphi$, starting with the start configuration and ending at an accepting position.
+    Without loss of generality, we can assume that $N$ clears its tape after accepting, so the end position is unique.
+   Thus, our formula holds if and only if there is an accepting path in $N$ on the  input word $w$.
 
     This concludes the equivalence of MSO(TC) and context-sensitive languages.
 \end{proof}
@@ -336,4 +230,3 @@ An interesting normal form for MSO(TC) can be derived from the proof.
     We have given an explicit way to convert any formula into a Turing machine and back in \cref{thm:contextsensitveMSOTC}.
     By construction this always gives us a formula of the required form.
 \end{proof}
-

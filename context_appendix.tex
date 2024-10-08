@@ -73,6 +73,43 @@ For the characterization using logic, again refer to~\cref{subsec:des-recursive-
 
 \section{Descriptive Complexity}\label{sec:descriptive-complexity-context}
 
+\subsection{Ehrenfeucht-Fraïssé Games}\label{subsec:ehrenfeucht-fraisse-games}
+
+Ehrenfeucht-Fraïssé games are combinatorial games which have a strong connection to first-order formulas and their extensions.
+Using these games, it is often possible to show inexpressibility results for certain problems in some logic $\mathcal{L}$.
+
+As a motivation, we can look at what it means for a formula to hold on some structure.
+Assume the formula has the form $\forall x\varphi$.
+This can be seen as some opponent choosing some element $a \in |\mathcal{A}|$ and us then needing to show that $\varphi(x / a)$ holds.
+The case where the formula has the form $\exists x\psi$ can be treated similarly, but we can select the element ourselves.
+
+\begin{define}[Ehrenfeucht-Fraïssé Game]
+    The \emph{$k$-pebble Ehrenfeucht-Fraïssé Game $\mathcal{G}_k$} is played by two players, the Spoiler and the Duplicator, on a pair of structures $\mathcal{A}$ and $\mathcal{B}$ using $k$ pairs of pebbles.
+    In each move, the Spoiler places one of the remaining pebbles on an element of one of the two structures.
+    Then, the Duplicator tries to match the move by placing the corresponding pebble on an element of the other structure.
+    For a pebbled element $x$ in $\mathcal{A}$, we denote by $p(x)$ the corresponding pebbled element in $\mathcal{B}$.
+    We say that the Duplicator wins the $k$-pebble Ehrenfeucht-Fraïssé Game on $\mathcal{A}, \mathcal{B}$ if after the $k$ rounds, the map $i : |\mathcal{A}| \to |\mathcal{B}|$ defined as
+    \[
+        i(x) = \begin{cases}
+                   c_{j}^{\mathcal{B}} & x = c_{j}^{\mathcal{A}} \\
+                   p(x) & x\text{ is pebbled}\\
+                   undefined & \text{otherwise}
+        \end{cases}
+    \]
+    is a partial isomorphism.
+    A partial isomorphism is an isomorphism over some subset of the universe with all relations restricted to that subset.
+\end{define}
+
+In the Ehrenfeucht-Fraïssé Game, the Spoiler wants to show that $\mathcal{A}$ and $\mathcal{B}$ are different, whereas the Duplicator wants to show that they are equivalent.
+
+As this is a zero-sum game with full information, one of the two players must have a winning strategy.
+It can be proven that the Duplicator has a winning strategy for the $k$-pebble Ehrenfeucht-Fraïssé on $\mathcal{A}$ and $\mathcal{B}$ if and only if $\mathcal{A}$ and $\mathcal{B}$ agree on all formulas with at most $k$ nested quantifiers.
+We can use these facts to prove the inexpressibility of some problems in first-order logic.
+Assume we have a decision problem $\mathcal{C}$.
+If we can exhibit two structures $\mathcal{A}_k \in \mathcal{C}$ and $\mathcal{B}_k \not \in \mathcal{C}$ for each $k$ and a winning strategy for the Duplicator on these two structures, we show that no first-order formula defining $\mathcal{C}$ can exist.
+This methodology can be extended to other logics by adding new moves or restrictions to the game.
+
+
 \subsection{Reduction and Completeness}\label{subsec:reduction}
 
 A reduction can informally be seen as a method of using a problem we already solved to solve a new problem by converting this new problem into an instance of the old problem.
@@ -111,6 +148,36 @@ These proofs follow the following steps as in~\cite{descriptive-complexity}:
     \item Find a formula for $T$ in $\mathcal{L}$, which shows $T \in \mathcal{L}$.
 \end{enumerate}
 The above steps work, as for any problem $B$ in $\mathcal{C}$, there is a first-order reduction $I$ to $T$, and both $\mathcal{L}$ and $\mathcal{C}$ are complete via these reductions, so we also have $B \in \mathcal{L} = \mathcal{C}$.
+
+\subsection{Space Hierarchy Theorem}\label{subsec:space-hierarchy-theorem}
+
+The Space Hierarchy Theorem states that for both nondeterministic and deterministic space, we have problems that can be solved using $t(n)$ space, but not with any tighter space bound.
+Formally, we have
+\[
+    \text{DSPACE}[o(t)] \subsetneq \text{DSPACE}[\mathcal{O}(t)]
+\]
+where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
+This holds for all space constructible $t \geq \log n$.
+The same holds for NSPACE\@.
+
+We will present a proof for deterministic space.
+\begin{proof}
+    The proof uses a diagonalization argument by presenting some machine $D$ that takes a Turing machine $M$ and an input size in unary as input and does the opposite of $M$ if it halts.
+    We want to show that for all $M$ which run in space $f(n) \in o(t(n))$, we have an input on which $D$ and $M$ do not agree.
+    This would show that the language computed by $D$ is not in DSPACE[$o(t)$], and thus the strict containment.
+
+    On input $\langle M, 1^{k} \rangle$ our machine $D$ marks of $t(|\langle M, 1^{k} \rangle|)$ tape cells, which are the cells that are allowed for the computation.
+    Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a Turing machine can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
+    Then, we simulate $M$ on input $\langle M, 1^{k} \rangle$.
+    If we transcend any bound, we reject.
+    For all $M$ in DSPACE[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
+    On this input, the simulation finishes, and we can invert the output.
+
+    This directly gives us an input for which $M$ and $D$ differ, and thus proves our claim.
+    Furthermore, $D$ runs in DSPACE[$\mathcal{O}(t)$] as by construction we assured that we do not run infinitely and that we stay within the space bound.
+\end{proof}
+
+
 
 \subsection{Regular Languages}\label{subsec:des-regular-languages}
 
@@ -367,6 +434,53 @@ Now, we can start with the proof of our theorem.
     \[w \models \varphi \Leftrightarrow \text{there exists a tree $T$ with yield $w$ such that } T \models \Upsilon \land \gamma \]
     Thus, we have proved both directions and see that the context free languages are exactly captured by FO($\exists$Match)
 \end{proof}
+
+\subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages}
+
+Here, we show the equivalence between context-sensitive languages and nondeterministic Turing machines using $\mathcal{O}(n)$ space.
+The two directions of the proof were presented separately in~\cite{Kuroda1964} and~\cite{Landweber1963}.
+
+\begin{theorem}
+    \label{thm:nspacecontextsensitive}
+    The class of context-sensitive languages is exactly the class of languages accepted by a linear bounded nondeterministic Turing machine.
+\end{theorem}
+
+\begin{proof}
+    For the direction from grammar to Turing machine, we only need to show that our Turing machine can simulate a derivation backwards.
+    We know that every context-sensitive language has a noncontracting grammar $G$.
+    Using this fact, we can construct a nondeterministic Turing machine $N$ which scans the current tape and whenever it recognizes a pattern of the right-hand side of a production rule in $G$, it decides whether it replaces it or not by the left-hand side of the rule.
+    If some computation branch of $N$ ends up with only the start symbol of $G$ on the tape, we accept.
+    Essentially, $N$ simulates a derivation of $w$ from the start symbol backwards.
+    Because we try all possibilities by nondeterminism, we know that if $N$ does not accept $w$, there is no derivation ending in $w$ from the start symbol of $G$.
+    As we assumed $G$ is noncontracting, replacing the right-hand side of a rule with the left-hand side never makes the word longer, and thus we only need $\mathcal{O}(|w|)$ space.
+
+    \vspace{5mm}
+
+    The other direction works by explicitly defining a grammar which simulates any linear bounded automaton backwards.
+    Without loss of generality, we include an end marker $\#$.
+
+    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a NSPACE[$\mathcal{O}(n)$] Turing machine.
+    Then, we construct a grammar $G = \langle V, \Sigma, P, S \rangle$ with $V = \bigcup_{q_i \in Q} \bigcup_{a_j \in \Gamma} \{b_{q_i, a_j}\} \cup \{S, L, R, \#\} \cup \bigcup_{a_w \in \Gamma \setminus \Sigma} \{a_w\}$.
+    The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition we also have the start state, the end marker and some utility non-terminals.
+
+    We now add the following rules to $P$:
+    \begin{itemize}
+        \setlength\itemsep{0.2em}
+        \item For each $a_i \in \Gamma$, we add a rule $S \to Lb_{q_{accept}, a_i}R$ to $P$.
+        These rules mean that we are in a final accept state.
+        To extend the final tape, we add again for each $a_i \in \Gamma$ the rules $L \to La_i$, $L \to \#$, $R \to a_{i}R$ and $R \to \#$ to our rule set.
+        These rules allow derivations from $S$ to an end tape of the form $\#a_{i_1}\dots b_{q_{accept}, a_{i_j}}\dots a_{i_k}\#$.
+        \item For each rule $\langle a_k, q_l, L \rangle \in \delta(q_i, a_j)$, we add rule $b_{a_w, q_l}a_k \to a_{w}b_{a_j, q_i}$ for every $a_w \in \Gamma$.
+        Similarly, for each rule $\langle a_k, q_l, R \rangle \in \delta(q_i, a_j)$, we add rule $a_{k}b_{a_w, q_l} \to b_{a_j, q_i}a_{w}$ for every $a_w \in \Gamma$.
+        We can clearly see that these rules simulate the nondeterministic Turing machine backwards.
+        \item For the start, we include $\#b_{a_i, q_0} \to \#a_i$ for all $a_i \in \Sigma$
+        This rule allows us to say that we are at the start of our computation and ``remove'' the read-write head to get our initial input word.
+    \end{itemize}
+    As for any word in $G$ we can follow back the derivation to an accepting state, we have that both $N$ and $G$ define the same language.
+
+    Thus, we are done and have proven the equivalence of context-sensitive languages and linear bounded automata.
+\end{proof}
+
 
 \subsection{Recursive Languages}\label{subsec:des-recursive-languages}
 
