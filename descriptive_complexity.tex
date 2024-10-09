@@ -21,14 +21,14 @@ Further, Descriptive Complexity has applications in database theory, computer ai
 \section{Tools}\label{sec:tools}
 
 As always, we first need to present some tools and techniques which will be used later for proofs.
-In this section, we will only present Complexity Theory.
+In this section, we will only present Complexity theory.
 In \cref{subsec:ehrenfeucht-fraisse-games} and \cref{subsec:reduction}, we also present Ehrenfeucht-Fraïssé games and first-order reductions.
 These tools are not needed for \cref{ch:personal-contribution}, but using them was tried extensively during the research phase.
 Definition are again taken from~\cite{theory-cs} and~\cite{descriptive-complexity}.
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
 
-Complexity Theory is the study of the resources, measured mostly in time and space, needed to compute certain classes of problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines.}.
+Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain classes of problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines.}.
 As different computers can handle tasks at various speeds, a notation which only considers the asymptotic use of resources is used.
 
 \begin{define}[Big-O notation]
@@ -66,12 +66,12 @@ The complexity class P has a special meaning for computer scientists, as the pro
 
 \section{Important Results}\label{sec:important-results}
 
-In this section, we will only introduce Savitch's Theorem.
+In this section, we will only introduce Savitch's theorem.
 In \cref{subsec:space-hierarchy-theorem}, we also present the space hierarchy theorem.
 
 \subsection{Quadratic simulation of nondeterministic Turing machines using deterministic Turing machines}\label{subsec:nspacesubsetdspacesquared}
 
-This result is part of Savitch's Theorem, which introduces alternating Turing machines as an intermediate step.
+This result is part of Savitch's theorem, which introduces alternating Turing machines as an intermediate step.
 These Turing machines are a generalization of nondeterministic Turing machines, which can be seen as machines taking the ``or'' over all their computation paths.
 
 \begin{define}[Alternating Turing Machine]
@@ -85,7 +85,7 @@ In addition to taking the ``or'' over its children, an alternating Turing machin
 
 \sloppy We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$.
 
-We can proceed to the (quite technical) proof of Savitch's Theorem using the technique presented in~\cite{descriptive-complexity}.
+We can proceed to the (quite technical) proof of Savitch's theorem using the technique presented in~\cite{descriptive-complexity}.
 \begin{theorem}[Savitch's Theorem]
     For all space constructible functions with $t(n) \geq \log n$ we have
     \[

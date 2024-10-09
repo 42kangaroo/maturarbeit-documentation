@@ -99,12 +99,12 @@ This would happen because we do not know which combinations are possible, as we 
 One way to fix this is by remembering the nondeterministic choices we made in the previous steps.
 This would make the values deterministic again, fixing the issue.
 In the worst case, this would take $\mathcal{O}(2^{cn^k})$ additional bits.
-But we already know by Savitch's Theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for DSPACE that we only need $\log(n) \cdot (k + 2)$ bits to represent a NSPACE$[n^k]$ computation.
+But we already know by Savitch's theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for DSPACE that we only need $\log(n) \cdot (k + 2)$ bits to represent a NSPACE$[n^k]$ computation.
 
 Let VAR$[r(n)]$ be the generalization of VAR$[k]$ which means that a total of $r(n) + \mathcal{O}(1)$ bits of variables are allowed.
-Any proof which would show that NSPACE$[n^k]$ can be expressed in VAR$[r(n)]$ with $\log(n) \cdot (k + 1) \leq r(n) < \log(n) \cdot (k + 2)$ would be an improvement on Savitch's Theorem.
+Any proof which would show that NSPACE$[n^k]$ can be expressed in VAR$[r(n)]$ with $\log(n) \cdot (k + 1) \leq r(n) < \log(n) \cdot (k + 2)$ would be an improvement on Savitch's theorem.
 That is because the proof for DSPACE$[n^k]$ can easily be extended to more general polynomial functions, as Immerman showed in~\cite{Immerman1999}.
-Actually, this is a two-way relationship: if Savitch's Theorem can be improved, we can describe NSPACE with less than $k + 2$ variables and unbounded iterations.
+Actually, this is a two-way relationship: if Savitch's theorem can be improved, we can describe NSPACE with less than $k + 2$ variables and unbounded iterations.
 
 
 
@@ -123,7 +123,7 @@ For this to contain NSPACE$[s(n)]$, for any formula of the form $(\text{TC}_{a, 
     \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv (\text{TC}_{a, b}\varphi)(c, d)
 \]
 We know that we can simulate any TC formula with variables of size $r(n)$ using $r(n)$ iterations of a quantifier block.
-This is done by the technique of halving paths used in Savitch's Theorem.
+This is done by the technique of halving paths used in Savitch's theorem.
 An exact formula achieving this is presented in \cref{sec:restricting-universal-quantification}.
 Thus, we find an equivalent formula
 \[
@@ -149,8 +149,8 @@ Now, there are multiple cases
 \end{description}
 
 We thus get that any improvement on our simulation results happen only when we have less than $s(n)$ variable bits.
-Using Savitch's Theorem once more, we also get that $r(n) > \sqrt{n}$.
-Another result is that Savitch's Theorem can be improved if $t(n)r(n) < s(n)^2$ as
+Using Savitch's theorem once more, we also get that $r(n) > \sqrt{n}$.
+Another result is that Savitch's theorem can be improved if $t(n)r(n) < s(n)^2$ as
 \[
     \text{FO-VAR}[t(n), r(n)/\log(n)] \subset \text{DSPACE}[t(n)r(n)]
 \]
@@ -164,7 +164,7 @@ We will denote boolean variables by $b_j$.
 Further, the requirement of the $M_i$ to be quantifier-free is dropped.
 This step was motivated by the fact that nondeterministic Turing machines in essence capture existential quantification.
 
-We use a similar idea to the one used in Savitch's Theorem, guessing the middle of a path and checking if both shorter paths are connected.
+We use a similar idea to the one used in Savitch's theorem, guessing the middle of a path and checking if both shorter paths are connected.
 A formula in FO$\exists$-VAR$[s(n), s(n)/\log(n)]$ which is equivalent to a formula in FO-VAR$[1, s(n)/\log(n)]$(TC) of the form $\left( TC_{\overline{X}, \overline{Y}}\varphi \right)(\overline{C}, \overline{D})$ is
 \[
     \begin{aligned}
@@ -199,7 +199,7 @@ As for simulating this formula with a Turing machine, the product of the number 
 
 \section{Alternating bounds}\label{sec:alternating-bounds}
 
-In the proof of Savitch's Theorem, we use alternating Turing machines as an intermediate step for proving that NSPACE$[s(n)]$ is a subset of DSPACE$[s(n)^2]$.
+In the proof of Savitch's theorem, we use alternating Turing machines as an intermediate step for proving that NSPACE$[s(n)]$ is a subset of DSPACE$[s(n)^2]$.
 We can also add another intermediate step using FO-VAR$[s(n), s(n)/\log(n)]$ with the method shown in \cref{sec:restricting-universal-quantification}.
 It is also quite easy to simulate any formula in FO-VAR$[t(n), s(n)/\log(n)]$ with an alternating Turing machine in ATSR$[t(n)s(n), s(n), t(n)]$, where in this new class ATSR, we specify \emph{t}ime, \emph{s}pace and \emph{r}eversals.
 With reversals, we mean the number of times we switch from universal states to existential states and back.
@@ -229,7 +229,7 @@ Next, if we are not done yet, we first existentially guess the next configuratio
 In $M_2$ we either retain this existentially guessed next state if we are in an existential state (thus effectively doing nothing) or ignore the existentially quantified state and just quantify universally over all states which are connected to the current one.
 The last thing we do is copying $\overline{B}$ to $\overline{X}$, making it the new start of our path.
 
-By combining the above techniques for switching between universal and existential quantification with the path-halving method from Savitch's Theorem, we get an even stronger result.
+By combining the above techniques for switching between universal and existential quantification with the path-halving method from Savitch's theorem, we get an even stronger result.
 
 From now on, we will refer to configurations as vertices to emphasize that we are searching for paths on a graph.
 On a high level, our plan is to do the following:
