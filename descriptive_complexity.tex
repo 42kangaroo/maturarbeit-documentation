@@ -1,5 +1,7 @@
 %! suppress = UnresolvedReference
 %! suppress = MissingImport
+
+
 \chapter{Descriptive Complexity}\label{ch:descriptive-complexity}
 
 
@@ -67,7 +69,7 @@ The complexity class P has a special meaning for computer scientists, as the pro
 In this section, we will only introduce Savitch's Theorem.
 In \cref{subsec:space-hierarchy-theorem}, we also present the space hierarchy theorem.
 
-\subsection{NSPACE$[\mathcal{O}(s(n))]$ $\subseteq$ DSPACE$[\mathcal{O}(s(n)^2)]$}\label{subsec:nspacesubsetdspacesquared}
+\subsection{Quadratic simulation of nondeterministic Turing machines using deterministic Turing machines}\label{subsec:nspacesubsetdspacesquared}
 
 This result is part of Savitch's Theorem, which introduces alternating Turing machines as an intermediate step.
 These Turing machines are a generalization of nondeterministic Turing machines, which can be seen as machines taking the ``or'' over all their computation paths.
@@ -98,7 +100,7 @@ We can proceed to the (quite technical) proof of Savitch's Theorem using the tec
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
     Consider $G_w$, the computation graph of $N$ on input $w$.
-This graph consists of configurations as vertices and directed edges from each configuration to all configurations that are directly reachable from it.
+    This graph consists of configurations as vertices and directed edges from each configuration to all configurations that are directly reachable from it.
     We see that $N$ accepts $w$ if and only if there is a path from the start configuration $s$ to the accepting configuration $t$ in $G_w$.
     We now present a routine $P(d, x, y)$ which asserts that there is a path of length at most $2^{d}$ from vertex $x$ to $y$.
     Inductively, we can define $P$ as follows:
@@ -106,21 +108,22 @@ This graph consists of configurations as vertices and directed edges from each c
         P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
     \]
     This formula asserts that there exists a middle vertex $z$ for which there is a $2^{d - 1}$ path from $x$ to $z$ and from $z$ to $y$.
-The base case for $d = 0$ is to check if we can reach $x$ from $y$ by a transition in the transition table of $N$.
+    The base case for $d = 0$ is to check if we can reach $x$ from $y$ by a transition in the transition table of $N$.
     Using an alternating Turing machine, we can evaluate the formula using existential states to find the middle vertex $z$, and then a universal state choosing which one of the two new paths we check.
 
-For the runtime analysis, we proceed as follows.   It takes $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as each configuration includes the tape contents, which have length $\mathcal{O}(t(n))$.
+    For the runtime analysis, we proceed as follows.
+    It takes $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as each configuration includes the tape contents, which have length $\mathcal{O}(t(n))$.
     Further, we then evaluate one of the new shorter paths $P(d - 1, z, y)$.
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
     There are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
-\vspace{5mm}
+    \vspace{5mm}
     \sloppy For the second inclusion, we need to simulate an ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
     Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
     We can systematically search this computation graph to get our answer.
     This is done by keeping a string of choices $c_{1}c_{2}\dots c_r$ of length $\mathcal{O}(s(n))$ made until this point.
-Each choice takes up $\mathcal{O}(1)$ place, as the number of transitions from one state is bounded by a constant depending only on $A$.
+    Each choice takes up $\mathcal{O}(1)$ place, as the number of transitions from one state is bounded by a constant depending only on $A$.
     Note that this uniquely determines which state we are in.
 
     Now, we can find the answer recursively.
@@ -158,7 +161,8 @@ From this theorem, we also get the following interesting corollary.
 
 Now that we have seen most of the required theory, we can start to apply it to the main subject of this work, the Chomsky Hierarchy.
 For this section, we define the vocabulary on strings to be $\sigma = \langle Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
-We have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.For a universe $| \mathcal{A} | = \{0, 1, \dots, n\}$, we require that $\max = n$. Also, for each $a \in \Sigma$ we have $Q_a(x)$ if and only if the $x^{th}$ character of the string is $a$.
+We have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.
+For a universe $| \mathcal{A} | = \{0, 1, \dots, n\}$, we require that $\max = n$. Also, for each $a \in \Sigma$ we have $Q_a(x)$ if and only if the $x^{th}$ character of the string is $a$.
 Again, only the results for context-sensitive languages are discussed in this section.
 Further results can be found in the context appendix under \cref{sec:descriptive-complexity-context}.
 
@@ -186,10 +190,11 @@ The transitive closure operator takes the transitive closure over some graph and
 \begin{proof}
     By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of MSO(TC) and NSPACE$[\mathcal{O}(n)]$ Turing machines.
 
-    First, we show that any formula in MSO(TC) can be evaluated by  a NSPACE$[\mathcal{O}(n)]$ Turing machine.
+    First, we show that any formula in MSO(TC) can be evaluated by a NSPACE$[\mathcal{O}(n)]$ Turing machine.
     The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
     For any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertex on the tape.
-    Then, we can check if the transition is valid by evaluating $\phi$.If it is, we replace $\overset{k}{u}$ with the new vertex and repeat until we reach $\overset{k}{v}$.
+    Then, we can check if the transition is valid by evaluating $\phi$.
+    If it is, we replace $\overset{k}{u}$ with the new vertex and repeat until we reach $\overset{k}{v}$.
     Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that we can also compute any sub-formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
     The other parts of the formula can be evaluated easily in linear space, as we just need to write down relations when quantifying and remember in which part of the constant-size formula we are.
 
@@ -202,7 +207,8 @@ The transitive closure operator takes the transitive closure over some graph and
     This tuple completely represents an instantaneous configuration of the tape and the machine.
     We can now write a formula $\varphi(\overline{X}, \overline{Y})$ which means that a transition from state $\overline{X}$ to $\overline{Y}$ is possible in $N$.
     This can be done by a big disjunction over all rules of $N$.
-    After one step of a Turing machine, a character $b$ at position $x$ is only determined by the actual character at position $x$ and the two characters left and right of it\footnote{we include markers at the two ends of the tape, which makes this well-defined}.This means that we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
+    After one step of a Turing machine, a character $b$ at position $x$ is only determined by the actual character at position $x$ and the two characters left and right of it\footnote{we include markers at the two ends of the tape, which makes this well-defined}.
+    This means that we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
     If $P$ is the set of all transitions, we have
     \begin{multline*}
         \varphi(\overline{X}, \overline{Y}) \equiv \exists i \left(\forall j \left(|i - j| > 1 \to \bigwedge_{b_i}\left(Y_{Q_{b_i}}(j) \leftrightarrow X_{Q_{b_i}}(j)\right)\right) \land \right. \\
@@ -213,7 +219,7 @@ The transitive closure operator takes the transitive closure over some graph and
 
     Now, we can take the transitive closure over $\varphi$, starting with the start configuration and ending at an accepting position.
     Without loss of generality, we can assume that $N$ clears its tape after accepting, so the end position is unique.
-   Thus, our formula holds if and only if there is an accepting path in $N$ on the  input word $w$.
+    Thus, our formula holds if and only if there is an accepting path in $N$ on the input word $w$.
 
     This concludes the equivalence of MSO(TC) and context-sensitive languages.
 \end{proof}
