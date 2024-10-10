@@ -15,20 +15,19 @@ Different forms of logic have the power to describe different classes of problem
 By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
 
 Using these results, many insights into the underlying structure of real-world problems can be made, which in turn can give us better ways to tackle them.
-Further, Descriptive Complexity has applications in database theory, computer aided verification, and proofs.
-
+Further, Descriptive Complexity has applications in database theory, computer-aided verification, and proofs. %TODO rewrite this for more roter faden
 
 \section{Tools}\label{sec:tools}
 
-As always, we first need to present some tools and techniques which will be used later for proofs.
+We first need to present some tools and techniques which are used later for proofs.
 In this section, we will only present Complexity theory.
 In \cref{subsec:ehrenfeucht-fraisse-games} and \cref{subsec:reduction}, we also present Ehrenfeucht-Fraïssé games and first-order reductions.
 These tools are not needed for \cref{ch:personal-contribution}, but using them was tried extensively during the research phase.
-Definition are again taken from~\cite{theory-cs} and~\cite{descriptive-complexity}.
+Definitions are again taken from~\cite{theory-cs} and~\cite{descriptive-complexity}.
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
 
-Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain classes of problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines.}.
+Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain classes of problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines, which are defined in \cref{sec:turing-machines}.}.
 As different computers can handle tasks at various speeds, a notation which only considers the asymptotic use of resources is used.
 
 \begin{define}[Big-O notation]
@@ -37,7 +36,7 @@ As different computers can handle tasks at various speeds, a notation which only
     We say that $f(n) \in \mathcal{O}(g(n))$ if there exists positive integers $n_0, c$ such that for all $n \geq n_0$ we have \[f(n) \leq c\cdot g(n)\]
 \end{define}
 
-Complexity classes can be defined as the set of all the problems for which there exists a Turing machine satisfying some bounds that computes the answer to the problem.
+Complexity classes can be defined as the set of all problems for which there exists a Turing machine satisfying some bounds that computes the answer to the problem.
 Now, we will define some common complexity classes.
 
 \begin{define}
@@ -46,7 +45,7 @@ Now, we will define some common complexity classes.
 \end{define}
 
 \begin{define}[P]
-    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME$[\mathcal{O}(q(n))]$
+    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME$[\mathcal{O}(q(n))]$.
 \end{define}
 
 \begin{define}
@@ -55,10 +54,10 @@ Now, we will define some common complexity classes.
 \end{define}
 
 \begin{define}[PSPACE]
-    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE$[\mathcal{O}(q(n))]$
+    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE$[\mathcal{O}(q(n))]$.
 \end{define}
 
-We can go do the same for nondeterministic Turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
+We can do the same for nondeterministic Turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
 There, we always take the maximum of tape cells and steps over any computation branch.
 
 The complexity class P has a special meaning for computer scientists, as the problems in P are deemed ``feasible'' on modern computers.
@@ -66,7 +65,7 @@ The complexity class P has a special meaning for computer scientists, as the pro
 
 \section{Important Results}\label{sec:important-results}
 
-In this section, we will only introduce Savitch's theorem.
+In this section, we will only introduce Savitch's theorem, which Savitch presented in \cite{Savitch1970}.
 In \cref{subsec:space-hierarchy-theorem}, we also present the space hierarchy theorem.
 
 \subsection{Savitch's Theorem}\label{subsec:nspacesubsetdspacesquared}
@@ -77,16 +76,16 @@ These Turing machines are a generalization of nondeterministic Turing machines, 
 
 \begin{define}[Alternating Turing Machine]
     An alternating Turing machine is a Turing machine with two types of states: existential and universal.
-    The accepting conditions change compared to a nondeterministic Turing machine and depend on the current state of the machine.
+    The accepting conditions change compared to a nondeterministic Turing machine and depend on the current state of the alternating Turing machine.
     If it is in an existential state, the current configuration is accepting if and only if \emph{at least one} of the directly reachable configurations is accepting.
-    If the machine is in a universal state, the current configuration is accepting if and only \emph{all} the directly reachable configurations are accepting.
+    If the machine is in a universal state, the current configuration is accepting if and only if \emph{all} the directly reachable configurations are accepting.
 \end{define}
 
 In addition to taking the ``or'' over its children, an alternating Turing machine can also take the ``and''.
 
-\sloppy We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$.
+\sloppy We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$ in \cref{subsec:complexity-theory}.
 
-We can proceed to the (quite technical) proof of Savitch's theorem using the technique presented in~\cite{descriptive-complexity}.
+We can proceed to the proof of Savitch's theorem using the technique presented in~\cite{descriptive-complexity}.
 \begin{theorem}[Savitch's Theorem]
     For all space constructible functions with $t(n) \geq \log n$ we have
     \[
@@ -96,7 +95,7 @@ We can proceed to the (quite technical) proof of Savitch's theorem using the tec
 
 \begin{proof}
     We start with the first inclusion, $\text{NSPACE$[\mathcal{O}(t(n))]$} \subseteq \text{ATIME$[\mathcal{O}(t(n)^2)]$}$.
-    We need to show that any NSPACE$[\mathcal{O}(t(n))]$ Turing machine can be simulated by a ATIME$[\mathcal{O}(t(n)^2)]$ alternating Turing machine.
+    We need to show that any NSPACE$[\mathcal{O}(t(n))]$ Turing machine can be simulated by an ATIME$[\mathcal{O}(t(n)^2)]$ alternating Turing machine.
     Let $N$ be a NSPACE$[\mathcal{O}(t(n))]$ Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
@@ -104,7 +103,7 @@ We can proceed to the (quite technical) proof of Savitch's theorem using the tec
     This graph consists of configurations as vertices and directed edges from each configuration to all configurations that are directly reachable from it.
     We see that $N$ accepts $w$ if and only if there is a path from the start configuration $s$ to the accepting configuration $t$ in $G_w$.
     We now present a routine $P(d, x, y)$ which asserts that there is a path of length at most $2^{d}$ from vertex $x$ to $y$.
-    Inductively, we can define $P$ as follows:
+    Recursively, we can define $P$ as follows:
     \[
         P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
     \]
@@ -118,7 +117,7 @@ We can proceed to the (quite technical) proof of Savitch's theorem using the tec
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
     There are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
     \vspace{5mm}
-    \sloppy For the second inclusion, we need to simulate an ATIME$[\mathcal{O}(s(n))]$ machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ machine (here, we substituted $s(n)$ for $t(n)^2$).
+    \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an ATIME$[\mathcal{O}(s(n))]$ Turing machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ Turing machine.
     Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
@@ -133,13 +132,14 @@ We can proceed to the (quite technical) proof of Savitch's theorem using the tec
     In a universal state, we simulate its children, and if we get a positive result from all of them, we report a positive result.
 
     Overall, we use only $\mathcal{O}(s(n))$ space to simulate $A$.
+    This shows that we can simulate an ATIME$[\mathcal{O}(t(n)^2)]$ Turing machine $A$ using a DSPACE$[\mathcal{O}(t(n)^2)]$ Turing machine.
 
     Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]$.
 \end{proof}
 
 We do not know if the containment is strict for any of the inclusions.
 Neither is it known if the quadratic overhead for simulating nondeterministic space is optimal.
-From this theorem, we also get the following interesting corollary.
+From this theorem, we also get the following corollary.
 
 \begin{corollary}
     We have $\text{\upshape PSPACE} = \text{\upshape NPSPACE}$.
@@ -147,12 +147,12 @@ From this theorem, we also get the following interesting corollary.
 
 \begin{proof}
     \begin{align*}
-        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NTIME}[\mathcal{O}(n^k)] \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DTIME}[\mathcal{O}(n^{2k})] \\
-        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DTIME}[\mathcal{O}(n^{k})] \\
+        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^k)] & \text{by definition} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{2k})] & \text{by Savitch's Theorem} \\
+        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{k})] & \text{by definition} \\
         &= \text{PSPACE} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NTIME}[\mathcal{O}(n^{k})] \\
-        &= \text{NPSPACE}
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^{k})] & \text{by definition} \\
+        &= \text{NPSPACE} & \text{by definition}
     \end{align*}
 \end{proof}
 
@@ -161,11 +161,13 @@ From this theorem, we also get the following interesting corollary.
 
 
 Now that we have seen most of the required theory, we can start to apply it to the main subject of this work, the Chomsky Hierarchy.
+The definitions of first- and second-order logic can be found in \cref{sec:first-order-logic} and \cref{sec:second-order-logic}.
 For this section, we define the vocabulary on strings to be $\sigma = \langle Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
-We have a unary predicate for each character in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.
-For a universe $| \mathcal{A} | = \{0, 1, \dots, n\}$, we require that $\max = n$. Also, for each $a \in \Sigma$ we have $Q_a(x)$ if and only if the $x^{th}$ character of the string is $a$.
-Again, only the results for context-sensitive languages are discussed in this section.
-Further results can be found in the context appendix under \cref{sec:descriptive-complexity-context}.
+We have a unary predicate $Q_a$ for each character $a$ in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.
+For a universe $| \mathcal{A} | = \{0, 1, \dots, n - 1\}$, we require that $\max = n - 1$.
+Also, for each $a \in \Sigma$ we have $Q_a(x)$ if and only if the $x^{th}$ character of the string is $a$.
+Only the results for context-sensitive languages are discussed in this section.
+Further results can be found in \cref{sec:descriptive-complexity-context}.
 
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages}
 
@@ -173,8 +175,10 @@ This is the language class that interests us most, as it has been studied less e
 Nevertheless, there are some known formalisms.
 One of them is the linear bounded nondeterministic Turing machine.
 This first equivalence is shown in \cref{subsec:des-context-sensitive-languages}.
-The second formalism is given by the logic MSO(TC).
-This logic is defined as second-order logic restricted to quantification over unary relations supplemented with a transitive closure operator.
+
+We define MSO(TC) to be second-order logic restricted to quantification over unary relations supplemented with the transitive closure operator.
+Then, the second formalism is given by the logic MSO(TC).
+The equivalence was established by Immerman in \cite{Immerman1987}.
 The transitive closure operator takes the transitive closure over some graph and is defined as follows:
 
 \begin{define}[Transitive closure]
@@ -201,12 +205,12 @@ The transitive closure operator takes the transitive closure over some graph and
 
     \vspace{5mm}
 
-    For the other direction, consider a NSPACE$[\mathcal{O}(n)]$ Turing machine $N$.
+    For proving the other direction, consider a NSPACE$[\mathcal{O}(n)]$ Turing machine $N$.
     We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states.
 
     Consider the tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$ containing a unary relation for each symbol in $\Sigma$.
-    This tuple completely represents an instantaneous configuration of the tape and the machine.
-    We can now write a formula $\varphi(\overline{X}, \overline{Y})$ which means that a transition from state $\overline{X}$ to $\overline{Y}$ is possible in $N$.
+    This tuple completely represents an instantaneous configuration of the tape and the Turing machine.
+    We can now write a formula $\varphi(\overline{X}, \overline{Y})$ which is true if and only if a transition from state $\overline{X}$ to $\overline{Y}$ is possible in $N$.
     This can be done by a big disjunction over all rules of $N$.
     After one step of a Turing machine, a character $b$ at position $x$ is only determined by the actual character at position $x$ and the two characters left and right of it\footnote{we include markers at the two ends of the tape, which makes this well-defined}.
     This means that we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
@@ -215,17 +219,17 @@ The transitive closure operator takes the transitive closure over some graph and
         \varphi(\overline{X}, \overline{Y}) \equiv \exists i \left(\forall j \left(|i - j| > 1 \to \bigwedge_{b_i}\left(Y_{Q_{b_i}}(j) \leftrightarrow X_{Q_{b_i}}(j)\right)\right) \land \right. \\
         \left. \bigvee_{\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{u}, b_{v}, b_{w} \rangle \in P} \left(X_{Q_{b_{k}}}(i - 1) \land X_{Q_{b_{l}}}(i) \land X_{Q_{b_{m}}}(i + 1) \land Y_{Q_{b_{u}}}(i - 1) \land Y_{Q_{b_{v}}}(i) \land Y_{Q_{b_{w}}}(i + 1) \right)\right)
     \end{multline*}
-    The first line asserts that apart from the indices where the head is and thus where we change something, the tape stays unchanged.
+    The first line asserts that apart from the indices where the head is, the tape stays unchanged.
     The second line tells us that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
 
     Now, we can take the transitive closure over $\varphi$, starting with the start configuration and ending at an accepting position.
-    Without loss of generality, we can assume that $N$ clears its tape after accepting, so the end position is unique.
+    Without loss of generality, we can assume that $N$ clears its tape after accepting, therefore the end position is unique.
     Thus, our formula holds if and only if there is an accepting path in $N$ on the input word $w$.
 
     This concludes the equivalence of MSO(TC) and context-sensitive languages.
 \end{proof}
 
-An interesting normal form for MSO(TC) can be derived from the proof.
+An interesting normal form for MSO(TC) can be derived from this proof.
 \begin{corollary}
     Every formula in MSO(TC) can be written in the form
     \[
@@ -235,5 +239,7 @@ An interesting normal form for MSO(TC) can be derived from the proof.
 
 \begin{proof}
     We have given an explicit way to convert any formula into a Turing machine and back in \cref{thm:contextsensitveMSOTC}.
-    By construction this always gives us a formula of the required form.
+    By construction, this always gives us a formula of the required form.
 \end{proof}
+
+% TODO loop back/ answer research question

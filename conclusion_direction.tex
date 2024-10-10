@@ -21,7 +21,7 @@ After this, I wanted to explicitly prove that some methods could not work.
 This branch of my work started with the investigation of the proof that DSPACE is equivalent to VAR$[k + 1]$.
 There, I showed that naively applying this method gives wrong results, and that a natural extension by remembering decisions is suboptimal.
 A full proof was impossible to make, as it is unclear how to even define a generalization of this technique.
-The difficulty of this problem is illustrated by Savitch's theorem, which has not been improved for a long time and thus makes it seem unlikely that a simulation of NSPACE machines with subquadratic DSPACE machines is possible.
+The difficulty of this problem is illustrated by Savitch's theorem, which has not been improved for a long time and thus makes it seem unlikely that a simulation of NSPACE Turing machines with subquadratic DSPACE Turing machines is possible.
 
 The next method I tried was mixing transitive closure logic with iterative logic.
 This turned out to be not very powerful, as any interesting result in one of the mixed logics would imply one in pure iterative logic.
@@ -30,7 +30,7 @@ Nevertheless, some upper and lower bounds were shown using Savitch's theorem and
 In an attempt to make FO-VAR less powerful, I then considered restricting universal quantification.
 A new formula made this possible.
 As for the other restrictions, I was unable to find a way to simulate formulas in my restriction of FO-VAR using NSPACE Turing machines.
-The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gives a space-time tradeoff, but does not solve the inherent problem of simulating this formula by NSPACE machines.
+The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gives a space-time tradeoff, but does not solve the inherent problem of simulating this formula by NSPACE Turing machines.
 
 The most complicated result I was able to get does not have any tight connection to context-sensitive languages.
 It concerns the simulation of alternating Turing machines using FO-VAR\@.
@@ -74,7 +74,7 @@ In all proofs concerning equivalences between transitive closure logics and NSPA
 This is still a quite profound limitation, and no characterization for superpolynomial bounds is known to me.
 Finding a generalization could lead to new insights that could help in the polynomial case, and in the end to the case where $s(n) = n$, capturing exactly the context-sensitive languages.
 
-In the context of Savitch's theorem, it is interesting to investigate the computation graphs of NSPACE and DSPACE machines.
+In the context of Savitch's theorem, it is interesting to investigate the computation graphs of NSPACE and DSPACE Turing machines.
 This has been discussed on the theoretical computer science stack exchange in~\cite{Barak2010}.
 A motivation for this is that the number of nodes in both graphs are the same, only the number of edges vary.
 
