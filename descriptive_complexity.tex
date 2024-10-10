@@ -149,10 +149,11 @@ From this theorem, we also get the following corollary.
     \begin{align*}
         \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^k)] & \text{by definition} \\
         &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{2k})] & \text{by Savitch's Theorem} \\
-        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{k})] & \text{by definition} \\
-        &= \text{PSPACE} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^{k})] & \text{by definition} \\
-        &= \text{NPSPACE} & \text{by definition}
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{k})] \\
+        &= \text{PSPACE} & \text{by definition} \\
+        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{k})]
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^{k})] \\
+        &= \text{NPSPACE}
     \end{align*}
 \end{proof}
 

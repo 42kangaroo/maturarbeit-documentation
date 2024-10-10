@@ -10,22 +10,25 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
     \item[Tuple] An ordered collection of elements, written with pointed braces $\langle  \rangle$
     \item[Set operations] There are multiple ways to form new sets from already existing sets:
     \begin{description}
-        \item[Union] denoted as $\cup$, an element is in $A \cup B$ if and only if it is in $A$ or $B$
-        \item[Intersection] denoted as $\cap$, an element is in $A \cap B$ if and only if it is in $A$ and $B$
-        \item[Cartesian product] denoted as $\times$, $A \times B$ is the set of 2-tuples $\langle a, b\rangle$ with an element $a$ of $A$ and an element $b$ of $B$
+        \item[Union] denoted as $\cup$.
+        An element is in $A \cup B$ if and only if it is in $A$ or $B$
+        \item[Intersection] denoted as $\cap$.
+        An element is in $A \cap B$ if and only if it is in $A$ and $B$
+        \item[Cartesian product] denoted as $\times$. $A \times B$ is the set of 2-tuples $\langle a, b\rangle$ with an element $a$ of $A$ and an element $b$ of $B$
         \item[Cartesian power] $A^k$ denotes the Cartesian product of $A$ with itself repeated $k$ times
-        \item[Power set] denoted as $\mathcal{P}(A)$, contains all subsets of $A$
+        \item[Power set] denoted as $\mathcal{P}(A)$.
+        Contains all subsets of $A$
     \end{description}
 \end{description}
 
 
 \section{First-Order Logic}\label{sec:first-order-logic}
-We abbreviate first-order logic as FO\@.
+We abbreviate first-order logic as FO\@. % TODO check acronyms
 \begin{description}
     \item[Variable] A variable is an element that can have a value from a set
     \item[Universe] The set over which variables and constants can range
     \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables.
-    In this work we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
+    In this work we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
     \item[Vocabulary] A tuple $\tau = \langle R_1^{a_1}, \dots, R_r^{a_r}, c_1, \dots, c_s \rangle$ of relations $R_i$ with arity $a_i$ and constants $c_j$\footnote{We omit functions, which are included in most textbook definitions, as they can be simulated by a relation in our case}
     \item[Structure] A tuple $\mathcal{A} = \langle |\mathcal{A}|, R_1^{\mathcal{A}}, \dots, R_r^{\mathcal{A}}, c_1^{\mathcal{A}}, \dots, c_s^{\mathcal{A}} \rangle$ where $|\mathcal{A}|$ is the universe, the constants are assigned a value from $|\mathcal{A}|$, and each relation is assigned a truth value for each $a_i$-tuple in $|\mathcal{A}|^{a_i}$.
     The set of all structures for a given universe is denoted as STRUCT$[\tau]$
@@ -38,7 +41,7 @@ We abbreviate first-order logic as FO\@.
         \item[Existential quantification] If $\varphi$ is a formula, $\exists x \varphi$ is a formula
         \item[Universal quantification] If $\varphi$ is a formula, $\forall x \varphi$ is a formula
     \end{description}
-    \item[Free variables] A variable is called free if there is an occurrence of it in a formula which is not bound by a quantifier whose scope surrounds it
+    \item[Free variables] A variable in a formula which occurs at least once without being bound by a quantifier whose scope surrounds it
     \item[Semantics] For any structure, we can assign a truth value to any formula over the corresponding vocabulary.
     If the formula contains free variables, these need to be assigned a value from the universe first.
     We say $\mathcal{A}$ satisfies $\phi$, denoted as $\mathcal{A} \models \phi$, if and only if $\phi$ is true under the interpretation of the constant and relations in $\mathcal{A}$.
@@ -48,7 +51,7 @@ We abbreviate first-order logic as FO\@.
         \item[Conjunction] We have $\mathcal{A} \models (\varphi \land \psi)$ if and only if $\mathcal{A} \models \varphi$ and $\mathcal{A} \models \psi$
         \item[Disjunction]  We have $\mathcal{A} \models (\varphi \lor \psi)$ if and only if $\mathcal{A} \models \varphi$ or $\mathcal{A} \models \psi$
         \item[Negation] We have $\mathcal{A} \models \lnot \varphi$ if and only if $\mathcal{A} \not\models \varphi$
-        \item[Existential quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y / x)$, where $\varphi(y / x)$ denotes $\varphi$ with any occurrence of $x$ replaced with the element $y$
+        \item[Existential quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y / x)$, where $\varphi(y / x)$ denotes $\varphi$ with any occurrence of $x$ replaced by the element $y$
         \item[Universal quantification] We have $\mathcal{A} \models \forall x\varphi$ if and only if for all $y \in |\mathcal{A}|$ we have $\mathcal{A} \models \varphi(y / x)$
     \end{description}
     \item[First-Order Queries] A first-order query is a map from structures over one vocabulary $\sigma$ to structures over another vocabulary $\tau$.
@@ -71,14 +74,14 @@ We thus also need to extend our definitions.
 We abbreviate second-order logic as SO\@.
 \begin{description}
     \item[SO variables] A relation that is not given in the vocabulary and can be substituted with a specific interpretation
-    \item[SO formula] In addition to the inductive rules from the FO formulas, we can quantify over second-order formulas
+    \item[SO formula] In addition to the inductive rules of the FO formulas, we can quantify over second-order formulas
     \begin{description}
         \item[SO Existential quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
         \item[SO Universal quantification] If $\varphi$ is a formula, then $\forall V\varphi$ is a formula
     \end{description}
-    \item[SO Semantics] Here we also need to extend the FO semantics
+    \item[SO Semantics] We also need to extend the FO semantics
     \begin{description}
-        \item[SO Existential quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U / V)$, where $\varphi(U / V)$ denotes $\varphi$ with any occurrence of $V$ replaced with $U$
+        \item[SO Existential quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U / V)$, where $\varphi(U / V)$ denotes $\varphi$ with any occurrence of $V$ replaced by $U$
         \item[SO Universal quantification] We have $\mathcal{A} \models \forall V\varphi$ if and only if for all relations $U$ over $|\mathcal{A}|$ we have $\mathcal{A} \models \varphi(U / V)$
     \end{description}
 \end{description}
@@ -100,7 +103,7 @@ Turing machines are the most common model of computation.
         \item[$q_{accept}$] the accepting state
         \item[$q_{reject}$] the rejecting state
     \end{description}
-    \item[Turing computation] At the beginning, the Turing machine is in the start state, the input word is written on a consecutive part of the tape and the read/write head is on the first character of the input word.
+    \item[Turing computation] In the beginning, the Turing machine is in the start state, the input word is written on a consecutive part of the tape and the read/write head is on the first character of the input word.
     In the following steps, the Turing machine state changes according to the transition function.
     If at some point the Turing machine enters the accepting or the rejecting state, the computation halts, and the Turing machine is said to have accepted / rejected the input.
     It can happen that the Turing machine continues indefinitely or loops.
