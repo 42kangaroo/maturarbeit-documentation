@@ -1,92 +1,86 @@
-%! suppress = UnresolvedReference
-%! suppress = MissingImport
 \chapter{Conclusion and Direction}\label{ch:conclusion-and-direction}
 
 \section{Conclusion}\label{sec:conclusion}
-In this work, we investigated multiple logics which have a relation to Savitch's theorem.
+In this work, we investigated multiple logics which have a relation to Savitch's theorem.  % TODO we / I in conclusion?
 This has led us to a better notion of how these logics are related to NSPACE$[s(n)]$ and thus also to linear bounded automata and context-sensitive languages.
 
 In the beginning, we introduced the theory of formal languages and the Chomsky Hierarchy.
-Afterward, the main tool of Descriptive Complexity used in this work, Complexity theory, was presented.
-Savitch's theorem is the next proof included in this chapter.
-This theorem is then present throughout the work.
+Afterwards, the main tool of Descriptive Complexity used in this work, Complexity theory, was presented.
+Next, Savitch's theorem and its proof are included in the chapter.
+From then on, this theorem is used multiple times.
 Then, the equivalence between context-sensitive languages and monadic second-order logic is shown.
 
-Personally, I investigated multiple ideas I got during the time I was reading the theory.
+Personally, I investigated multiple ideas I got when I was reading the theory.
 
-The first one was a direct transformation of the results of the equivalence between second-order transitive closure logic and nondeterministic Turing machines with bounded space to first-order logic.
-This approach does not contain any new insights, but showcases the close relationship between first- and second-order logic.
+The first one was a direct transformation of the results of the equivalence between second-order transitive closure logic and nondeterministic Turing machines with bounded space to first-order logic. % TODO check tense (past)
+This approach did not contain any new insights, but it was able to showcase the close relationship between first- and second-order logic.
 
 After this, I wanted to explicitly prove that some methods could not work.
 This branch of my work started with the investigation of the proof that DSPACE is equivalent to VAR$[k + 1]$.
-There, I showed that naively applying this method gives wrong results, and that a natural extension by remembering decisions is suboptimal.
-A full proof was impossible to make, as it is unclear how to even define a generalization of this technique.
+There, I showed that naively applying the proof to nondeterministic Turing machines gives wrong results and that a natural extension by remembering decisions is suboptimal.
+A full proof was impossible to make as it is unclear how to define a generalization of the proof for DSPACE\@.
 The difficulty of this problem is illustrated by Savitch's theorem, which has not been improved for a long time and thus makes it seem unlikely that a simulation of NSPACE Turing machines with subquadratic DSPACE Turing machines is possible.
 
 The next method I tried was mixing transitive closure logic with iterative logic.
-This turned out to be not very powerful, as any interesting result in one of the mixed logics would imply one in pure iterative logic.
+This turned out not to be very powerful, as any interesting result in one of the mixed logics would imply one in pure iterative logic.
 Nevertheless, some upper and lower bounds were shown using Savitch's theorem and the space hierarchy theorem.
 
-In an attempt to make FO-VAR less powerful, I then considered restricting universal quantification.
+In an attempt to make FO-VAR less powerful, I also tried restricting universal quantification.
 A new formula made this possible.
-As for the other restrictions, I was unable to find a way to simulate formulas in my restriction of FO-VAR using NSPACE Turing machines.
-The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gives a space-time tradeoff, but does not solve the inherent problem of simulating this formula by NSPACE Turing machines.
+As for all the other restrictions, I was unable to find a way to simulate formulas in my restriction of FO-VAR using NSPACE Turing machines.
+The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gives a space-time tradeoff but does not solve the inherent problem of simulating this formula by NSPACE Turing machines.
 
 The most complicated result I was able to get does not have any tight connection to context-sensitive languages.
 It concerns the simulation of alternating Turing machines using FO-VAR\@.
-There, a quite tight containment could be found which bounds some alternating Turing machine class from above and below by a factor of only $\log(s(n))$.
-A combination of different techniques used in the previous results was used to get the logical formula.
-This result could lead onto a path to describe alternating space-time classes exactly using an equivalent logic.
+There, a quite tight containment could be found, which bounds some alternating Turing machine classes from above and below by a factor of $\log(s(n))$.
+A combination of different techniques used in previous results was used to get the logical formula.
+This result could lead to a path for describing alternating space-time classes exactly using an equivalent logic.
 
 \subsection{Working process}\label{subsec:working-process}
-Generally, this work was a great learning opportunity for me.
-I was able to see how scientific research is done and could immerse myself in a domain that interests me.
-I knew that I could not plan with any significant results, and indeed I worked on a lot of different ideas, but most of the time hit a dead end.
+Generally, I learned a lot during this work.
+It also provided me insight into how scientific research is done, and I was able to immerse myself in a domain that fascinates me.
+I knew that I could not expect any significant results, and indeed I worked on many different ideas, but most of the time hit a dead end.
 
-In the beginning of the working process, I spend a lot of time reading multiple books about Descriptive Complexity and logic.
-Then, I researched more papers on the topic and tried to understand lower and upper bounds that were described there.
-This took more time than expected, but I still was able to start investigating myself as planned.
-As this is my first scientific research work, I did not know exactly how to approach it, so I wrote to Dr. Královi\v{c} from the ETH Zürich.
+At the beginning of the working process, I spend a lot of time reading multiple books about Descriptive Complexity and logic.
+I then researched more papers on the topic and tried to understand the lower and upper bounds described there.
+This took more time than expected, but I still was able to start investigating early enough.
+As this is my first scientific research work, I did not know how to approach it, so I wrote to Dr. Královi\v{c} from the ETH Zürich.
 His tips were helpful and gave me a starting point for the research.
-During the months that followed, I tried multiple ideas and read a lot of papers concerning things I wanted to prove or needed for own proofs.
-Quite soon, Ms. Sprunger and I discussed that starting to write the theoretical part of this work would help reduce the stress before handing in.
+During the months that followed, I tried multiple ideas and read a lot of papers concerning things I wanted to prove or needed for my proofs.
+Quite soon, Ms Sprunger and I discussed that in order to help reduce the stress before handing in, I should start writing the theoretical part of this work.
 I did this during the summer break, experiencing some difficulties in the simplification of proofs while still maintaining their correctness.
-Afterward, I continued doing research.
+Afterwards, I continued doing research.
+During this time, I found multiple results which are presented in \cref{ch:personal-contribution}, but also spent a lot of time working on hierarchies without notable results.
 Two months before handing in, the International Olympiad in Informatics took place.
 My time plan did not account for this very well, so I had to work quite a lot in the last two weeks to write down my personal contribution.
 
 Overall, I think there are three main points which could be improved:
 \begin{itemize}
     \setlength\itemsep{0.2em}
-    \item First, I often feel that my proofs are not explained in a way that is clear and concise.
-    This makes it difficult for the reader to follow the arguments and understand the underlying thought process.
-    \item Another point are the methods of research.
-    I found it difficult to find any resources on this matter for the highly abstract field of mathematics.
-    Further, I had no mentor on this project which could help me along the right path.
-    \item The time management was suboptimal, as I spend a lot of time on ideas that were clearly not working and thus did not have time to investigate everything I wanted.
-    Also, I did not start writing down my own research until very late, which generated some stress in the end.
+    \item First, I often felt that my proofs were not explained in a way that was clear and concise.
+    This makes it difficult for the reader to follow the arguments and understand the underlying thought process. % TODO make it positive
+    \item Another point is the methods of research.
+    I found it difficult to find any resources on this matter in the highly abstract field of mathematics.
+    Further, I had no mentor on this project who could help me along the right path.
+    \item The time management could also be improved, as I spent a lot of time on ideas that were clearly not working and thus did not have time to investigate everything I wanted.
+    Also, I only started writing down my own research very late, which generated some stress in the end.
 \end{itemize}
 
 \section{Directions}\label{sec:directions}
-In the future, multiple topics could be investigated further to get an even deeper understanding on the inner workings of Savitch's theorem.
+Multiple topics could be investigated further and would provide an even deeper understanding of the inner workings of Savitch's theorem.
 
 In all proofs concerning equivalences between transitive closure logics and NSPACE$[s(n)]$, we assumed that $s(n)$ is at most polynomial.
-This is still a quite profound limitation, and no characterization for superpolynomial bounds is known to me.
-Finding a generalization could lead to new insights that could help in the polynomial case, and in the end to the case where $s(n) = n$, capturing exactly the context-sensitive languages.
+This is still a profound limitation, and finding a generalization could lead to new insights that could help in the polynomial case and in the end also in the case where $s(n) = n$, capturing exactly the context-sensitive languages.
 
-In the context of Savitch's theorem, it is interesting to investigate the computation graphs of NSPACE and DSPACE Turing machines.
+In the context of Savitch's theorem, it would also be interesting to investigate the computation graphs of NSPACE and DSPACE Turing machines.
 This has been discussed on the theoretical computer science stack exchange in~\cite{Barak2010}.
-A motivation for this is that the number of nodes in both graphs are the same, only the number of edges vary.
+A motivation for this is that the number of nodes in both graphs is the same, only the number of edges varies.
 
-Another direction that could be investigated is looking at normal forms.
+Another approach that could be investigated is looking at normal forms.
 One that seems to have some potential is the Kuroda Normal Form described in~\cite{Kuroda1964}.
 This approach could yield a semantic restriction similar to the one for context-free languages described in \cref{subsec:des-context-free-languages}.
 
-After showing that mixing TC and iterative procedures does not give any strong characterizations in \cref{sec:mixing-iterations-and-transitive-closure} and seeing that all improvements happen when the extended variables have less than $s(n)$ bits, I came up with an idea that took up a lot of time and yielded very little results.
-A very interesting result would have been to show that any iterative formula simulating a TC computation needs to have variables of at least the same size.
-This would have shown that the path of investigating any logic which is a subset of these logics can not work.
-To prove this, I read multiple papers concerning hierarchies over transitive closure operators, generalized quantifiers and alternating space-time classes.
-One of these is ``A double arity hierarchy theorem for transitive closure logic''~\cite{Grohe1996} which combines transitive closure operators and generalized quantifiers and shows strict hierarchies on unordered graphs.
-The main problem with the approaches of the papers I read is that they can not be generalized to include string structures, which are inherently ordered.
-This makes it impossible to connect them to Turing machines, which work on strings.
-Some steps in this direction were made in the chapter about proving lower bounds in~\cite{descriptive-complexity}.
+Further, one could investigate hierarchies of transitive closure logics, generalized quantifiers and alternating time-space complexity classes.
+``A double arity hierarchy theorem for transitive closure logic''\cite{Grohe1996} by Grohe shows a strict hierarchy for logics which combine the transitive closure operator with generalized quantifiers but is limited to unordered structures.
+As string structures are inherently ordered, this does not generalize to cases where we use Turing machines.
+Some steps in the direction of hierarchies for ordered structures were made in the chapter about proving lower bounds in~\cite{descriptive-complexity}.
