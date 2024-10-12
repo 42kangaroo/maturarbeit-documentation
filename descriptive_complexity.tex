@@ -9,27 +9,27 @@
 
 In mathematics, abstraction is one of the most important tools, as it enables us to make general statements and prove them for all concrete instances of a concept.
 Formal logic takes this even further and makes it possible to abstract mathematical thought itself.
-That is the reason why Descriptive Complexity uses formal logic to describe computational problems in a way that captures their mathematical essence.
+That is the reason why {Descriptive} Complexity uses formal logic to describe computational problems in a way that captures their mathematical essence.
 
 In computer science, we are always interested in the amount of resources needed to compute some function or solve a certain problem, speaking in terms of time and storage space.
 By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean query meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can define a logical characterization of a problem as a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
 By looking at the complexity of formulas that are needed to describe problems in terms of relations, operators, variables, and other metrics, we can often find remarkably natural classes of logic that correspond to computational classes of problems.
 
-Using results from this research, many insights into the underlying structure of real-world problems can be made, which in turn can give us better ways to tackle them.
+Using results from this research, many insights into the underlying structure of real-world problems can be made, which in turn can lead to better ways to tackle them.
 Further, Descriptive Complexity has applications in database theory, computer-aided verification, and proofs.
 
 
 \section{Tools}\label{sec:tools}
 
-We first need to present some tools and techniques which are used later for proofs.
-In this section, we will only present Complexity theory.
-In \cref{subsec:ehrenfeucht-fraisse-games} and \cref{subsec:reduction}, we also present Ehrenfeucht-Fraïssé games and first-order reductions.
-These tools are not needed for \cref{ch:personal-contribution}, but using them was tried extensively during the research phase.
+Some tools and techniques which are used later for proofs need to be introduced first.
+In this section, only Complexity theory is presented.
+In \cref{subsec:ehrenfeucht-fraisse-games} and \cref{subsec:reduction},   Ehrenfeucht-Fraïssé games and first-order reductions are also presented.
+These tools are not needed for \cref{ch:personal-contribution}, but I tried using them extensively during the research phase of this project.
 Definitions are again taken from~\cite{theory-cs} and~\cite{descriptive-complexity}.
 
 \subsection{Complexity Theory}\label{subsec:complexity-theory}
 
-Complexity theory is the study of the resources, measured mostly in time and space, needed to compute certain classes of problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines, which are defined in \cref{sec:turing-machines}.}.
+Complexity theory is the study of the resources, measured mostly in time and space, needed to compute the answers to computational problems\footnote{The specific model of computation is not important as all give almost the same results. We will assume Turing machines, which are defined in \cref{sec:turing-machines}.}.
 As different computers can handle tasks at various speeds, a notation which only considers the asymptotic use of resources is used.
 
 \begin{define}[Big-O notation]
@@ -39,7 +39,7 @@ As different computers can handle tasks at various speeds, a notation which only
 \end{define}
 
 Complexity classes can be defined as the set of all problems for which there exists a Turing machine satisfying some bounds that computes the answer to the problem.
-Now, we will define some common complexity classes.
+Now, some common complexity classes are defined.
 
 \begin{define}
 [{DTIME$[t(n)]$}]
@@ -67,8 +67,8 @@ The complexity class P has a special meaning for computer scientists, as the pro
 
 \section{Important Results}\label{sec:important-results}
 
-In this section, we will only introduce Savitch's theorem, which Savitch presented in \cite{Savitch1970}.
-In \cref{subsec:space-hierarchy-theorem}, we also present the space hierarchy theorem.
+In this section, only Savitch's theorem is introduced, which Savitch presented in \cite{Savitch1970}.
+In \cref{subsec:space-hierarchy-theorem}, the space hierarchy theorem is presented.
 
 \subsection{Savitch's Theorem}\label{subsec:nspacesubsetdspacesquared}
 
@@ -83,7 +83,7 @@ These Turing machines are a generalization of nondeterministic Turing machines, 
     If the machine is in a universal state, the current configuration is accepting if and only if \emph{all} the directly reachable configurations are accepting.
 \end{define}
 
-In addition to taking the ``or'' over its children, an alternating Turing machine can also take the ``and''.
+In addition to taking the ``or'' over its children, an alternating Turing machine can thus also take the ``and''.
 
 \sloppy We define ATIME$[t(n)]$ and ASPACE$[t(n)]$ analogously to NTIME$[t(n)]$ and NSPACE$[t(n)]$ in \cref{subsec:complexity-theory}.
 
@@ -109,37 +109,39 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
     \[
         P(d, x, y) = (\exists z)(P(d - 1, x, z) \land P(d - 1, z, y))
     \]
-    This formula asserts that there exists a middle vertex $z$ for which there is a $2^{d - 1}$ path from $x$ to $z$ and from $z$ to $y$.
-    The base case for $d = 0$ is to check if we can reach $x$ from $y$ by a transition in the transition table of $N$.
-    Using an alternating Turing machine, we can evaluate the formula using existential states to find the middle vertex $z$, and then a universal state choosing which one of the two new paths we check.
+    This formula asserts that there exists a middle vertex $z$ for which there is a path of length at most $2^{d - 1}$ from $x$ to $z$ and from $z$ to $y$.
+    The base case for $d = 0$ is to check whether $x$ can be reached from $y$ by a transition in the transition table of $N$.
+    Using an alternating Turing machine, the formula can be evaluated by using existential states to find the middle vertex $z$, and then a universal state choosing which one of the two new paths should be checked.
 
     For the runtime analysis, we proceed as follows.
     It takes $\mathcal{O}(t(n))$ time to write down the middle vertex $z$, as each configuration includes the tape contents, which have length $\mathcal{O}(t(n))$.
-    Further, we then evaluate one of the new shorter paths $P(d - 1, z, y)$.
+    Further, one of the new shorter paths $P(d - 1, z, y)$ is then evaluated.
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
-    There are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
+    There are only $2^{\mathcal{O}(t(n))}$ possible configurations, so we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
+    
     \vspace{5mm}
+    
     \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an ATIME$[s(n)]$ Turing machine $A$ using a DSPACE$[s(n)]$ Turing machine.
     Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
-    We can systematically search this computation graph to get our answer.
-    This is done by keeping a string of choices $c_{1}c_{2}\dots c_r$ of length $\mathcal{O}(s(n))$ made until this point.
+    A DSPACE$[s(n)]$ Turing machine $D$ can systematically search this computation graph to simulate $A$.
+    This is done by keeping a string of choices $c_{1}c_{2}\dots c_r$ of length $\mathcal{O}(s(n))$ made up to this point.
     Each choice takes up $\mathcal{O}(1)$ place, as the number of transitions from one state is bounded by a constant depending only on $A$.
-    Note that this uniquely determines which state we are in.
+    Note that these choices uniquely determine which state we are in.
 
-    Now, we can find the answer recursively.
-    If we are in a halt state, we report this back to the previous state.
-    In an existential state, we simulate its children, and if we get a positive result from one of them, we also report a positive result.
-    In a universal state, we simulate its children, and if we get a positive result from all of them, we report a positive result.
+    Now, $D$ can find the answer recursively.
+    If in the simulation, $A$ is in a halt state, $D$ reports this back to the previous state.
+    In an existential state, $D$ simulates the children of that state, and if it gets a positive result from one of them, $D$ also reports a positive result.
+    In a universal state, $D$ simulates the children of that state, and if it gets a positive result from all of them, $D$ reports a positive result.
 
-    Overall, we use only $\mathcal{O}(s(n))$ space to simulate $A$.
+    Overall, $D$ only uses $\mathcal{O}(s(n))$ space to simulate $A$.
     This shows that we can simulate an ATIME$[t(n)^2]$ Turing machine $A$ using a DSPACE$[t(n)^2]$ Turing machine.
 
     Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{NSPACE}[t(n)] \subseteq \text{DSPACE}[t(n)^2]$.
 \end{proof}
 
-We do not know if the containment is strict for any of the inclusions.
+It is not known if the containment is strict for any of the inclusions.
 Neither is it known if the quadratic overhead for simulating nondeterministic space is optimal.
 From this theorem, we also get the following corollary.
 
@@ -149,12 +151,12 @@ From this theorem, we also get the following corollary.
 
 \begin{proof}
     \begin{align*}
-        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NSPACE}[n^k] & \text{by definition} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[n^{2k}] & \text{by Savitch's Theorem} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[n^{k}] \\
+        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}\text{NSPACE}[n^k] & \text{by definition} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}\text{DSPACE}[n^{2k}] & \text{by Savitch's Theorem} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}\text{DSPACE}[n^{k}] \\
         &= \text{PSPACE} & \text{by definition} \\
-        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[n^{k}]
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NSPACE}[n^{k}] \\
+        &= \bigcup_{k\in \mathbb{N}}\text{DSPACE}[n^{k}] \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}\text{NSPACE}[n^{k}] \\
         &= \text{NPSPACE}
     \end{align*}
 \end{proof}
@@ -162,13 +164,14 @@ From this theorem, we also get the following corollary.
 
 \section{Results concerning the Chomsky Hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
+Now that we have seen most of the required theory, we can start to apply it to the main subject of this document: the Chomsky Hierarchy.
 
-Now that we have seen most of the required theory, we can start to apply it to the main subject of this document, the Chomsky Hierarchy.
-The definitions of first- and second-order logic can be found in \cref{sec:first-order-logic} and \cref{sec:second-order-logic}.
+The definitions of first- and second-order logic can be found in \cref{sec:first-order-logic} and \cref{sec:second-order-logic} respectively.
 For this section, we define the vocabulary on strings to be $\sigma = \langle Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
 We have a unary predicate $Q_a$ for each character $a$ in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.
 For a universe $| \mathcal{A} | = \{0, 1, \dots, n - 1\}$, we require that $\max = n - 1$.
-Also, for each $a \in \Sigma$ we have $Q_a(x)$ if and only if the $x^{th}$ character of the string is $a$.
+Also, for each $a \in \Sigma$ we require that $Q_a(x)$ is true if and only if the $x^{th}$ character of the string is $a$.
+
 Only the results for context-sensitive languages are discussed in this section.
 Further results can be found in \cref{sec:descriptive-complexity-context}.
 
@@ -185,9 +188,9 @@ The equivalence was established by Immerman in \cite{Immerman1987}.
 The transitive closure operator takes the transitive closure over some graph and is defined as follows:
 
 \begin{define}[Transitive closure]
-    Let $\phi\left(\overset{k}{a}, \overset{k}{b}\right)$ be a formula with $2k$ free variables.
-    We can see this formula as a directed edge relation over the graph with vertices $\overset{k}{c} \in | \mathcal{A} |^{k}$.
-    Then, the transitive closure $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$ is true if and only if there is a path in the graph generated by $\phi$ from $\overset{k}{u}$ to $\overset{k}{v}$.
+    Let $\phi\left(\overline{a}, \overline{b}\right)$ be a formula with $2k$ free variables.
+    We can see this formula as a directed edge relation over the graph with vertices $\overline{c} \in | \mathcal{A} |^{k}$.
+    Then, the transitive closure $\left(TC_{\overline{a}, \overline{b}}\phi\left(\overline{a}, \overline{b}\right)\right)\left(\overline{u}, \overline{v}\right)$ is true if and only if there is a path in the graph generated by $\phi$ from $\overline{u}$ to $\overline{v}$.
 \end{define}
 
 \begin{theorem}
@@ -198,24 +201,26 @@ The transitive closure operator takes the transitive closure over some graph and
 \begin{proof}
     By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of MSO(TC) and NSPACE$[n]$ Turing machines.
 
-    First, we show that any formula in MSO(TC) can be evaluated by a NSPACE$[n]$ Turing machine.
+    First, we show that any formula in MSO(TC) can be evaluated by a NSPACE$[n]$ Turing machine $N$.
     The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
-    For any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertex on the tape.
-    Then, we can check if the transition is valid by evaluating $\phi$.
-    If it is, we replace $\overset{k}{u}$ with the new vertex and repeat until we reach $\overset{k}{v}$.
-    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that we can also compute any sub-formula of the form $\neg\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$.
-    The other parts of the formula can be evaluated easily in linear space, as we just need to write down relations when quantifying and remember in which part of the constant-size formula we are.
+    For any sub-formula of the form $\left(TC_{\overline{a}, \overline{b}}\phi\left(\overline{a}, \overline{b}\right)\right)\left(\overline{u}, \overline{v}\right)$, $N$ writes down $\overline{u}$ and guesses the next vertex on the tape.
+    Then, $N$ can check if the transition is valid by evaluating $\phi$.
+    If it is, $N$ replaces $\overline{u}$ with the new vertex and repeats until it reaches $\overline{v}$.
+    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that $N$ can also compute any sub-formula of the form $\neg\left(TC_{\overline{a}, \overline{b}}\phi\left(\overline{a}, \overline{b}\right)\right)\left(\overline{u}, \overline{v}\right)$.
+    The other parts of the formula can be evaluated easily in linear space, as $N$ just needs to write down relations when quantifying and remember in which part of the constant-size formula it is.
 
     \vspace{5mm}
 
     For proving the other direction, consider a NSPACE$[n]$ Turing machine $N$.
-    We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states.
+    We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states in addition to all normal symbols $a_i$.
+    We use these symbols to completely represent an instantaneous configuration of the computation of $N$.
+    This is done by having creating a string from the tape content and replacing the character at the position of the read/write head by the $b_{a_i, q_j}$ which contains the actual character and state of $N$.
 
     Consider the tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$ containing a unary relation for each symbol in $\Sigma$.
     This tuple completely represents an instantaneous configuration of the tape and the Turing machine.
     We can now write a formula $\varphi(\overline{X}, \overline{Y})$ which is true if and only if a transition from state $\overline{X}$ to $\overline{Y}$ is possible in $N$.
     This can be done by a big disjunction over all rules of $N$.
-    After one step of a Turing machine, a character $b$ at position $x$ is only determined by the actual character at position $x$ and the two characters left and right of it\footnote{we include markers at the two ends of the tape, which makes this well-defined}.
+    After one step of $N$, the new character $b$ at position $x$ is only determined by the actual character at position $x$ and the two characters left and right of it\footnote{we include markers at the two ends of the tape, which makes this well-defined}.
     This means that we can write all transitions of $N$ in the form $\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{i}, b_{j}, b_{w} \rangle$.
     If $P$ is the set of all transitions, we have
     \begin{multline*}
@@ -223,9 +228,9 @@ The transitive closure operator takes the transitive closure over some graph and
         \left. \bigvee_{\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{u}, b_{v}, b_{w} \rangle \in P} \left(X_{Q_{b_{k}}}(i - 1) \land X_{Q_{b_{l}}}(i) \land X_{Q_{b_{m}}}(i + 1) \land Y_{Q_{b_{u}}}(i - 1) \land Y_{Q_{b_{v}}}(i) \land Y_{Q_{b_{w}}}(i + 1) \right)\right)
     \end{multline*}
     The first line asserts that apart from the indices where the head is, the tape stays unchanged.
-    The second line tells us that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
+    The second line tells states that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
 
-    Now, we can take the transitive closure over $\varphi$, starting with the start configuration and ending at an accepting position.
+    Now, we can take the transitive closure over $\varphi$, starting with the start configuration and ending at an accepting configuration.
     Without loss of generality, we can assume that $N$ clears its tape after accepting, therefore the end position is unique.
     Thus, our formula holds if and only if there is an accepting path in $N$ on the input word $w$.
 

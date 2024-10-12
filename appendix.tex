@@ -7,7 +7,7 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
 \section{Set Theory}\label{sec:set-theory}
 \begin{description}
     \item[Set] An unordered collection of distinct elements, written with curly braces $\{\}$
-    \item[Tuple] An ordered collection of elements, written with pointed braces $\langle  \rangle$
+    \item[Tuple] An ordered collection of elements, written with pointed braces $\langle  \rangle$.
     \item[Set operations] There are multiple ways to form new sets from already existing sets:
     \begin{description}
         \item[Union] denoted as $\cup$.
@@ -25,7 +25,8 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
 \section{First-Order Logic}\label{sec:first-order-logic}
 We abbreviate first-order logic as FO\@. % TODO check acronyms
 \begin{description}
-    \item[Variable] A variable is an element that can have a value from a set
+    \item[Variable] A variable is an element that can have a value from a set.
+    Tuples of variables are denoted by $\overline{x} = \langle x_1, \dots, x_n \rangle$
     \item[Universe] The set over which variables and constants can range
     \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables.
     In this document, we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
@@ -61,7 +62,7 @@ We abbreviate first-order logic as FO\@. % TODO check acronyms
     For a more formally thorough definition see~\cite{descriptive-complexity}
     \item[Isomorphism] An isomorphism is a map $I: |\mathcal{A}| \to |\mathcal{B}|$ with $\mathcal{A}, \mathcal{B}$ over the same vocabulary which satisfies the following properties:
     \begin{itemize}
-        \setlength\itemsep{0.2em}
+        \setlength\itemsep{0.15em}
         \item $I$ is bijective
         \item for every available relation $R_i$ of arity $a_i$ and every $a_i$-tuple $\overline{e} = \langle e_1, \dots, e_{a_i} \rangle$ in $|\mathcal{A}|^{a_i}$, we have \[R_i^{\mathcal{A}}(e_1, \cdot, e_{a_i}) \Leftrightarrow R_i^{\mathcal{B}}(I(e_1), \cdot, I(e_{a_i}))\]
         \item for every constant symbol $c_j$, we have $I(c_j^{\mathcal{A}}) = c_j^{\mathcal{B}}$

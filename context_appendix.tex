@@ -8,7 +8,7 @@
 
 The regular languages have the most restricted type of grammars.
 Formally, any regular language can be described by a grammar with rules in $V\times(\Sigma \cup \Sigma V \cup \varepsilon)$.
-This means that we only have exactly one non-terminal on the left-hand side and the right-hand side is either a terminal, the empty word or a terminal symbol followed by a non-terminal symbol.
+This means that we only have exactly one non-terminal on the left-hand side and the right-hand side is either a terminal, the empty word, or a terminal symbol followed by a non-terminal symbol.
 
 \begin{exmp}
     Consider the grammar $\langle \{S, O\}, \{a\}, R, S \rangle$ with
@@ -24,7 +24,7 @@ This means that we only have exactly one non-terminal on the left-hand side and 
 
 The regular languages have been studied quite thoroughly and have multiple equivalent formalisms:
 \begin{itemize}
-    \setlength\itemsep{0.2em}
+    \setlength\itemsep{0.15em}
     \item The language is recognized by a Deterministic finite automaton, which process the input word one character at a time
     \item The language can be decided by a read-only Turing machine, that is a Turing machine that can not modify it's tape
     \item The language can be described by a regular expression
@@ -132,7 +132,7 @@ Using the reductions, we can define completeness.
 \begin{define}[Completeness via first-order reductions for Complexity Class $\mathcal{C}$]
     We say some problem $A$ is complete for $\mathcal{C}$ via $\leq_{fo}$ if and only if
     \begin{itemize}
-        \setlength\itemsep{0.2em}
+        \setlength\itemsep{0.15em}
         \item $A \in \mathcal{C}$
         \item for all $B \in \mathcal{C}$, we have $B \leq_{fo} A$
     \end{itemize}
@@ -189,7 +189,7 @@ First we need to present a formal definition of deterministic finite automata.
 \begin{define}[DFA]
     A deterministic finite automaton is a 5-tuple $M = \langle Q, \Sigma, \delta, q_0,  F \rangle$ where
     \begin{itemize}
-        \setlength\itemsep{0.2em}
+        \setlength\itemsep{0.15em}
         \item[$Q$] is the set of states
         \item[$\Sigma$] is the alphabet
         \item[$\delta$] is the transition function mapping a state and a symbol to the next state, so formally $\delta : Q\times \Sigma \to Q$.
@@ -295,10 +295,10 @@ The proof that every context-free grammar can be converted to this form can be f
 \begin{lemma}
     Every context free language has a grammar which satisfies
     \begin{itemize}
-        \setlength\itemsep{0.2em}
+        \setlength\itemsep{0.15em}
         \item All rules are of one of the two forms
         \begin{itemize}
-            \setlength\itemsep{0.2em}
+            \setlength\itemsep{0.15em}
             \item $S \to \alpha$ with $\alpha \in \Sigma$
             \item $X \to \alpha u \beta$ with $\alpha, \beta \in \Sigma$ and $u \in (\Sigma \cup V)^{*}$
         \end{itemize}
@@ -382,12 +382,12 @@ Now, we can start with the proof of our theorem.
         \item[Lf($i$)] Node $i$ is a leaf $\text{Lf}(i) \equiv \forall x \neq C(x, i)$
         \item[Lc($i, j$)] Node $i$ is the leftmost child of $j$ $\text{Lc}(i, j) \equiv C(i, j) \land \forall x (C(x, j) \to i < x)$
         \item[Rc($i, j$)] Node $i$ is the rightmost child of $j$ $\text{Rc}(i, j) \equiv C(i, j) \land \forall x (C(x, j) \to x < i)$
-        \item[An($i, j$)] Node $i$ is an ancestor or $j$
+        \item[An($i, j$)] Node $i$ is an ancestor of $j$
         \begin{align*}
             \text{An}(i, j) \equiv~&\exists U (U(i) \land U(j) \land \forall x (U(x) \to \\
             &((x \neq i \leftrightarrow \exists y (C(x, y) \land U(y))) \land (x \neq j \leftrightarrow \exists y (C(y, x) \land U(y))))))
         \end{align*}
-        \item[Pt($U, i, j$)] Node $i$ is an ancestor or $j$, $j$ is a leaf and $U$ contains all nodes in the path from $i$ to $j$.
+        \item[Pt($U, i, j$)] Node $i$ is an ancestor of $j$, $j$ is a leaf and $U$ contains all nodes in the path from $i$ to $j$.
         \begin{align*}
             \text{Pt}(U, i, j) \equiv~&U(i) \land U(j) \land \text{Lf}(j) \land \forall x (U(x) \to \\
             &((x \neq i \leftrightarrow \exists y (C(x, y) \land U(y))) \land (x \neq j \leftrightarrow \exists y (C(y, x) \land U(y)))))
@@ -465,7 +465,7 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
 
     We now add the following rules to $P$:
     \begin{itemize}
-        \setlength\itemsep{0.2em}
+        \setlength\itemsep{0.15em}
         \item For each $a_i \in \Gamma$, we add a rule $S \to Lb_{q_{accept}, a_i}R$ to $P$.
         These rules mean that we are in a final accept state.
         To extend the final tape, we add again for each $a_i \in \Gamma$ the rules $L \to La_i$, $L \to \#$, $R \to a_{i}R$ and $R \to \#$ to our rule set.

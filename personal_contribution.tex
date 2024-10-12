@@ -59,7 +59,7 @@ For DSPACE$[s(n)]$, there are multiple other logical characterizations which do 
 We first need to define the logic FO$[t(n)]$, which formalizes iterative definitions, and then VAR$[k]$, which restricts the number of variables but allows for unbounded first-order iterations.
 
 \begin{define}[{FO$[t(n)]$}]
-    Let $Q_1, \dots, Q_n$ be a series of quantifiers, $s_1, \dots, s_n$ a series of variables, and $M_1 \dots, M_n$ a series of quantifier-free formulas. % TODO check oxford commas
+    Let $Q_1, \dots, Q_n$ be a series of quantifiers, $s_1, \dots, s_n$ a series of variables, and $M_1 \dots, M_n$ a series of quantifier-free formulas.
     We can now form a quantifier block \[QB = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})\]
     For a universal quantifier, $(\forall s.M)\varphi \equiv \forall s (M \to \varphi)$.
     For an existential quantifier, $(\exists s.M)\varphi \equiv \exists s(M \land \varphi)$.
@@ -92,7 +92,7 @@ In the main part of the proof, a construction is made to simulate a DSPACE$[n^k]
 There, the relation $C_{t}(\overline{x}, \overline{b})$ is inductively defined to mean that at time $t$, the character on the tape at position $\overline{x}$ is the one encoded by $\overline{b}$, where $\overline{b}$ is a tuple of boolean variables.
 The characters are defined in the same way as in the proof of \cref{thm:contextsensitveMSOTC} to include the machine state as well as the tape symbol.
 As the Turing machine we are contemplating is deterministic, the character at position $\overline{x}$ is uniquely determined.
-Further, it only depends on the characters at positions $\overline{x} - 1, \overline{x}$ and $\overline{x} + 1$ at time $t - 1$.
+Further, it only depends on the characters at positions $\overline{x} - 1, \overline{x}$, and $\overline{x} + 1$ at time $t - 1$.
 Because we can assume without loss of generality that the Turing machine returns to the starting tape cell and clears its tape after accepting, finding out the value of $C_{2^{cn^k}}(\overline{0}, \overline{b})$ is sufficient to determine if the machine accepts.
 
 If we want to extend this to nondeterministic Turing machines using $C_{t}(\overline{x}, \overline{b})$ to mean that the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
@@ -143,7 +143,7 @@ As any $t(n) > 2^{cr(n)}$ can be seen as having an unbounded amount of iteration
 In both cases, we have a formula in FO-VAR$[r(n) + t(n), r(n)/\log(n)]$.
 Now, there are multiple cases
 \begin{description}
-    \setlength\itemsep{0.2em}
+    \setlength\itemsep{0.15em}
     \item[$r(n) \leq t(n)$:]  Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[t(n), r(n)/\log(n)]$.
     This is only interesting in the case where $r(n) < s(n)$
     \item[$r(n) > t(n)$:] Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[r(n), r(n)/\log(n)]$.
@@ -238,7 +238,7 @@ By combining the above techniques for switching between universal and existentia
 From now on, we will refer to configurations as vertices to emphasize that we are searching for paths on a graph.
 On a high level, our plan is to do the following:
 \begin{enumerate}
-    \setlength\itemsep{0.2em}
+    \setlength\itemsep{0.15em}
     \item From the actual starting vertex, find all reachable vertices using only vertices which have the same type (existential or universal) as the starting vertex.
     \begin{enumerate}
         \item For existential states, we can use the normal technique of halving paths naively
@@ -295,7 +295,7 @@ and $\left([QB]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(\text{true} / b_{pat
 
 The meanings of the variables are explained below:
 \begin{description}
-    \setlength\itemsep{0.2em}
+    \setlength\itemsep{0.15em}
     \item[$Y$:] the accepting vertex
     \item[$X$:] the starting vertex in the actual component
     \item[$I$:] the vertex for which we are checking if a path from $X$ exists
