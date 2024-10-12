@@ -184,8 +184,7 @@ and finally
     [QB]^{cs(n)}(false)(\overline{C} / \overline{X}, \overline{D} / \overline{Y})
 \]
 for some $c$.
-$M_1$ describes the breaking condition, being false whenever either $\overline{X}$ and $\overline{Y}$ are equal or connected directly.
-So in $QB$, the first quantification means that we break with the actual branch of the formula being true whenever we have a connection. % TODO reformulate to make sense
+In $QB$, the first quantification and $M_1$ means that we break with the actual branch of the formula being true whenever $X$ and $Y$ are connected.
 When this happens, we quantify universally over the empty set, which is defined as true.
 If no connection exists yet, a middle configuration $\overline{Z}$ is guessed, and both sides are checked by universally choosing $b_2$.
 In $M_2$, we then check that $\overline{A}$ and $\overline{B}$ are the endpoints of the path determined by $b_2, \overline{X}, \overline{Z} \text{ and }\overline{Y}$.
@@ -329,7 +328,7 @@ As this formula is quite intricate, it is proposed to read it four times, each t
     \item The second case we look at is the case where we claim that no path exists.
     Here, we have $\neg b_{path}$.
     Because of this, in $M_1$ we do nothing.
-    In $N_1$, we check if we found a connection, and if we did, we set this logical branch to false because of the existential quantification over the empty set. % TODO logical branch?
+    In $N_1$, we check if we found a connection, and if we did, we set this logical branch to false because of the existential quantification over the empty set.
     If $N_1$ is true, we go on to $M_2$, where we establish $b_1$.
     As we ignore $M_3$ in $N_2$, it has no effect.
     In $N_2$ we universally quantify over all middle vertices $Z$ which could lie on a path between $S$ and $E$.

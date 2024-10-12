@@ -7,15 +7,17 @@
 
 \section{Aims}\label{sec:aims}
 
-In mathematics, abstraction is one of the most important tools, as it enables us to make general statements and prove them for all the concrete instances of a concept.
+In mathematics, abstraction is one of the most important tools, as it enables us to make general statements and prove them for all concrete instances of a concept.
 Formal logic takes this even further and makes it possible to abstract mathematical thought itself.
-In computer science, we are always interested in the amount of resources needed to compute a certain function or solve a certain problem, speaking in terms of time and storage space.
-By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean query meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can define a logical characterization of a problem as a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
-Different forms of logic have the power to describe different classes of problems.
-By looking at the complexity of formulas which are needed to describe problems in terms of relations, operators, variables and other metrics, we can often find remarkably natural classes of logic corresponding to classes of problems.
+That is the reason why Descriptive Complexity uses formal logic to describe computational problems in a way that captures their mathematical essence.
 
-Using these results, many insights into the underlying structure of real-world problems can be made, which in turn can give us better ways to tackle them.
-Further, Descriptive Complexity has applications in database theory, computer-aided verification, and proofs. %TODO rewrite this for more roter faden
+In computer science, we are always interested in the amount of resources needed to compute some function or solve a certain problem, speaking in terms of time and storage space.
+By focusing on decision problems\footnote{Any problem can be reduced to boolean queries, for example by having a boolean query meaning ``the i$^{th}$ bit of an encoding of the answer is 1''}, we can define a logical characterization of a problem as a formula $\varphi$ which is true if and only if a structure satisfies the required properties.
+By looking at the complexity of formulas that are needed to describe problems in terms of relations, operators, variables, and other metrics, we can often find remarkably natural classes of logic that correspond to computational classes of problems.
+
+Using results from this research, many insights into the underlying structure of real-world problems can be made, which in turn can give us better ways to tackle them.
+Further, Descriptive Complexity has applications in database theory, computer-aided verification, and proofs.
+
 
 \section{Tools}\label{sec:tools}
 
@@ -40,21 +42,21 @@ Complexity classes can be defined as the set of all problems for which there exi
 Now, we will define some common complexity classes.
 
 \begin{define}
-[{DTIME$[\mathcal{O}(t(n))]$}] % TODO check O(t(n)) vs t(n)
-    We say that a decision problem is in DTIME$[\mathcal{O}(t(n))]$ if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
+[{DTIME$[t(n)]$}]
+    We say that a decision problem is in DTIME$[t(n)]$ if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
 \end{define}
 
 \begin{define}[P]
-    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME$[\mathcal{O}(q(n))]$.
+    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME$[q(n)]$.
 \end{define}
 
 \begin{define}
-[{DSPACE$[\mathcal{O}(t(n))]$}]
-    We say that a decision problem is in DSPACE$[\mathcal{O}(t(n))]$ if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
+[{DSPACE$[t(n)]$}]
+    We say that a decision problem is in DSPACE$[t(n)]$ if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
 \end{define}
 
 \begin{define}[PSPACE]
-    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE$[\mathcal{O}(q(n))]$.
+    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE$[q(n)]$.
 \end{define}
 
 We can do the same for nondeterministic Turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
@@ -83,20 +85,20 @@ These Turing machines are a generalization of nondeterministic Turing machines, 
 
 In addition to taking the ``or'' over its children, an alternating Turing machine can also take the ``and''.
 
-\sloppy We define ATIME$[\mathcal{O}(t(n))]$ and ASPACE$[\mathcal{O}(t(n))]$ analogously to NTIME$[\mathcal{O}(t(n))]$ and NSPACE$[\mathcal{O}(t(n))]$ in \cref{subsec:complexity-theory}.
+\sloppy We define ATIME$[t(n)]$ and ASPACE$[t(n)]$ analogously to NTIME$[t(n)]$ and NSPACE$[t(n)]$ in \cref{subsec:complexity-theory}.
 
 We can proceed to the proof of Savitch's theorem using the technique presented in~\cite{descriptive-complexity}.
 \begin{theorem}[Savitch's Theorem]
     For all space constructible functions with $t(n) \geq \log n$ we have
     \[
-        \text{\upshape NSPACE}[\mathcal{O}(t(n))] \subseteq \text{\upshape ATIME}[\mathcal{O}(t(n)^2)] \subseteq \text{\upshape DSPACE}[\mathcal{O}(t(n)^2)]
+        \text{\upshape NSPACE}[t(n)] \subseteq \text{\upshape ATIME}[t(n)^2] \subseteq \text{\upshape DSPACE}[t(n)^2]
     \]
 \end{theorem}
 
 \begin{proof}
-    We start with the first inclusion, $\text{NSPACE$[\mathcal{O}(t(n))]$} \subseteq \text{ATIME$[\mathcal{O}(t(n)^2)]$}$.
-    We need to show that any NSPACE$[\mathcal{O}(t(n))]$ Turing machine can be simulated by an ATIME$[\mathcal{O}(t(n)^2)]$ alternating Turing machine.
-    Let $N$ be a NSPACE$[\mathcal{O}(t(n))]$ Turing machine.
+    We start with the first inclusion, $\text{NSPACE$[t(n)]$} \subseteq \text{ATIME$[t(n)^2]$}$.
+    We need to show that any NSPACE$[t(n)]$ Turing machine can be simulated by an ATIME$[t(n)^2]$ alternating Turing machine.
+    Let $N$ be a NSPACE$[t(n)]$ Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
     Consider $G_w$, the computation graph of $N$ on input $w$.
@@ -117,7 +119,7 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
     There are only $2^{\mathcal{O}(t(n))}$ possible configurations, we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
     \vspace{5mm}
-    \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an ATIME$[\mathcal{O}(s(n))]$ Turing machine $A$ using a DSPACE$[\mathcal{O}(s(n))]$ Turing machine.
+    \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an ATIME$[s(n)]$ Turing machine $A$ using a DSPACE$[s(n)]$ Turing machine.
     Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
@@ -132,9 +134,9 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
     In a universal state, we simulate its children, and if we get a positive result from all of them, we report a positive result.
 
     Overall, we use only $\mathcal{O}(s(n))$ space to simulate $A$.
-    This shows that we can simulate an ATIME$[\mathcal{O}(t(n)^2)]$ Turing machine $A$ using a DSPACE$[\mathcal{O}(t(n)^2)]$ Turing machine.
+    This shows that we can simulate an ATIME$[t(n)^2]$ Turing machine $A$ using a DSPACE$[t(n)^2]$ Turing machine.
 
-    Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{NSPACE}[\mathcal{O}(t(n))] \subseteq \text{DSPACE}[\mathcal{O}(t(n)^2)]$.
+    Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{NSPACE}[t(n)] \subseteq \text{DSPACE}[t(n)^2]$.
 \end{proof}
 
 We do not know if the containment is strict for any of the inclusions.
@@ -147,12 +149,12 @@ From this theorem, we also get the following corollary.
 
 \begin{proof}
     \begin{align*}
-        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^k)] & \text{by definition} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{2k})] & \text{by Savitch's Theorem} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{k})] \\
+        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}^{\infty}\text{NSPACE}[n^k] & \text{by definition} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[n^{2k}] & \text{by Savitch's Theorem} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[n^{k}] \\
         &= \text{PSPACE} & \text{by definition} \\
-        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[\mathcal{O}(n^{k})]
-        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NSPACE}[\mathcal{O}(n^{k})] \\
+        &= \bigcup_{k\in \mathbb{N}}^{\infty}\text{DSPACE}[n^{k}]
+        &\subseteq \bigcup_{k\in \mathbb{N}}^{\infty}\text{NSPACE}[n^{k}] \\
         &= \text{NPSPACE}
     \end{align*}
 \end{proof}
@@ -161,7 +163,7 @@ From this theorem, we also get the following corollary.
 \section{Results concerning the Chomsky Hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
 
-Now that we have seen most of the required theory, we can start to apply it to the main subject of this work, the Chomsky Hierarchy.
+Now that we have seen most of the required theory, we can start to apply it to the main subject of this document, the Chomsky Hierarchy.
 The definitions of first- and second-order logic can be found in \cref{sec:first-order-logic} and \cref{sec:second-order-logic}.
 For this section, we define the vocabulary on strings to be $\sigma = \langle Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
 We have a unary predicate $Q_a$ for each character $a$ in $\Sigma$, a total ordering on the universe, and the constants $0, 1$ and $\max$.
@@ -194,9 +196,9 @@ The transitive closure operator takes the transitive closure over some graph and
 \end{theorem}
 
 \begin{proof}
-    By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of MSO(TC) and NSPACE$[\mathcal{O}(n)]$ Turing machines.
+    By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of MSO(TC) and NSPACE$[n]$ Turing machines.
 
-    First, we show that any formula in MSO(TC) can be evaluated by a NSPACE$[\mathcal{O}(n)]$ Turing machine.
+    First, we show that any formula in MSO(TC) can be evaluated by a NSPACE$[n]$ Turing machine.
     The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
     For any sub-formula of the form $\left(TC_{\overset{k}{a}, \overset{k}{b}}\phi\left(\overset{k}{a}, \overset{k}{b}\right)\right)\left(\overset{k}{u}, \overset{k}{v}\right)$, we write down $\overset{k}{u}$ and guess the next vertex on the tape.
     Then, we can check if the transition is valid by evaluating $\phi$.
@@ -206,7 +208,7 @@ The transitive closure operator takes the transitive closure over some graph and
 
     \vspace{5mm}
 
-    For proving the other direction, consider a NSPACE$[\mathcal{O}(n)]$ Turing machine $N$.
+    For proving the other direction, consider a NSPACE$[n]$ Turing machine $N$.
     We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states.
 
     Consider the tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$ containing a unary relation for each symbol in $\Sigma$.
@@ -232,6 +234,7 @@ The transitive closure operator takes the transitive closure over some graph and
 
 An interesting normal form for MSO(TC) can be derived from this proof.
 \begin{corollary}
+    \label{cor:normalmso}
     Every formula in MSO(TC) can be written in the form
     \[
         \left( TC_{\overline{X}, \overline{Y}} \varphi(\overline{X}, \overline{Y}) \right)\left( \overline{U}, \overline{V} \right)
@@ -243,4 +246,6 @@ An interesting normal form for MSO(TC) can be derived from this proof.
     By construction, this always gives us a formula of the required form.
 \end{proof}
 
-% TODO loop back/ answer research question
+Returning to our research question, we now have one characterization of context-sensitive languages, but using second-order logic.
+Still, we can say that these proofs show that context-sensitive languages are tightly connected to the connectivity of graphs with $2^{cn}$ vertices.
+This is because the transitive closure answers exactly all questions regarding the existence of paths between two vertices in a graph, and \cref{cor:normalmso} combined with \cref{thm:contextsensitveMSOTC} shows that all formulas capturing a context-sensitive language can be written as a formula checking such a path on a graph.

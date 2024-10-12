@@ -28,11 +28,11 @@ We abbreviate first-order logic as FO\@. % TODO check acronyms
     \item[Variable] A variable is an element that can have a value from a set
     \item[Universe] The set over which variables and constants can range
     \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables.
-    In this work we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
+    In this document, we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
     \item[Vocabulary] A tuple $\tau = \langle R_1^{a_1}, \dots, R_r^{a_r}, c_1, \dots, c_s \rangle$ of relations $R_i$ with arity $a_i$ and constants $c_j$\footnote{We omit functions, which are included in most textbook definitions, as they can be simulated by a relation in our case}
     \item[Structure] A tuple $\mathcal{A} = \langle |\mathcal{A}|, R_1^{\mathcal{A}}, \dots, R_r^{\mathcal{A}}, c_1^{\mathcal{A}}, \dots, c_s^{\mathcal{A}} \rangle$ where $|\mathcal{A}|$ is the universe, the constants are assigned a value from $|\mathcal{A}|$, and each relation is assigned a truth value for each $a_i$-tuple in $|\mathcal{A}|^{a_i}$.
     The set of all structures for a given universe is denoted as STRUCT$[\tau]$
-    \item[First-Order Formula] A first-order formula is inductively defined as follows:
+    \item[First-order formula] A first-order formula is inductively defined as follows:
     \begin{description}
         \item[Atoms] Any formula of the form $R(x_1, \dots, x_k)$ for some relation of arity $k$ is called an atomic formula
         \item[Conjunction] If $\varphi$ and $\psi$ are formulas, $(\varphi \land \psi)$ is a formula
@@ -54,7 +54,9 @@ We abbreviate first-order logic as FO\@. % TODO check acronyms
         \item[Existential quantification] We have $\mathcal{A} \models \exists x\varphi$ if and only if there exists a $y \in |\mathcal{A}|$ such that $\mathcal{A} \models \varphi(y / x)$, where $\varphi(y / x)$ denotes $\varphi$ with any occurrence of $x$ replaced by the element $y$
         \item[Universal quantification] We have $\mathcal{A} \models \forall x\varphi$ if and only if for all $y \in |\mathcal{A}|$ we have $\mathcal{A} \models \varphi(y / x)$
     \end{description}
-    \item[First-Order Queries] A first-order query is a map from structures over one vocabulary $\sigma$ to structures over another vocabulary $\tau$.
+    \item[Logical operator] A logical operator can create a new formula from one or more existing formulas.
+    One example is the conjunction, which combines two existing formulas.
+    \item[First-order queries] A first-order query is a map from structures over one vocabulary $\sigma$ to structures over another vocabulary $\tau$.
     The mapping is done in such a way that first-order formulas define the universe, which is a subset of $|\mathcal{A}|^k$ for some $k$, the relation symbols, and all the constants.
     For a more formally thorough definition see~\cite{descriptive-complexity}
     \item[Isomorphism] An isomorphism is a map $I: |\mathcal{A}| \to |\mathcal{B}|$ with $\mathcal{A}, \mathcal{B}$ over the same vocabulary which satisfies the following properties:
@@ -73,16 +75,16 @@ In second-order logic, we extend the capabilities of first-order logic with the 
 We thus also need to extend our definitions.
 We abbreviate second-order logic as SO\@.
 \begin{description}
-    \item[SO variables] A relation that is not given in the vocabulary and can be substituted with a specific interpretation
-    \item[SO formula] In addition to the inductive rules of the FO formulas, we can quantify over second-order formulas
+    \item[Second-order variables] A relation that is not given in the vocabulary and can be substituted with a specific interpretation
+    \item[Second-order formula] In addition to the inductive rules of the FO formulas, we can quantify over second-order formulas
     \begin{description}
-        \item[SO Existential quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
-        \item[SO Universal quantification] If $\varphi$ is a formula, then $\forall V\varphi$ is a formula
+        \item[Second-order Existential quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
+        \item[Second-order Universal quantification] If $\varphi$ is a formula, then $\forall V\varphi$ is a formula
     \end{description}
-    \item[SO Semantics] We also need to extend the FO semantics
+    \item[Second-order Semantics] We also need to extend the first-order semantics
     \begin{description}
-        \item[SO Existential quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U / V)$, where $\varphi(U / V)$ denotes $\varphi$ with any occurrence of $V$ replaced by $U$
-        \item[SO Universal quantification] We have $\mathcal{A} \models \forall V\varphi$ if and only if for all relations $U$ over $|\mathcal{A}|$ we have $\mathcal{A} \models \varphi(U / V)$
+        \item[Second-order Existential quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U / V)$, where $\varphi(U / V)$ denotes $\varphi$ with any occurrence of $V$ replaced by $U$
+        \item[Second-order Universal quantification] We have $\mathcal{A} \models \forall V\varphi$ if and only if for all relations $U$ over $|\mathcal{A}|$ we have $\mathcal{A} \models \varphi(U / V)$
     \end{description}
 \end{description}
 
@@ -108,7 +110,7 @@ Turing machines are the most common model of computation.
     If at some point the Turing machine enters the accepting or the rejecting state, the computation halts, and the Turing machine is said to have accepted / rejected the input.
     It can happen that the Turing machine continues indefinitely or loops.
     In that case, we also say that it has rejected its input.
-    In this work, we will ignore the tape content after the computation and focus on decision problems.
+    In this document, we will ignore the tape content after the computation and focus on decision problems.
     \item[Decidability] If a Turing machine halts on all inputs, we say that it decides a problem, as we can always be sure that the machine will accept or reject an input in finite time.
     \item[Nondeterministic Turing machine] We can extend the transition function $\delta$ to allow multiple transitions from a given state.
     Formally, we then have $\delta : \Gamma \times Q \to \mathcal{P}(\Gamma \times Q \times \{L, R\})$.

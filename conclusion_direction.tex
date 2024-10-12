@@ -1,18 +1,21 @@
+%! suppress = UnresolvedReference
+%! suppress = MissingImport
+
 \chapter{Conclusion and Direction}\label{ch:conclusion-and-direction}
 
 \section{Conclusion}\label{sec:conclusion}
-In this work, we investigated multiple logics which have a relation to Savitch's theorem.  % TODO we / I in conclusion?
+In this document, we investigated multiple logics which have a relation to Savitch's theorem.  % TODO we / I in conclusion?
 This has led us to a better notion of how these logics are related to NSPACE$[s(n)]$ and thus also to linear bounded automata and context-sensitive languages.
 
 In the beginning, we introduced the theory of formal languages and the Chomsky Hierarchy.
-Afterwards, the main tool of Descriptive Complexity used in this work, Complexity theory, was presented.
-Next, Savitch's theorem and its proof are included in the chapter.
-From then on, this theorem is used multiple times.
-Then, the equivalence between context-sensitive languages and monadic second-order logic is shown.
+Afterwards, the main tool of Descriptive Complexity used in this document, Complexity theory, was presented.
+Next, Savitch's theorem and its proof were explained.
+From then on, this theorem was used multiple times.
+Then, the equivalence between context-sensitive languages and monadic second-order logic was shown.
 
 Personally, I investigated multiple ideas I got when I was reading the theory.
 
-The first one was a direct transformation of the results of the equivalence between second-order transitive closure logic and nondeterministic Turing machines with bounded space to first-order logic. % TODO check tense (past)
+The first one was a direct transformation of the results of the equivalence between second-order transitive closure logic and nondeterministic Turing machines with bounded space to first-order logic.
 This approach did not contain any new insights, but it was able to showcase the close relationship between first- and second-order logic.
 
 After this, I wanted to explicitly prove that some methods could not work.
@@ -28,26 +31,26 @@ Nevertheless, some upper and lower bounds were shown using Savitch's theorem and
 In an attempt to make FO-VAR less powerful, I also tried restricting universal quantification.
 A new formula made this possible.
 As for all the other restrictions, I was unable to find a way to simulate formulas in my restriction of FO-VAR using NSPACE Turing machines.
-The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gives a space-time tradeoff but does not solve the inherent problem of simulating this formula by NSPACE Turing machines.
+The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gave a space-time tradeoff but did not solve the inherent problem of simulating this formula by NSPACE Turing machines.
 
 The most complicated result I was able to get does not have any tight connection to context-sensitive languages.
 It concerns the simulation of alternating Turing machines using FO-VAR\@.
-There, a quite tight containment could be found, which bounds some alternating Turing machine classes from above and below by a factor of $\log(s(n))$.
+There, a quite tight containment was found, which bounds some alternating Turing machine classes from above and below by a factor of $\log(s(n))$.
 A combination of different techniques used in previous results was used to get the logical formula.
 This result could lead to a path for describing alternating space-time classes exactly using an equivalent logic.
 
 \subsection{Working process}\label{subsec:working-process}
-Generally, I learned a lot during this work.
+Generally, I learned a lot during this project.
 It also provided me insight into how scientific research is done, and I was able to immerse myself in a domain that fascinates me.
 I knew that I could not expect any significant results, and indeed I worked on many different ideas, but most of the time hit a dead end.
 
 At the beginning of the working process, I spend a lot of time reading multiple books about Descriptive Complexity and logic.
 I then researched more papers on the topic and tried to understand the lower and upper bounds described there.
 This took more time than expected, but I still was able to start investigating early enough.
-As this is my first scientific research work, I did not know how to approach it, so I wrote to Dr. Královi\v{c} from the ETH Zürich.
+As this was my first scientific research project, I did not know how to approach it, so I wrote to Dr. Královi\v{c} from the ETH Zürich.
 His tips were helpful and gave me a starting point for the research.
 During the months that followed, I tried multiple ideas and read a lot of papers concerning things I wanted to prove or needed for my proofs.
-Quite soon, Ms Sprunger and I discussed that in order to help reduce the stress before handing in, I should start writing the theoretical part of this work.
+Quite soon, Ms Sprunger and I discussed that in order to help reduce the stress before handing in, I should start writing the theoretical part of this document.
 I did this during the summer break, experiencing some difficulties in the simplification of proofs while still maintaining their correctness.
 Afterwards, I continued doing research.
 During this time, I found multiple results which are presented in \cref{ch:personal-contribution}, but also spent a lot of time working on hierarchies without notable results.
@@ -58,10 +61,11 @@ Overall, I think there are three main points which could be improved:
 \begin{itemize}
     \setlength\itemsep{0.2em}
     \item First, I often felt that my proofs were not explained in a way that was clear and concise.
-    This makes it difficult for the reader to follow the arguments and understand the underlying thought process. % TODO make it positive
+    This made it difficult for the reader to follow the arguments and understand the underlying thought process.
+    In this document I focused on this point and was able to improve the quality of the proofs.
     \item Another point is the methods of research.
     I found it difficult to find any resources on this matter in the highly abstract field of mathematics.
-    Further, I had no mentor on this project who could help me along the right path.
+    I reached out to multiple professors at the University of Basel and the ETH Zürich, but unfortunately none of the people I contacted hat time to help me along the right path.
     \item The time management could also be improved, as I spent a lot of time on ideas that were clearly not working and thus did not have time to investigate everything I wanted.
     Also, I only started writing down my own research very late, which generated some stress in the end.
 \end{itemize}

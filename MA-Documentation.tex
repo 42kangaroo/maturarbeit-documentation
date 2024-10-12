@@ -37,6 +37,8 @@
 \usepackage{siunitx}
 \usepackage{stackengine}
 \usepackage{cleveref}
+\usepackage{acronym}
+\usepackage{glossaries}
 % ========= ENDE VON PAKETE LADEN =========
 
 
@@ -161,7 +163,6 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \svgpath{{img/svg/}}
 % =========== ENDE VON BILDPFADE ==========
 
-
 % =============================================================
 \begin{document} % START VOM DOKUMENT =========================
 % =============================================================
@@ -207,8 +208,15 @@ bookmarksnumbered=true     % Kapitelnummern in Lesezeichen?
 \nocite{*}
 \addcontentsline{toc}{chapter}{\bibname}
 \printbibliography %          \
-
 % ----------------------------
+
+% Acronyms
+\chapter*{Acronyms}
+\addcontentsline{toc}{chapter}{Acronyms}
+\begin{acronym}
+\acro{FO}{first-order logic}
+\end{acronym}
+
 
 % =========== START VON ANHÄNGE ===========
 \appendix
