@@ -97,7 +97,7 @@ Further, it only depends on the characters at positions $\overline{x} - 1, \over
 Because it can be assumed without loss of generality that the Turing machine returns to the starting tape cell and clears its tape after accepting, finding out the value of $C_{2^{cn^k}}(\overline{0}, \overline{b})$ is sufficient to determine if the machine accepts.
 
 If we want to extend this to nondeterministic Turing machines using $C_{t}(\overline{x}, \overline{b})$ to mean that the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
-As we do not have the guarantee that the computation is deterministic, we can not say any more that the new state only depend on the possible characters on the tape at time $t - 1$.
+As we do not have the guarantee that the computation is deterministic, we can not say any more that the new state only depends on the possible characters on the tape at time $t - 1$.
 Doing this would mean that impossible states could be reached.
 This would happen because the formula does not remember which combinations of characters are possible, which is required as the characters of each tape cell can not be chosen independently.
 One way to fix this is by remembering the nondeterministic choices made in the previous steps.
@@ -151,7 +151,7 @@ Now, there are multiple cases
     This is again only interesting when $r(n) < s(n)$.
 \end{description}
 
-We thus get that any improvement on our simulation results happens only when we have less than $s(n)$ variable bits.
+We thus get that any improvement of our simulation results happens only when we have less than $s(n)$ variable bits.
 Using Savitch's theorem once more, we also get that $r(n) > \sqrt{n}$.
 Another result is that if $t(n)r(n) < s(n)^2$, Savitch's theorem can be improved as
 \[
@@ -337,11 +337,11 @@ As this formula is quite intricate, it is proposed to read it four times, each t
     The next two quantifiers quantify existentially which half of $S \to Z \to E$ is not connected.
     This half must exist, as otherwise, a path from $S$ to $E$ exists, which would contradict $\neg b_{path}$.
     Because $b_1$ is again true, the relevant part of the path is copied to $A$ and $B$ in $M_4$ and back to $S$ and $E$ in $M_5$.
-    In $M_6$, $M_7$, $N_4$ and $N_5$ the formula does the same as in the first case, which was not changing $X$, $I$ and $b_{path}$.
+    In $M_6$, $M_7$, $N_4$ and $N_5$ the formula does the same as in the first case, which is not changing $X$, $I$ and $b_{path}$.
     If no path exists, this continues until the formula $\neg b_{path}$ is hit.
     At this point, this branch of the formula is marked as true, as effectively, no path from $X$ to $I$ exists by making these choices.
 
-    \item The third possibility we need to consider is that the formula is currently trying to find a path from $X$ to $I$ in a universal component and that it succeed in finding a connection between $S$ and $E$.
+    \item The third possibility we need to consider is that the formula is currently trying to find a path from $X$ to $I$ in a universal component and that it succeeds in finding a connection between $S$ and $E$.
     In this case, $b_{path}$ is true and $b_1$ is false.
     In $M_1$, if $I = Y$, this logical branch is done as the simulation reached the accepting vertex.
     Otherwise, $N_1$ can be disregarded, and in $M_2$, $b_1$ is set to false.
@@ -365,7 +365,7 @@ As this formula is quite intricate, it is proposed to read it four times, each t
     Thus, all vertices which are either the accepting vertex or are existential are universally quantified.
     After that, in $M_6$ and $M_7$, the formula copies $S$ to $X$ and $E$ to $I$ via $A$ and $B$.
     The last change happens in $N_{5}$, where the formula quantifies existentially if it claims that a path from $X$ to $I$ exists or that no such path does.
-    Thus, the variables are set for a new block of  universal states.
+    Thus, the variables are set for a new block of universal states.
 \end{enumerate}
 The complete formula sets the starting values of the variables.
 By setting $b_{path} = \text{true}$ and all of $X, S, E$ and $I$ to the staring configuration $AS$, either case three or four is triggered.

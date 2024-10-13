@@ -7,7 +7,7 @@
 
 \section{Aims}\label{sec:aims}
 
-In mathematics, abstraction is one of the most important tools, as it enables us to make general statements and prove them for all concrete instances of a concept.
+In mathematics, abstraction is one of the most important tools, enabling us to make general statements and prove them for all concrete instances of a concept.
 Formal logic takes this even further and makes it possible to abstract mathematical thought itself.
 That is the reason why {Descriptive} Complexity uses formal logic to describe computational problems in a way that captures their mathematical essence.
 
@@ -96,7 +96,7 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
 \end{theorem}
 
 \begin{proof}
-    We start with the first inclusion, $\text{\acs{NSPACE}$[t(n)]$} \subseteq \text{\acs{ATIME}$[t(n)^2]$}$.
+    We start with the first inclusion, $\text{\acs{NSPACE}}[t(n)] \subseteq \text{\acs{ATIME}}[t(n)^2]$.
     We need to show that any \acs{NSPACE}$[t(n)]$ Turing machine can be simulated by an \acs{ATIME}$[t(n)^2]$ alternating Turing machine.
     Let $N$ be a \acs{NSPACE}$[t(n)]$ Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
@@ -118,9 +118,9 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
     Further, one of the new shorter paths $P(d - 1, z, y)$ is then evaluated.
     By induction, we find that we need $\mathcal{O}(d\cdot t(n))$ time to compute $P(d, x, y)$.
     There are only $2^{\mathcal{O}(t(n))}$ possible configurations, so we get that the initial $d$ is also in $\mathcal{O}(t(n))$, and thus our total runtime is $\mathcal{O}(t(n)\cdot t(n)) = \mathcal{O}(t(n)^2)$.
-    
+
     \vspace{5mm}
-    
+
     \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an \acs{ATIME}$[s(n)]$ Turing machine $A$ using a \acs{DSPACE}$[s(n)]$ Turing machine.
     Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
@@ -211,10 +211,10 @@ The transitive closure operator takes the transitive closure over some graph and
 
     \vspace{5mm}
 
-    For proving the other direction, consider a \acs{NSPACE}$[n]$ Turing machine $N$.
+    To prove the other direction, consider a \acs{NSPACE}$[n]$ Turing machine $N$.
     We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states in addition to all normal symbols $a_i$.
     We use these symbols to completely represent an instantaneous configuration of the computation of $N$.
-    This is done by having creating a string from the tape content and replacing the character at the position of the read/write head by the $b_{a_i, q_j}$ which contains the actual character and state of $N$.
+    This is done by creating a string from the tape content and replacing the character at the position of the read/write head by the $b_{a_i, q_j}$ which contains the actual character and state of $N$.
 
     Consider the tuple $\overline{X} = \langle Q_{b_1}, \dots, Q_{b_r} \rangle$ containing a unary relation for each symbol in $\Sigma$.
     This tuple completely represents an instantaneous configuration of the tape and the Turing machine.
@@ -228,7 +228,7 @@ The transitive closure operator takes the transitive closure over some graph and
         \left. \bigvee_{\langle b_{k},b_{l},b_{m}\rangle \to \langle b_{u}, b_{v}, b_{w} \rangle \in P} \left(X_{Q_{b_{k}}}(i - 1) \land X_{Q_{b_{l}}}(i) \land X_{Q_{b_{m}}}(i + 1) \land Y_{Q_{b_{u}}}(i - 1) \land Y_{Q_{b_{v}}}(i) \land Y_{Q_{b_{w}}}(i + 1) \right)\right)
     \end{multline*}
     The first line asserts that apart from the indices where the head is, the tape stays unchanged.
-    The second line tells states that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
+    The second line states that there exists a rule in $P$ such that the characters in $\overline{Y}$ at positions $i - 1, i, i + 1$ follow from the previous characters in $\overline{X}$.
 
     Now, we can take the transitive closure over $\varphi$, starting with the start configuration and ending at an accepting configuration.
     Without loss of generality, we can assume that $N$ clears its tape after accepting, therefore the end position is unique.

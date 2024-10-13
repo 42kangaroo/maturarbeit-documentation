@@ -4,7 +4,7 @@
 
 In our daily lives, we are in contact with various kinds of algorithms at all times.
 Searching on Google, sending texts, asking questions to \acs{AI} chatbots, searching for the fastest route with a \acs{GPS}; all of these consume resources in energy, storage space, and time.
-According to a report from 2021 \cite{webFootprint}, 3.7 \% of global carbon emissions come from the \acs{IT} domain, with an upward tendency.
+According to a report from 2021 \cite{webFootprint}, 3.7\% of global carbon emissions come from the \acs{IT} domain, with an upward tendency.
 This footprint is similar to that of the airline industry.
 At this scale, it is vitally important to understand and find out if the resource consumption can be reduced.
 
@@ -20,16 +20,16 @@ One of the subfields of Complexity theory is Descriptive Complexity.
 It relates mathematical logic to different complexity classes and allows us to get new insights into the underlying structure of problems of certain classes.
 The other main field present in this document, formal languages, is concerned with the abstraction of computational problems as sets, which is often helpful for proofs.
 This then allows multiple formalisms which describe these sets to be defined.
-The formal language class this document focuses on, context-sensitive languages, is part of the ``Chomsky hierarchy'' introduced by the famous linguist Noam Chomsky in \cite{Chomsky1959}.
+The formal language class this document focuses on, called context-sensitive languages, is part of the ``Chomsky hierarchy'' introduced by the famous linguist Noam Chomsky in \cite{Chomsky1959}.
 
 Towards the end of the 20$^{\text{th}}$ century, many equivalences were proven between fragments and extensions of various logics and complexity classes, including all classes in the Chomsky hierarchy.
 A great summary of all the results can be found in Neil Immermans paper ``Languages that capture complexity classes''~\cite{Immerman1987}.
 
 In this project, the focus lies on the following question: What are the connections between context-sensitive languages and extensions and restrictions of first-order logic?
-It is known that context-sensitive languages are captured by linear bounded nondeterministic Turing machines and that these in turn are equivalent to a certain extension of second-order logic.
+It is known that context-sensitive languages are captured by linear bounded nondeterministic Turing machines and that these in turn are equivalent to a certain extension of second-order logic \cite{descriptive-complexity}.
 Many complexity classes have multiple formalizations using logic, but this one does not.
 This is why it is interesting to try to find new characterization that can give new insights into the inherent structure of context-sensitive languages.
-First-order logic has many powerful extensions that allow for such research and thus has gained the main focus of this project.
+First-order logic has many powerful extensions that allow for such research and thus has become the main focus of this project.
 
 This document starts by introducing the relevant theory in the first two chapters.
 Later, a personal study of connections between first-order logic and context-sensitive languages is presented.
@@ -43,8 +43,8 @@ After the introduction to the material, \cref{ch:personal-contribution} describe
 Different approaches that I tried are presented and investigated.
 Towards the end of the chapter, the direct connection to context-sensitive languages fades and the objects of study become more related to Savitch's theorem, which plays a great role in the theory of space-bounded computation.
 The main result is given in \cref{sec:alternating-bounds} and concerns a simulation of alternating Turing machines using iterative logic.
-This divergence from the original working question is due to the hope that researching other, more loosely connected problems will ultimately help to find a solution for the core problem.
-Also, I tried to pursue ideas I had instead of trying approaches where I did not make any progress.
+This divergence from the original working question is due to the hope that researching other, more loosely connected problems would ultimately help to find a solution for the core problem.
+Also, I aimed to investigate many personal ideas instead of dwelling on approaches that rapidly proved to not develop into successful ways.
 
 Finally, in \cref{ch:conclusion-and-direction}, what was accomplished during this project is reflected.
 A review of the working process is presented, and finally, further possibilities of research are discussed.
@@ -56,5 +56,5 @@ A full collection of descriptions, proofs, techniques, and context information a
 \Cref{ch:communications} contains all the messages and emails exchanged in the course of this project.
 All notes which were made during this project can be found in \cref{ch:notes}.
 
-In mathematical research, English has traditionally been the language of papers, exchanges, and books.
-This document adheres to this tradition and is writen in English.
+In mathematical research, English has traditionally been the language of communication between members of the community, may it be for papers, exchanges or other publications.
+This document adheres to this tradition and is written in English.

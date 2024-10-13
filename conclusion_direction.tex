@@ -11,12 +11,12 @@ Further, \cref{sec:analogues-to-proof-for-dspace} seems to indicate that they ar
 In \cref{sec:restricting-universal-quantification}, we have seen that even very little boolean universal quantification is probably too much for the existential nature of \acs{NSPACE}$[n]$ Turing machines to handle.
 
 In the beginning, the theory of formal languages and the Chomsky hierarchy were introduced.
-Afterwards, the main tool of Descriptive Complexity used in this document, Complexity theory, was presented.
-Next, Savitch's theorem and its proof were explained.
+Next, the main tool of Descriptive Complexity used in this document, Complexity theory, was presented.
+Afterwards, Savitch's theorem and its proof were explained.
 From then on, this theorem was used multiple times.
-Then, the equivalence between context-sensitive languages and monadic second-order logic was shown.
+Last, the equivalence between context-sensitive languages and monadic second-order logic was shown.
 
-Personally, I investigated multiple ideas I got when I was reading the theory.
+Personally, I investigated multiple ideas I got while reading the theory.
 
 The first one was a direct transformation of the results of the equivalence between second-order transitive closure logic and nondeterministic Turing machines with bounded space to first-order logic.
 This approach did not contain any new insights, but it was able to showcase the close relationship between first- and second-order logic.
@@ -27,50 +27,52 @@ There, I showed that naively applying the proof to nondeterministic Turing machi
 A full proof was impossible to make as it is unclear how to define a generalization of the proof for \acs{DSPACE}\@.
 The difficulty of this problem is illustrated by Savitch's theorem, which has not been improved for a long time and thus makes it seem unlikely that a simulation of \acs{NSPACE} Turing machines with subquadratic \acs{DSPACE} Turing machines is possible.
 
-The next method I tried was mixing transitive closure logic with iterative logic.
+Subsequently, I tried was mixing transitive closure logic with iterative logic.
 This turned out not to be very powerful, as any interesting result in one of the mixed logics would imply one in pure iterative logic.
-Nevertheless, I showed upper and lower bounds using Savitch's theorem and the space hierarchy theorem.
+Nevertheless, I proved upper and lower bounds using Savitch's theorem and the space hierarchy theorem.
 
 In an attempt to make \acs{FO-VAR} less powerful, I also tried restricting universal quantification.
 A new formula made this possible.
 As for all the other restrictions, I was unable to find a way to simulate formulas in my restriction of \acs{FO-VAR} using \acs{NSPACE} Turing machines.
 The generalization of this idea by adding more bits to the extended variables and decreasing the iteration count gave a space-time tradeoff but did not solve the inherent problem of simulating this formula by \acs{NSPACE} Turing machines.
 
-The most complicated result I was able to get does not have any tight connection to context-sensitive languages.
+The most complicated result I managed to find does not have any tight connection to context-sensitive languages.
 It concerns the simulation of alternating Turing machines using \acs{FO-VAR}\@.
 There, I found quite a tight containment, which bounds some alternating Turing machine classes from above and below by a factor of $\log(s(n))$.
 I used a combination of different techniques used in previous results to get the logical formula.
 This result could lead to a path for describing alternating space-time classes exactly using an equivalent logic.
 
 \subsection{Working Process}\label{subsec:working-process}
-Generally, I learned a lot during this project.
-It also provided me insight into how scientific research is done, and I was able to immerse myself in a domain that fascinates me.
-I knew that I could not expect any significant results, and indeed I worked on many different ideas, but most of the time hit a dead end.
+Generally, I learned a lot about logic and Descriptive Complexity during this project.
+It also provided me with insight into how scientific research is done, and I was able to immerse myself in a domain that fascinates me.
+I knew that the probability of obtaining significant results was low, and indeed I worked on many different ideas, but most of the time hit a dead end.
 
 At the beginning of the working process, I spend a lot of time reading multiple books about Descriptive Complexity and logic.
-I then researched more papers on the topic and tried to understand the lower and upper bounds described there.
+I then researched more papers on the topic and began to understand the lower and upper bounds described there.
 This took more time than expected, but I still was able to start investigating early enough.
 As this was my first scientific research project, I did not know how to approach it, so I wrote to Dr. Královi\v{c} from the ETH Zürich.
-His tips were helpful and gave me a starting point for the research.
-During the months that followed, I tried multiple ideas and read a lot of papers concerning things I wanted to prove or needed for my proofs.
-Quite soon, Ms Sprunger and I discussed that in order to help reduce the stress before handing in, I should start writing the theoretical part of this document.
+His tips were helpful and gave me a starting point for my research.
+During the months that followed, I investigated multiple ideas and read a lot of papers concerning things I wanted to prove or needed for my proofs.
+
+Early on, Ms Sprunger and I discussed that in order to help reduce the stress before handing in, I should start writing the theoretical part of this document.
 I did this during the summer break, experiencing some difficulties in the simplification of proofs while still maintaining their correctness.
 Afterwards, I continued doing research.
 During this time, I found multiple results which are presented in \cref{ch:personal-contribution}, but also spent a lot of time working on hierarchies without notable results.
 Two months before handing in, the International Olympiad in Informatics took place.
-My time plan did not account for this very well, so I had to work quite a lot in the last two weeks to write down my personal contribution.
+My time plan did not account for this and all the preparation required very well, so I had to work quite a lot in the last two weeks to write down my personal contribution.
 
-Overall, I think there are three main points which could be improved:
+The main difficulties I had during this project are the following:
 \begin{itemize}
     \setlength\itemsep{0.15em}
-    \item First, I often felt that my proofs were not explained in a way that was clear and concise.
+    \item First, in the past I often felt that my proofs were not explained in a way that was clear and concise.
     This made it difficult for the reader to follow the arguments and understand the underlying thought process.
     In this document I focused on this point and was able to improve the quality of the proofs.
-    \item Another point is the methods of research.
+    \item Second, the methods of research were difficult to find.
     I found it difficult to find any resources on this matter in the highly abstract field of mathematics.
-    I reached out to multiple professors at the University of Basel and the ETH Zürich, but unfortunately none of the people I contacted hat time to help me along the right path.
-    \item The time management could also be improved, as I spent a lot of time on ideas that were clearly not working and thus did not have time to investigate everything I wanted.
-    Also, I only started writing down my own research very late, which generated some stress in the end.
+    I reached out to multiple professors at the University of Basel and the ETH Zürich, but unfortunately only one of the people I contacted hat a little time to help me along the right path.
+    \item Finally, the time management is a topic I need to improve.
+    I spent a lot of time on ideas that were clearly not working and thus did not have time to investigate everything I wished to study.
+    Also, I started writing down my own research very late, which generated some stress in the end.
 \end{itemize}
 
 \section{Directions}\label{sec:directions}

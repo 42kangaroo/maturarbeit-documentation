@@ -1,12 +1,12 @@
 %! suppress = UnresolvedReference
 %! suppress = MissingImport
-\chapter{Mathematical Context and Further Proofs}\label{ch:mathematical-context-and-further-proofs} % TODO check spelling
+\chapter{Mathematical Context and Further Proofs}\label{ch:mathematical-context-and-further-proofs}
 
 \section{Formal languages}\label{sec:formal-languages-app}
 
 \subsection{Regular Languages}\label{subsec:regular-languages}
 
-The regular languages have the most restricted type of grammars.
+The regular languages have the most restricted type of grammar.
 Formally, any regular language can be described by a grammar with rules in $V\times(\Sigma \cup \Sigma V \cup \varepsilon)$.
 This means that we only have exactly one non-terminal on the left-hand side and the right-hand side is either a terminal, the empty word, or a terminal symbol followed by a non-terminal symbol.
 
@@ -19,14 +19,14 @@ This means that we only have exactly one non-terminal on the left-hand side and 
                 O \to aS
         \end{Bmatrix*}
     \]
-    The generated language are exactly all words with even length.
+    The generated language consists of exactly all words with even length.
 \end{exmp}
 
 The regular languages have been studied quite thoroughly and have multiple equivalent formalisms:
 \begin{itemize}
     \setlength\itemsep{0.15em}
-    \item The language is recognized by a Deterministic finite automaton, which process the input word one character at a time
-    \item The language can be decided by a read-only Turing machine, that is a Turing machine that can not modify it's tape
+    \item The language is recognized by a Deterministic finite automaton, which processes the input word one character at a time
+    \item The language can be decided by a read-only Turing machine, that is a Turing machine that can not modify its tape
     \item The language can be described by a regular expression
 \end{itemize}
 
@@ -34,7 +34,7 @@ For a more in-depth analysis of regular languages and equivalent formalisms refe
 
 \subsection{Context-Free Languages}\label{subsec:context-free-languages}
 
-The context-free languages extend the regular languages by allowing arbitrary right-hand sides for the rules of the defining grammar.
+Context-free languages extend the regular languages by allowing arbitrary right-hand sides for the rules of the defining grammar.
 Formally, that gives us rules in $V\times(\Sigma \cup V)^{*}$.
 Most valid arithmetic expressions, logical formulas and formally correct code in programming languages are context-free, as we can see the non-terminal symbols as types which are then converted to specific expressions of that type.
 
@@ -68,7 +68,7 @@ By the Church-Turing thesis, this means that these are exactly the languages tha
 Thus, we have a huge number of equivalent formalisms, including a RAM machine, while-programs and lambda calculus.
 
 It is worth noting that there are languages which are not recursive.
-One of the most important example of these languages is the set of all (descriptions) of Turing machines which halt on every input, also known as the halting problem.
+One of the most important examples of these languages is the set of all (descriptions) of Turing machines which halt on every input, also known as the halting problem.
 For the characterization using logic, again refer to~\cref{subsec:des-recursive-languages}.
 
 \section{Descriptive Complexity}\label{sec:descriptive-complexity-context}
@@ -125,7 +125,7 @@ These reductions can be very useful to define complete problems for complexity c
 \end{define}
 
 First-order reductions can then be used to show that some problem is also a member in some complexity class, as in most complexity classes, we can compute the first-order query, and then we are left with a problem that we already know is in the required class.
-The converse can also be shown: for some problem $B$ which is not in some complexity class $\mathcal{C}$, if we have $B \leq_{fo} A$, then $A$ is also not in $\mathcal{C}$, as otherwise $B$ would also be in $\mathcal{C}$, which is a contradiction.
+The converse can also be shown: for some problem $B$ which is not in some complexity class $\mathcal{C}$, if we have $B \leq_{fo} A$, then $A$ is also not in $\mathcal{C}$, as otherwise, $B$ would also be in $\mathcal{C}$, which is a contradiction.
 
 Using the reductions, we can define completeness.
 
@@ -167,14 +167,14 @@ We will present a proof for deterministic space.
     This would show that the language computed by $D$ is not in \acs{DSPACE}[$o(t)$], and thus the strict containment.
 
     On input $\langle M, 1^{k} \rangle$ our machine $D$ marks of $t(|\langle M, 1^{k} \rangle|)$ tape cells, which are the cells that are allowed for the computation.
-    Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a Turing machine can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
+    Further, we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a Turing machine can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
     Then, we simulate $M$ on input $\langle M, 1^{k} \rangle$.
     If we transcend any bound, we reject.
     For all $M$ in \acs{DSPACE}[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
     On this input, the simulation finishes, and we can invert the output.
 
-    This directly gives us an input for which $M$ and $D$ differ, and thus proves our claim.
-    Furthermore, $D$ runs in \acs{DSPACE}[$t(n)$] as by construction we assured that we do not run infinitely and that we stay within the space bound.
+    This directly gives us an input for which $M$ and $D$ differ and thus proves our claim.
+    Furthermore, $D$ runs in \acs{DSPACE}[$t(n)$] as by construction we ensured that we do not run infinitely and that we stay within the space bound.
 \end{proof}
 
 
@@ -185,7 +185,7 @@ Here, we will show that the regular languages are captured exactly by second-ord
 Further, we also are not allowed to use $\leq$, but have access to equality $x = y$ and the successor relation $x = y + 1$.
 We call this class \acs{MSO}[$+1$].
 
-First we need to present a formal definition of deterministic finite automata.
+First, we need to present a formal definition of deterministic finite automata.
 \begin{define}[DFA]
     A deterministic finite automaton is a 5-tuple $M = \langle Q, \Sigma, \delta, q_0,  F \rangle$ where
     \begin{itemize}
@@ -210,14 +210,14 @@ Now we can start to prove our main theorem for regular languages.
 \end{theorem}
 
 \begin{proof}
-    First we show that any regular language can be expressed in \acs{MSO}[$+1$].
-    Let $L$ be regular, end $D_L$ be a DFA recognizing the language.
-    We assume $L$ does not contain the empty word, otherwise we can recognize the language $L \setminus \{\varepsilon\}$ and then add $\varphi \lor \forall x(x \neq x)$, which adds the empty string back.
+    First, we show that any regular language can be expressed in \acs{MSO}[$+1$].
+    Let $L$ be regular, and $D_L$ be a DFA recognizing the language.
+    We assume $L$ does not contain the empty word, otherwise, we can recognize the language $L \setminus \{\varepsilon\}$ and then add $\varphi \lor \forall x(x \neq x)$, which adds the empty string back.
 
     Now let $D_L$ have $k$ states.
     We can existentially quantify unary relations $X_1, \dots, X_k$ to have the meaning that $X_i(y)$ is true if and only if $D_L$ is in state $i$ after $y$ steps.
     Then, we need to make consistency checks.
-    We present formulas for each of the consistency checks, and then can take the ``and'' of those to get our final formula $\exists X_1, \dots, X_k(\varphi_1 \land \varphi_2 \land \varphi_3)$.
+    We present formulas for each of the consistency checks and then can take the ``and'' of those to get our final formula $\exists X_1, \dots, X_k(\varphi_1 \land \varphi_2 \land \varphi_3)$.
     \begin{description}
         \item[The start state is $q_j$] We have \[\varphi_1 \coloneqq \bigwedge_{i = 1}^{k} (i = j \leftrightarrow X_j(0))\]
         \item[We end in an accepting state] Let $T_i$ be the set of all characters which lead from $q_i$ to an accepting state.
@@ -238,7 +238,7 @@ Now we can start to prove our main theorem for regular languages.
 
     For the other direction, we need to introduce two new concepts.
 
-    One of them is the nondeterministic finite automaton, which is analogous to the nondeterministic Turing machine as it can also have multiple transitions going from the same state.
+    One is the nondeterministic finite automaton, which is analogous to the nondeterministic Turing machine as it can also have multiple transitions going from the same state.
     As with the nondeterministic Turing machine and the Turing machine, both the DFA and the NFA have the same expressive power.
 
     The other concept is that of $(\mathcal{V}_1, \mathcal{V}_2)$-structures.
@@ -268,7 +268,7 @@ Now we can start to prove our main theorem for regular languages.
 
     The remaining case with second-order variables is treated analogously, without the restriction on the number of times the variable is used, so we do not need to duplicate our states.
 
-    By induction, we have thus showed the other direction, and we see that \acs{MSO}[$+ 1$] and the regular languages are equivalent.
+    By induction, we have thus shown the other direction, and we see that \acs{MSO}[$+ 1$] and the regular languages are equivalent.
 \end{proof}
 
 \subsection{Context-Free Languages}\label{subsec:des-context-free-languages}
@@ -293,7 +293,7 @@ With matchings, we can define \acs{FO}($\exists$Match) as the first-order logic 
 For this, we first introduce a normal form for context-free grammars.
 The proof that every context-free grammar can be converted to this form can be found in~\cite{Lautemann1995}.
 \begin{lemma}
-    Every context free language has a grammar which satisfies
+    Every context-free language has a grammar which satisfies
     \begin{itemize}
         \setlength\itemsep{0.15em}
         \item All rules are of one of the two forms
@@ -326,9 +326,9 @@ Now, we can start with the proof of our theorem.
         &\left. \left(M(x_1, y_1) \land \dots \land M(x_s, y_s) \land M(x, y) \right) \land \right. \\
         &\left. \forall k, l \left(M(k, l) \to \left((x \leq k \land l \leq y) \lor (x_1 \leq k \land l \leq y_1) \lor \dots \lor (x_s \leq k \land l \leq y_s)\right)\right) \right)
     \end{align*}
-    The first line means that the $v_i$ are in the right order, the second that they do correspond, the third that there are arches between the $v_i$ and the last that there are no other arches.
+    The first line means that the $v_i$ are in the right order, the second that they correspond, the third that there are arches between the $v_i$ and the last that there are no other arches.
 
-    Now, we want to be more general, and express the that the pattern of $\langle i, j \rangle$ corresponds to some production rule with left-hand side $X$.
+    Now, we want to be more general, and express that the pattern of $\langle i, j \rangle$ corresponds to some production rule with left-hand side $X$.
     Let $\widetilde{\mathcal{X}}_X(x, y)$ be the disjunction of all $\mathcal{X}_p$ with left-hand side $X$.
     Because our normal form says that the pattern uniquely determines the left-hand side, for each arch which has arches underneath, we have a unique corresponding non-terminal.
 
@@ -348,7 +348,7 @@ Now, we can start with the proof of our theorem.
     \]
 
     Now, by construction, if and only if a word satisfies the formula, there is a derivation from $S$ for the word, as each arch can be seen as a derivation step, which we check is valid with our formula.
-    We used our assumption from the normal form to show that the $\widetilde{\mathcal{X}}_p$ are only satisfied when the arches which are non-terminal do not belong to any other non-terminal symbol then the one in the rule.
+    We used our assumption from the normal form to show that the $\widetilde{\mathcal{X}}_p$ are only satisfied when the arches which are non-terminal do not belong to any other non-terminal symbol than the one in the rule.
     If two terminal rules coincide, we do not care as no further derivation is possible.
 
     \vspace{5mm}
@@ -370,14 +370,14 @@ Now, we can start with the proof of our theorem.
 
     Now, we present two lemmas for recognizable tree languages and their relation to context-free languages.
     \begin{lemma}[\cite{Mezei1967}]
-        A language $L \subseteq \Sigma^{*}$ is context free if and only if there is a recognizable tree language $T$ with leaf alphabet $\Sigma$ for which a word is in $L$ if and only if it is the yield of some tree in $T$.
+        A language $L \subseteq \Sigma^{*}$ is context-free if and only if there is a recognizable tree language $T$ with leaf alphabet $\Sigma$ for which a word is in $L$ if and only if it is the yield of some tree in $T$.
     \end{lemma}
 
     \begin{lemma}[\cite{Thatcher1968}]
         A tree language $T$ is recognizable if and only if there is a monadic second-order sentence that recognizes it.
     \end{lemma}
 
-    We now present some relations that can be written in \acs{MSO} on trees.
+    We present some relations that can be written in \acs{MSO} on trees.
     \begin{description}
         \item[Lf($i$)] Node $i$ is a leaf $\text{Lf}(i) \equiv \forall x \neq C(x, i)$
         \item[Lc($i, j$)] Node $i$ is the leftmost child of $j$ $\text{Lc}(i, j) \equiv C(i, j) \land \forall x (C(x, j) \to i < x)$
@@ -400,15 +400,15 @@ Now, we can start with the proof of our theorem.
     For this, we present a class of trees which correspond to a word with a matching.
     For any word $w$ with matching $M$, we can construct a tree over $\Sigma \cup \{\oplus^2, \odot^2\}$.
     We do this using an intermediate step.
-    First, we construct a tree with wrong arity for nodes of type $\oplus$ by assigning one node of type $\oplus$ to each arch, with edges to every direct arch underneath it and every character directly underneath it.
+    First, we construct a tree with the wrong arity for nodes of type $\oplus$ by assigning one node of type $\oplus$ to each arch, with edges to every direct arch underneath it and every character directly underneath it.
     If we have multiple trees, we add a new $\odot$ node on top with an edge to all roots of these trees.
     To fix the arity issue, we repeat the following procedure until there are no nodes with more than outdegree 2.
 
-    Take some node with outdegree greater than 2.
+    Take some node with an outdegree greater than 2.
     Take the two leftmost children and add a $\odot$ node with an edge to both, and an edge from the new node to the former parent.
     This procedure will eventually terminate as we always decrease the outdegree of some node by one and add a valid node.
 
-    We can see that this procedure can also be done backward if and only if for any node of type $\oplus$, the leaf on the leftmost and rightmost path of a node are distinct and no $\oplus$ node occurs on the path between the two.
+    We can see that this procedure can also be done backwards if and only if for any node of type $\oplus$, the leaf on the leftmost and rightmost path of a node are distinct and no $\oplus$ node occurs on the path between the two.
     We can express this property of a tree by the following formula.
     \begin{align*}
         \Upsilon \equiv~& \forall x ( Q_{\oplus}(x) \to ( \exists y, z, U_y, U_z (y \neq z \land \text{Pt}(U_z, x, z) \land \text{Pt}(U_y, x, y) \land \\
@@ -416,7 +416,7 @@ Now, we can start with the proof of our theorem.
         &\forall r (U_z(r) \to ((r = z \lor \exists w (U_z(w) \land \text{Lc}(w, r)))\land (r = y \lor r = x \lor Q_{\odot}(r)))))))
     \end{align*}
     Here, in the first line we assert that for every node with label $\oplus$, we have two distinct leaves $y, z$ with paths $U_y$ and $U_z$.
-    The second and third line assert the same for $x$ and $y$, that they are the rightmost~/~leftmost leaf and that no other $\oplus$ type node lies on the path from them to $x$.
+    The second and third lines assert the same for $x$ and $y$, that they are the rightmost~/~leftmost leaf and that no other $\oplus$ type node lies on the path from them to $x$.
 
     Now, we want to convert our formula $\varphi$ over strings with a matching to a formula $\gamma$ over trees.
     Then we can assert that the tree represents a string with matching and the yield satisfies $\varphi$ using $\Upsilon \land \gamma$.
@@ -432,7 +432,7 @@ Now, we can start with the proof of our theorem.
 
     This is already everything we need to do, and thus we can conclude that
     \[w \models \varphi \Leftrightarrow \text{there exists a tree $T$ with yield $w$ such that } T \models \Upsilon \land \gamma \]
-    Thus, we have proved both directions and see that the context free languages are exactly captured by \acs{FO}($\exists$Match)
+    Thus, we have proved both directions and see that the context-free languages are exactly captured by \acs{FO}($\exists$Match)
 \end{proof}
 
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages-context-app}
@@ -461,7 +461,7 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
 
     Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a \acs{NSPACE}$[n]$ Turing machine.
     Then, we construct a grammar $G = \langle V, \Sigma, P, S \rangle$ with $V = \bigcup_{q_i \in Q} \bigcup_{a_j \in \Gamma} \{b_{q_i, a_j}\} \cup \{S, L, R, \#\} \cup \bigcup_{a_w \in \Gamma \setminus \Sigma} \{a_w\}$.
-    The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition we also have the start state, the end marker and some utility non-terminals.
+    The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition, we also have the start state, the end marker and some utility non-terminals.
 
     We now add the following rules to $P$:
     \begin{itemize}
@@ -472,7 +472,7 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
         These rules allow derivations from $S$ to an end tape of the form $\#a_{i_1}\dots b_{q_{accept}, a_{i_j}}\dots a_{i_k}\#$.
         \item For each rule $\langle a_k, q_l, L \rangle \in \delta(q_i, a_j)$, we add rule $b_{a_w, q_l}a_k \to a_{w}b_{a_j, q_i}$ for every $a_w \in \Gamma$.
         Similarly, for each rule $\langle a_k, q_l, R \rangle \in \delta(q_i, a_j)$, we add rule $a_{k}b_{a_w, q_l} \to b_{a_j, q_i}a_{w}$ for every $a_w \in \Gamma$.
-        We can clearly see that these rules simulate the nondeterministic Turing machine backwards.
+        We can see that these rules simulate the nondeterministic Turing machine backwards.
         \item For the start, we include $\#b_{a_i, q_0} \to \#a_i$ for all $a_i \in \Sigma$
         This rule allows us to say that we are at the start of our computation and ``remove'' the read-write head to get our initial input word.
     \end{itemize}
@@ -503,7 +503,7 @@ Thus, they also define exactly all computable sets.
 
 \subsection{Open questions}\label{subsec:open-questions}
 
-The domain of Descriptive Complexity is full of open questions as the proofs of lower bounds seems to be very difficult in most cases.
+The domain of Descriptive Complexity is full of open questions as the proofs of lower bounds seem to be very difficult in most cases.
 Further, even separation between complexity classes which seem to take an exponential amount of resources compared to another one in practice can not be shown to be different.
 
 \subsubsection{\acs{P}$\overset{?}{=}$\acs{NP}}\label{subsubsec:pnp}
@@ -513,9 +513,9 @@ This leads to the widely believed conjuncture that \acs{P} $\neq$ \acs{NP}\@.
 The problem is one of the seven Millennium Problems and a solution of equality or inequality is worth 1 Million US dollars.
 
 The consequences of a solution stating that \acs{P} $=$ \acs{NP} could have many practical advantages if it was constructive and had a low constant, as many important problems in research and logistics could be solved quickly.
-It would also mean the breakdown of most of modern cryptography, which relies on problem being intractable.
+It would also mean the breakdown of most of modern cryptography, which relies on problems being intractable.
 On a conceptual level, it would mean that finding a proof to a problem is not harder than verifying its correctness, which would greatly impact the work of mathematicians.
-If a proof of the contrary would be known, this would focus the research more on the average case complexity of \acs{NP} problems, but because of the continued lack of success on the question, this shift has already widely taken place.
+If a proof of the contrary were known, this would focus the research more on the average case complexity of \acs{NP} problems, but because of the continued lack of success on the question, this shift has already widely taken place.
 
 \subsubsection{\acs{NSPACE}$[n]$$\overset{?}{=}$\acs{DSPACE}$[n]$}\label{subsubsec:nspacedspace}
 
@@ -523,7 +523,7 @@ This problem is known under the name first linear bounded automaton problem sinc
 This comes from the fact that a \acs{NSPACE}$[n]$ Turing machine can be seen as a Turing machine with a linear bound on its space usage.
 This theorem is of interest as we know that \acs{NSPACE}$[n]$ is equivalent to the context-sensitive languages by~\cref{subsec:des-context-sensitive-languages-context-app}.
 
-Since the proposal, there were two advances.
+Since the proposal, there have been two advances.
 One is the proof that \acs{NSPACE} is closed under complement.
 The contrary would have implied $\text{\acs{NSPACE}}[n] \neq \text{\acs{DSPACE}}[n]$ as \acs{DSPACE} is closed under complement.
 The second advance is Savitch's theorem in~\cref{subsec:nspacesubsetdspacesquared} which already gives a bound for simulating \acs{NSPACE} using \acs{DSPACE} machines.
