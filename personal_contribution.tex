@@ -11,30 +11,30 @@ Using a restricted form of iterative logic, I could lower the bounds for an iter
 \section{Direct Transformation}\label{sec:direct-transformation}
 
 Similar to Immerman in~\cite{descriptive-complexity}, we use extended variables to model second-order variables in first-order logic.
-This then directly gives us a characterization of NSPACE$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second-order logic.
+This then directly gives us a characterization of \acs{NSPACE}$[s(n)]$ without requiring any new insights, as we can just use the same technique as for second-order logic.
 
 \begin{define}[Extended Variable]
-    The logic FO-VAR$[1, s(n)]$ has two types of variables.
+    The logic \acs{FO-VAR}$[1, s(n)]$ has two types of variables.
     Domain variables are the first type, which we denote by lowercase characters, ranging from $0$ to $n - 1$.
     Extended variables are the other type, which we denote by uppercase characters, ranging from $0$ to $2^{s(n)\log(n)} - 1$, and thus having $s(n)\log(n)$ bits.
-    The extended variables are not allowed to appear as an input to any relation apart from BIT\@.
+    The extended variables are not allowed to appear as an input to any relation apart from \acs{BIT}\@.
     Thus, we can only query if a specific bit in the binary representation of an extended variable is on.
-    For extended variables with more than $n$ bits, we can extend BIT to accept a tuple of domain variables encoding the position we want to query.
+    For extended variables with more than $n$ bits, we can extend \acs{BIT} to accept a tuple of domain variables encoding the position we want to query.
     This makes extended variables with a polynomial number of bits possible.
 \end{define}
 
-The extended variables in FO-VAR$[1, n^k / \log(n)]$ have exactly the same capabilities as second-order variables of arity $k$ in second-order logic.
+The extended variables in \acs{FO-VAR}$[1, n^k / \log(n)]$ have exactly the same capabilities as second-order variables of arity $k$ in second-order logic.
 This is true as for every second-order variable $X$ we can have an extended variable $X'$ such that bit $\overline{x}$ of $X'$ is set if and only if $X(\overline{x})$ is true.
-By generalizing the proof of \cref{thm:contextsensitveMSOTC}, we have NSPACE$[n^k] = $ SO(TC, arity $k$).
-We now prove that SO(TC, arity $k$) = FO-VAR$[1, n^k/\log(n)]$(TC), thus also capturing NSPACE$[n^k]$ with an extension of first-order logic.
+By generalizing the proof of \cref{thm:contextsensitveMSOTC}, we have \acs{NSPACE}$[n^k] = $ \acs{SO}(\acs{TC}, arity $k$).
+We now prove that \acs{SO}(\acs{TC}, arity $k$) = \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}), thus also capturing \acs{NSPACE}$[n^k]$ with an extension of first-order logic.
 
 \begin{proof}
-    We show by induction on the structures of the formulas that each formula in SO(TC, arity $k$) has an equivalent formula in FO-VAR$[1, n^k/\log(n)]$(TC) and vice versa.
+    We show by induction on the structures of the formulas that each formula in \acs{SO}(\acs{TC}, arity $k$) has an equivalent formula in \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}) and vice versa.
 
-    Any atomic formula in SO(TC, arity $k$) which does not include any second-order variable is trivially writable in FO-VAR$[1, n^k/\log(n)]$(TC).
-    The same holds for formulas in FO-VAR$[1, n^k/\log(n)]$(TC) without extended variables.
+    Any atomic formula in \acs{SO}(\acs{TC}, arity $k$) which does not include any second-order variable is trivially writable in \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}).
+    The same holds for formulas in \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}) without extended variables.
     An atomic formula with a second-order variable $Y(\overline{x})$ can be represented as querying the bit $\overline{x}$ of an extended variable $Y'$.
-    We can do the same transformation backwards for an atomic formula of the form BIT$(Y', \overline{x})$ and get a formula of the form $Y(\overline{x})$ with a second-order variable $Y$.
+    We can do the same transformation backwards for an atomic formula of the form \acs{BIT}$(Y', \overline{x})$ and get a formula of the form $Y(\overline{x})$ with a second-order variable $Y$.
 
     Using this, we can induct on the structure of the formulas.
     Taking the conjunction, disjunction, or negation of equivalent formulas generates new formulas which are also equivalent.
@@ -48,48 +48,48 @@ We now prove that SO(TC, arity $k$) = FO-VAR$[1, n^k/\log(n)]$(TC), thus also ca
     By induction, we then have that every formula in either logic has an equivalent formula in the other logic.
 \end{proof}
 
-Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that FO-VAR$[1, n/\log(n)]$(TC) describes exactly the context-sensitive languages.
+Using this equivalence and the proof in \cref{subsec:des-context-sensitive-languages}, we get that \acs{FO-VAR}$[1, n/\log(n)]$(\acs{TC}) describes exactly the context-sensitive languages.
 This gives us our first characterization of context-sensitive languages in first-order logic.
 
 
-\section{Analogues to Proof for DSPACE}\label{sec:analogues-to-proof-for-dspace}
+\section{Analogues to Proof for \acs{DSPACE}}\label{sec:analogues-to-proof-for-dspace}
 
-For DSPACE$[s(n)]$, there are multiple other logical characterizations which do not use the transitive closure operator.
+For \acs{DSPACE}$[s(n)]$, there are multiple other logical characterizations which do not use the transitive closure operator.
 
-First, the logics FO$[t(n)]$, which formalizes iterative definitions, and VAR$[k]$, which restricts the number of variables but allows for unbounded first-order iterations, are defined.
+First, the logics \acs{FO}$[t(n)]$, which formalizes iterative definitions, and \acs{VAR}$[k]$, which restricts the number of variables but allows for unbounded first-order iterations, are defined.
 
-\begin{define}[{FO$[t(n)]$}]
+\begin{define}[{\acs{FO}$[t(n)]$}]
     Let $Q_1, \dots, Q_n$ be a series of quantifiers, $s_1, \dots, s_n$ a series of variables, and $M_1 \dots, M_n$ a series of quantifier-free formulas.
-    A quantifier block has the form \[QB = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})\]
+    A quantifier block has the form \[\acs{QB} = (Q_{1}s_{1}.M_{n})\dots(Q_{n}s_{n}.M_{n})\]
     For a universal quantifier, $(\forall s.M)\varphi \equiv \forall s (M \to \varphi)$.
     For an existential quantifier, $(\exists s.M)\varphi \equiv \exists s(M \land \varphi)$.
     Both of these equivalences effectively mean that the quantifiers are restricted to range only over the elements that satisfy $M$.
-    Then, a formula of FO$[t(n)]$ is of the form
+    Then, a formula of \acs{FO}$[t(n)]$ is of the form
     \[
-        \left([QB]^{t(n)}M_{0}\right)(\overline{c} / \overline{s})
+        \left([\acs{QB}]^{t(n)}M_{0}\right)(\overline{c} / \overline{s})
     \]
     where $M_0$ is a quantifier-free formula, $\overline{c} = \langle c_1, \dots, c_n \rangle$ is a tuple of constants, and $\overline{s} = \langle s_1, \dots, s_n \rangle$ are the variables occurring in the quantifier block.
     The notation $(\overline{c} / \overline{s})$ means that in the beginning, we define $s_1 \coloneqq c_1, \dots, s_n \coloneqq c_n$.
-    $[QB]^{t(n)}$ stands for $QB$ literally repeated $t(n)$ times.
+    $[\acs{QB}]^{t(n)}$ stands for $\acs{QB}$ literally repeated $t(n)$ times.
     The truth values of these formulas for a specific structure are defined by evaluating the formula obtained by iterating the quantifier block $t(\lVert \mathcal{A}\rVert)$ times.
 \end{define}
 This gives us a formalism for iterative procedures.
 
-If we restrict the number of variables such that there are at most $k$ distinct variables, but allow some additional boolean variables\footnote{variables which have only two possible values}, we get FO-VAR$[t(n), k]$.
+If we restrict the number of variables such that there are at most $k$ distinct variables, but allow some additional boolean variables\footnote{variables which have only two possible values}, we get \acs{FO-VAR}$[t(n), k]$.
 In particular, we can reuse the same variable multiple times in the same quantifier block.
 Additionally, we define
 \[
-    \text{VAR}[k] = \bigcup_{c = 1}^{\infty}\text{FO-VAR}[2^{cn^k}, k]
+    \text{\acs{VAR}}[k] = \bigcup_{c = 1}^{\infty}\text{\acs{FO-VAR}}[2^{cn^k}, k]
 \]
 This is the same as saying that we allow unbounded iterations, as after at most $2^{cn^k}$ iterations, the truth value of the formula will loop or stay the same.
 The constant $c$ depends only on the number of boolean variables in the formula.
 
-For DSPACE, we have
+For \acs{DSPACE}, we have
 \[
-    \text{DSPACE}[n^k] = \text{VAR}[k + 1]
+    \text{\acs{DSPACE}}[n^k] = \text{\acs{VAR}}[k + 1]
 \]
 A proof of this can be found in~\cite{descriptive-complexity}.
-In the main part of the proof, a construction is made to simulate a DSPACE$[n^k]$ Turing machine using VAR$[k + 1]$.
+In the main part of the proof, a construction is made to simulate a \acs{DSPACE}$[n^k]$ Turing machine using \acs{VAR}$[k + 1]$.
 There, the relation $C_{t}(\overline{x}, \overline{b})$ is inductively defined to mean that at time $t$, the character on the tape at position $\overline{x}$ is the one encoded by $\overline{b}$, where $\overline{b}$ is a tuple of boolean variables.
 The characters are defined in the same way as in the proof of \cref{thm:contextsensitveMSOTC} to include the machine state as well as the tape symbol.
 As the Turing machines under consideration are deterministic, the character at position $\overline{x}$ is uniquely determined.
@@ -103,51 +103,51 @@ This would happen because the formula does not remember which combinations of ch
 One way to fix this is by remembering the nondeterministic choices made in the previous steps.
 This would make the values deterministic again, fixing the issue.
 In the worst case, this would take $\mathcal{O}(2^{cn^k})$ additional bits.
-But we already know by Savitch's theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for DSPACE that we only need $\log(n) \cdot (k + 2)$ bits to represent a NSPACE$[n^k]$ computation.
+But we already know by Savitch's theorem (\cref{subsec:nspacesubsetdspacesquared}) and the equivalence for \acs{DSPACE} that we only need $\log(n) \cdot (k + 2)$ bits to represent a \acs{NSPACE}$[n^k]$ computation.
 This is much less than the $2^{cn^k}$ bits needed using this approach.
 
-Let VAR$[r(n)]$ be the generalization of VAR$[k]$ which means that a total of $r(n) + \mathcal{O}(1)$ bits of variables are allowed.
-Any proof which would show that NSPACE$[n^k]$ can be expressed in VAR$[r(n)]$ with $\log(n) \cdot (k + 1) \leq r(n) < \log(n) \cdot (k + 2)$ would be an improvement on Savitch's theorem.
-That is because the proof for DSPACE$[n^k]$ can easily be extended to more general polynomial functions, as Immerman showed in~\cite{Immerman1999}.
-If Savitch's theorem can be improved, we can also describe NSPACE with less than $k + 2$ variables and unbounded iterations.
+Let \acs{VAR}$[r(n)]$ be the generalization of \acs{VAR}$[k]$ which means that a total of $r(n) + \mathcal{O}(1)$ bits of variables are allowed.
+Any proof which would show that \acs{NSPACE}$[n^k]$ can be expressed in \acs{VAR}$[r(n)]$ with $\log(n) \cdot (k + 1) \leq r(n) < \log(n) \cdot (k + 2)$ would be an improvement on Savitch's theorem.
+That is because the proof for \acs{DSPACE}$[n^k]$ can easily be extended to more general polynomial functions, as Immerman showed in~\cite{Immerman1999}.
+If Savitch's theorem can be improved, we can also describe \acs{NSPACE} with less than $k + 2$ variables and unbounded iterations.
 
 
 \section{Mixing Iterations and Transitive Closure}\label{sec:mixing-iterations-and-transitive-closure}
 
-\sloppy One question that came up during my research was: Can we find a logic that is more restricted than $\text{FO-VAR}[s(n), s(n)/\log(n)]$ but still captures NSPACE$[s(n)]$?
+\sloppy One question that came up during my research was: Can we find a logic that is more restricted than $\text{\acs{FO-VAR}}[s(n), s(n)/\log(n)]$ but still captures \acs{NSPACE}$[s(n)]$?
 This led to the idea of mixing up iterative procedures with the transitive closure operator.
-We now show that a success of this approach would mean that there exists a restriction using only iterative procedures that also contains NSPACE$[s(n)]$.
+We now show that a success of this approach would mean that there exists a restriction using only iterative procedures that also contains \acs{NSPACE}$[s(n)]$.
 As formulas mixing up multiple operators and procedures are more difficult to analyse, it makes this approach unpractical.
 
 There are two ways of combining the transitive closure with iterated formulas.
-The first is surrounding a formula in FO-VAR$[t(n), r(n)/\log(n)]$ with a TC operator using variables of size $r(n)$.
-For this to contain NSPACE$[s(n)]$, for any formula of the form $(\text{TC}_{a, b}\varphi)(c, d)$ we need a quantifier block, a formula $\phi$ and some constants $\overline{e}, f, g$ such that
+The first is surrounding a formula in \acs{FO-VAR}$[t(n), r(n)/\log(n)]$ with a \acs{TC} operator using variables of size $r(n)$.
+For this to contain \acs{NSPACE}$[s(n)]$, for any formula of the form $(\text{\acs{TC}}_{a, b}\varphi)(c, d)$ we need a quantifier block, a formula $\phi$ and some constants $\overline{e}, f, g$ such that
 \[
-    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv (\text{TC}_{a, b}\varphi)(c, d)
+    \left(\text{\acs{TC}}_{a, b}\left([\acs{QB}]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv (\text{\acs{TC}}_{a, b}\varphi)(c, d)
 \]
-We know that we can simulate any TC formula with variables of size $r(n)$ using $r(n)$ iterations of a quantifier block.
+We know that we can simulate any \acs{TC} formula with variables of size $r(n)$ using $r(n)$ iterations of a quantifier block.
 This is done by the technique of halving paths used in Savitch's theorem.
 An exact formula achieving this is presented in \cref{sec:restricting-universal-quantification}.
 Like this, we find an equivalent formula:
 \[
-    \left(\text{TC}_{a, b}\left([QB]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv [QB_1]^{r(n)}[QB_2]^{t(n)}\phi(\overline{e}/\overline{s}, f/a, g/b)
+    \left(\text{\acs{TC}}_{a, b}\left([\acs{QB}]^{t(n)}\phi(\overline{e}/\overline{s})\right)\right)(f, g) \equiv [\acs{QB}_1]^{r(n)}[\acs{QB}_2]^{t(n)}\phi(\overline{e}/\overline{s}, f/a, g/b)
 \]
-The two quantifier blocks can then be merged into one by additionally maintaining a counter variable of size $\log(r(n))$ such that the quantifier block acts like $[QB_1]$ during the first $r(n)$ round and then acts like $[QB_2]$.
+The two quantifier blocks can then be merged into one by additionally maintaining a counter variable of size $\log(r(n))$ such that the quantifier block acts like $[\acs{QB}_1]$ during the first $r(n)$ round and then acts like $[\acs{QB}_2]$.
 
-The other case in which we write the TC formula after the quantifier block can be treated similarly.
+The other case in which we write the \acs{TC} formula after the quantifier block can be treated similarly.
 \[
-    \left([QB]^{t(n)}\left(\text{TC}_{a, b}\phi\right)(f, g)\right)(\overline{e}/\overline{s}) \equiv (\text{TC}_{a, b}\varphi)(c, d)
+    \left([\acs{QB}]^{t(n)}\left(\text{\acs{TC}}_{a, b}\phi\right)(f, g)\right)(\overline{e}/\overline{s}) \equiv (\text{\acs{TC}}_{a, b}\varphi)(c, d)
 \]
 If the condition $c \cdot r(n) > \log(t(n))$ is satisfied for some fixed $c$, we can again merge the quantifier blocks by using the counting trick.
 As any $t(n) > 2^{cr(n)}$ can be seen as having an unbounded amount of iterations, we can assume without loss of generality that the condition holds.
 
-In both cases, we have a formula in FO-VAR$[r(n) + t(n), r(n)/\log(n)]$.
+In both cases, we have a formula in \acs{FO-VAR}$[r(n) + t(n), r(n)/\log(n)]$.
 Now, there are multiple cases
 \begin{description}
     \setlength\itemsep{0.15em}
-    \item[$r(n) \leq t(n)$:]  Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[t(n), r(n)/\log(n)]$.
+    \item[$r(n) \leq t(n)$:]  Then, \acs{FO-VAR}$[r(n) + t(n), r(n)/\log(n)] =$ \acs{FO-VAR}$[t(n), r(n)/\log(n)]$.
     This is only interesting in the case where $r(n) < s(n)$
-    \item[$r(n) > t(n)$:] Then, FO-VAR$[r(n) + t(n), r(n)/\log(n)] =$ FO-VAR$[r(n), r(n)/\log(n)]$.
+    \item[$r(n) > t(n)$:] Then, \acs{FO-VAR}$[r(n) + t(n), r(n)/\log(n)] =$ \acs{FO-VAR}$[r(n), r(n)/\log(n)]$.
     This is again only interesting when $r(n) < s(n)$.
 \end{description}
 
@@ -155,47 +155,47 @@ We thus get that any improvement on our simulation results happens only when we 
 Using Savitch's theorem once more, we also get that $r(n) > \sqrt{n}$.
 Another result is that if $t(n)r(n) < s(n)^2$, Savitch's theorem can be improved as
 \[
-    \text{FO-VAR}[t(n), r(n)/\log(n)] \subseteq \text{DSPACE}[t(n)r(n)]
+    \text{\acs{FO-VAR}}[t(n), r(n)/\log(n)] \subseteq \text{\acs{DSPACE}}[t(n)r(n)]
 \]
-This same method also tells us that $t(n)r(n) \geq s(n)$ because otherwise, we could simulate a NSPACE$[s(n)]$ Turing machine deterministically using less than $s(n)$ space, which is a contradiction to the space hierarchy theorem described in \cref{subsec:space-hierarchy-theorem}.
+This same method also tells us that $t(n)r(n) \geq s(n)$ because otherwise, we could simulate a \acs{NSPACE}$[s(n)]$ Turing machine deterministically using less than $s(n)$ space, which is a contradiction to the space hierarchy theorem described in \cref{subsec:space-hierarchy-theorem}.
 
 
 \section{Restricting Universal Quantification}\label{sec:restricting-universal-quantification}
 
-Another approach that I attempted was restricting universal quantification in the FO-VAR formulas.
-I called the resulting logic FO$\exists$-VAR\@.
-In FO$\exists$-VAR, universal quantification is only allowed over boolean variables.
+Another approach that I attempted was restricting universal quantification in the \acs{FO-VAR} formulas.
+I called the resulting logic \acs{FOEx-VAR}\@.
+In \acs{FOEx-VAR}, universal quantification is only allowed over boolean variables.
 We denote boolean variables by $b_j$.
 Further, the requirement of $M_i$ to be quantifier-free is dropped.
 This step was motivated by the fact that nondeterministic Turing machines in essence capture existential quantification.
 
 We use a similar idea to the one used in Savitch's theorem: guessing the middle of a path and checking if both shorter paths are connected.
-A formula in FO$\exists$-VAR$[s(n), s(n)/\log(n)]$ which is equivalent to a formula in FO-VAR$[1, s(n)/\log(n)]$(TC) of the form $\left( TC_{\overline{X}, \overline{Y}}\varphi \right)(\overline{C}, \overline{D})$ is
+A formula in \acs{FOEx-VAR}$[s(n), s(n)/\log(n)]$ which is equivalent to a formula in \acs{FO-VAR}$[1, s(n)/\log(n)]$(\acs{TC}) of the form $\left( TC_{\overline{X}, \overline{Y}}\varphi \right)(\overline{C}, \overline{D})$ is
 \[
     \begin{aligned}
-        QB \equiv~& (\forall b_{1}.M_{1})(\exists\overline{Z}) (\forall b_{2})(\exists \overline{A}, \overline{B}.M_{2})(\exists\overline{X}, \overline{Y}.M_{3}) \\
-        M_{1} \equiv~& \neg(\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z})) \lor \varphi(\overline{X}, \overline{Y})) \\
-        M_{2} \equiv~&(b_{2} \land \forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Z}, \overline{z}))) \lor \\
-        &(\neg b_{2} \land \forall \overline{z} (\text{BIT}(\overline{Z}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))) \\
-        M_{3} \equiv~&\forall \overline{z} (\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{BIT}(\overline{B}, \overline{z}) \leftrightarrow \text{BIT}(\overline{Y}, \overline{z}))
+        \acs{QB} \equiv~& (\forall b_{1}.M_{1})(\exists\overline{Z}) (\forall b_{2})(\exists \overline{A}, \overline{B}.M_{2})(\exists\overline{X}, \overline{Y}.M_{3}) \\
+        M_{1} \equiv~& \neg(\forall \overline{z} (\text{\acs{BIT}}(\overline{X}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{Y}, \overline{z})) \lor \varphi(\overline{X}, \overline{Y})) \\
+        M_{2} \equiv~&(b_{2} \land \forall \overline{z} (\text{\acs{BIT}}(\overline{X}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{\acs{BIT}}(\overline{B}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{Z}, \overline{z}))) \lor \\
+        &(\neg b_{2} \land \forall \overline{z} (\text{\acs{BIT}}(\overline{Z}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{\acs{BIT}}(\overline{B}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{Y}, \overline{z}))) \\
+        M_{3} \equiv~&\forall \overline{z} (\text{\acs{BIT}}(\overline{X}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{A}, \overline{z}))\land \forall \overline{z} (\text{\acs{BIT}}(\overline{B}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{Y}, \overline{z}))
     \end{aligned}
 \]
 and finally
 \[
-    [QB]^{cs(n)}(false)(\overline{C} / \overline{X}, \overline{D} / \overline{Y})
+    [\acs{QB}]^{cs(n)}(false)(\overline{C} / \overline{X}, \overline{D} / \overline{Y})
 \]
 for some constant $c$.
 
-In $QB$, the first quantification and $M_1$ mean that the formula breaks with the actual branch being true whenever $X$ and $Y$ are connected.
+In $\acs{QB}$, the first quantification and $M_1$ mean that the formula breaks with the actual branch being true whenever $X$ and $Y$ are connected.
 When this happens, quantification is done universally over the empty set, which is defined as true.
 If no connection exists yet, a middle configuration $\overline{Z}$ is guessed, and both sides are checked by universally choosing $b_2$.
 In $M_2$, the formula then checks that $\overline{A}$ and $\overline{B}$ are the endpoints of the path determined by $b_2, \overline{X}, \overline{Z} \text{ and }\overline{Y}$.
 After this, $\overline{A}$ and $\overline{B}$ are copied to $\overline{Y}$ and $\overline{X}$ in $M_3$.
 When iterating this, a path from $\overline{C}$ to $\overline{D}$ is guessed, and every connection between adjacent states is checked.
 
-We define FO$\forall, \exists$-VAR$[t(n), f(n), s(n)]$ to contain all formulas with $t(n)$ iterations of a quantifier block, extended variables of $f(n)$ bits which can be universally quantified, and extended variables of $s(n)\log(n)$ bits which can be used in existential quantification.
-Using this, we can make the more general statement that for any function $r(n) \leq 2^{cs(n)}$ for some constant $c$, we can define a formula in \[\text{FO$\forall, \exists$-VAR$[s(n)/\log(r(n)), \log(r(n)), s(n)r(n)/\log(n)]$}\] which simulates a nondeterministic Turing machine using $s(n)$ space.
-These formulas are very similar to the one defined for FO$\exists$-VAR\@.
+We define \acs{FOExUn-VAR}$[t(n), f(n), s(n)]$ to contain all formulas with $t(n)$ iterations of a quantifier block, extended variables of $f(n)$ bits which can be universally quantified, and extended variables of $s(n)\log(n)$ bits which can be used in existential quantification.
+Using this, we can make the more general statement that for any function $r(n) \leq 2^{cs(n)}$ for some constant $c$, we can define a formula in \[\text{\acs{FOExUn-VAR}$[s(n)/\log(r(n)), \log(r(n)), s(n)r(n)/\log(n)]$}\] which simulates a nondeterministic Turing machine using $s(n)$ space.
+These formulas are very similar to the one defined for \acs{FOEx-VAR}\@.
 The only difference lies in how the paths are split.
 Instead of splitting the paths into two parts, they are split into $r(n)$ parts.
 This is done by guessing $r(n) - 1$ middle configurations at once in an existential extended variable and choosing which part to check using the universal extended variable.
@@ -205,35 +205,35 @@ As for simulating this formula with a Turing machine, the product of the number 
 
 \section{Alternating Bounds}\label{sec:alternating-bounds}
 
-In the proof of Savitch's theorem, alternating Turing machines were used as an intermediate step for proving that NSPACE$[s(n)]$ is a subset of DSPACE$[s(n)^2]$.
-We can also add another intermediate step using FO-VAR$[s(n), s(n)/\log(n)]$ with the method shown in \cref{sec:restricting-universal-quantification}.
-It is also quite easy to simulate any formula in FO-VAR$[t(n), s(n)/\log(n)]$ with an alternating Turing machine in ATSR$[t(n)s(n), s(n), t(n)]$, where in this new class ATSR, we specify time, space and reversals.
+In the proof of Savitch's theorem, alternating Turing machines were used as an intermediate step for proving that \acs{NSPACE}$[s(n)]$ is a subset of \acs{DSPACE}$[s(n)^2]$.
+We can also add another intermediate step using \acs{FO-VAR}$[s(n), s(n)/\log(n)]$ with the method shown in \cref{sec:restricting-universal-quantification}.
+It is also quite easy to simulate any formula in \acs{FO-VAR}$[t(n), s(n)/\log(n)]$ with an alternating Turing machine in \acs{ATSR}$[t(n)s(n), s(n), t(n)]$, where in this new class \acs{ATSR}, we specify time, space and reversals.
 By reversals, we mean the number of times we switch from universal states to existential states and back.
-A Turing machine in ATSR$[t(n)s(n), s(n), t(n)]$ does this by writing the current values of all variables on the tape while iterating and evaluating the quantifier-free FO formulas on the way, which can be done efficiently in terms of space.
+A Turing machine in \acs{ATSR}$[t(n)s(n), s(n), t(n)]$ does this by writing the current values of all variables on the tape while iterating and evaluating the quantifier-free first-order formulas on the way, which can be done efficiently in terms of space.
 
-We now investigate two ways of simulating an ATSR$[t(n), s(n), r(n)]$ Turing machine using FO-VAR\@.
+We now investigate two ways of simulating an \acs{ATSR}$[t(n), s(n), r(n)]$ Turing machine using \acs{FO-VAR}\@.
 
 The first one is a straightforward simulation of each step of the computation.
 For this, our formula encodes the whole state of the Turing machines in a tuple of $s(n)$ bit extended variables and iteratively guesses the next configuration.
 We also assume without loss of generality that a predicate $existential(\overline{X})$ exists and that there exists exactly one accepting state, denoted by $\overline{E}$.
 \[
     \begin{aligned}
-        QB \equiv~&(\forall b.M_{1})(\exists\overline{A}.\varphi(\overline{X}, \overline{A}))(\forall \overline{B}.M_{2})(\exists \overline{X}. \forall \overline{z}(\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{B}, \overline{z}))) \\
-        M_{1} \equiv~&\neg\forall \overline{z}(\text{BIT}(\overline{X}, \overline{z}) \leftrightarrow \text{BIT}(\overline{E}, \overline{z})) \\
-        M_{2} \equiv~& (existential(\overline{X}) \to \forall \overline{z}(\text{BIT}(\overline{A}, \overline{z}) \leftrightarrow \text{BIT}(\overline{B}, \overline{z}))) \land \varphi(\overline{X}, \overline{B})
+        \acs{QB} \equiv~&(\forall b.M_{1})(\exists\overline{A}.\varphi(\overline{X}, \overline{A}))(\forall \overline{B}.M_{2})(\exists \overline{X}. \forall \overline{z}(\text{\acs{BIT}}(\overline{X}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{B}, \overline{z}))) \\
+        M_{1} \equiv~&\neg\forall \overline{z}(\text{\acs{BIT}}(\overline{X}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{E}, \overline{z})) \\
+        M_{2} \equiv~& (existential(\overline{X}) \to \forall \overline{z}(\text{\acs{BIT}}(\overline{A}, \overline{z}) \leftrightarrow \text{\acs{BIT}}(\overline{B}, \overline{z}))) \land \varphi(\overline{X}, \overline{B})
     \end{aligned}
 \]
 with \[
-         \left([QB]^{t(n)}(false)\right)(\overline{S} / \overline{X})
+         \left([\acs{QB}]^{t(n)}(false)\right)(\overline{S} / \overline{X})
 \]
-This gives us a formula in FO-VAR$[t(n), s(n)/\log(n)]$ which simulates a computation of an alternating Turing machine.
+This gives us a formula in \acs{FO-VAR}$[t(n), s(n)/\log(n)]$ which simulates a computation of an alternating Turing machine.
 Some of these $M_i$ are not quantifier-free.
 The quantifiers could be moved out of the $M_i$, but would make the formula less readable.
 This formula works as follows:
-The formula $QB$ starts by checking if the accepting configuration has already been reached using $M_1$.
-Next, if the simulation is not done yet, $QB$ existentially guesses the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
+The formula $\acs{QB}$ starts by checking if the accepting configuration has already been reached using $M_1$.
+Next, if the simulation is not done yet, $\acs{QB}$ existentially guesses the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
 In $M_2$, either this existentially guessed next state is retained if the simulated Turing machine is in an existential state (thus effectively doing nothing) or the existentially quantified state is ignored and a universal quantification over all states which are connected to the current one is done.
-The last thing $QB$ does is copying $\overline{B}$ to $\overline{X}$, making it the new start of the path.
+The last thing $\acs{QB}$ does is copying $\overline{B}$ to $\overline{X}$, making it the new start of the path.
 
 By combining the above techniques for switching between universal and existential quantification with the path-halving method used in Savitch's theorem, we get an even stronger result.
 
@@ -269,13 +269,13 @@ We get
 \]
 because of the condition that $\sum_{j= 0}^{r(n)}a_{j} \leq t(n)$.
 Multiplying this with $r(n)$, we get that a path can require a maximum of $r(n)\log\left(\frac{t(n)}{r(n)} \right)$ iterations.
-Thus, the formula is in ${\text{FO-VAR}\left[r(n)\log\left(t(n)/r(n) \right), s(n)/\log(n) \right]}$.
+Thus, the formula is in ${\text{\acs{FO-VAR}}\left[r(n)\log\left(t(n)/r(n) \right), s(n)/\log(n) \right]}$.
 
 
-The following formula simulates an ATSR$[t(n), s(n), r(n)]$ Turing machine:
+The following formula simulates an \acs{ATSR}$[t(n), s(n), r(n)]$ Turing machine:
 \[
     \begin{aligned}
-        QB \equiv&~(\forall b_{0}.M_{1})(\exists b_{0}.N_{1})(\exists b_{1}.M_{2})(\exists Z_{e}.M_{3})(\forall Z.N_{2})\\
+        \acs{QB} \equiv&~(\forall b_{0}.M_{1})(\exists b_{0}.N_{1})(\exists b_{1}.M_{2})(\exists Z_{e}.M_{3})(\forall Z.N_{2})\\
         &~(\exists b_{2e})(\forall b_{2}.N_{3})(\exists A, B.M_{4})(\forall S, E.M_{5})(\exists A, B.M_{6})(\exists I, X.M_{7})(\exists b_{0}.N_{4})(\exists b_{path}.N_{5}) \\
         M_{1} \equiv&~b_{path} \to \neg(I = Y \land (S = E \lor \varphi(S, E))) \\
         N_{1} \equiv&~\neg b_{path} \to \neg(S = E \lor \varphi(S, E)) \\
@@ -293,7 +293,7 @@ The following formula simulates an ATSR$[t(n), s(n), r(n)]$ Turing machine:
         N_{5} \equiv&~(b_{1} \land b_{path} = b_{0}) \lor (\neg b_{1} \land (existential(X) \to b_{path}))
     \end{aligned}
 \]
-and $\left([QB]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(\text{true} / b_{path}, AS / S, AS / X, AS /I, AS /S, AS / E, AE / Y)$ being the final formula.
+and $\left([\acs{QB}]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(\text{true} / b_{path}, AS / S, AS / X, AS /I, AS /S, AS / E, AE / Y)$ being the final formula.
 
 The meanings of the variables are explained below:
 \begin{description}
@@ -312,7 +312,7 @@ The meanings of the variables are explained below:
 As this formula is quite intricate, it is proposed to read it four times, each time focusing on a different stage of the search.
 \begin{enumerate}
     \item First, we look at the formula in the easiest case: It is trying to find a path from $X$ to $I$ using $S$ and $E$, which are not directly connected.
-    In this case, both $b_{path}$ and $b_1$ are true and $QB$ works like this:
+    In this case, both $b_{path}$ and $b_1$ are true and $\acs{QB}$ works like this:
     In $M_1$, the formula checks and sees that it is not done, as $S$ and $E$ are not connected.
     As $b_{path}$ is true, nothing is done in $N_1$.
     In $M_2$, $b_1$ is set to true.
@@ -372,8 +372,8 @@ By setting $b_{path} = \text{true}$ and all of $X, S, E$ and $I$ to the staring 
 This is what we want as after this, the component including $AS$ will be searched.
 The accepting vertex $Y$ is set to the desired ending $AE$.
 
-These results allow us to enclose an ATSR class between two FO-VAR classes with only logarithmic overhead.
+These results allow us to enclose an \acs{ATSR} class between two \acs{FO-VAR} classes with only logarithmic overhead.
 Thus:
 \[
-    \text{FO-VAR}\left[a(n), s(n)/\log n \right] \subseteq \text{ATSR}[a(n)s(n), s(n), a(n)] \subseteq \text{FO-VAR}\left[a(n)\log(s(n)), s(n)/\log n \right]
+    \text{\acs{FO-VAR}}\left[a(n), s(n)/\log n \right] \subseteq \text{\acs{ATSR}}[a(n)s(n), s(n), a(n)] \subseteq \text{\acs{FO-VAR}}\left[a(n)\log(s(n)), s(n)/\log n \right]
 \]

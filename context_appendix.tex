@@ -154,27 +154,27 @@ The above steps work, as for any problem $B$ in $\mathcal{C}$, there is a first-
 The space hierarchy theorem states that for both nondeterministic and deterministic space, we have problems that can be solved using $t(n)$ space, but not with any tighter space bound.
 Formally, we have
 \[
-    \text{DSPACE}[o(t(n))] \subsetneq \text{DSPACE}[t(n)]
+    \text{\acs{DSPACE}}[o(t(n))] \subsetneq \text{\acs{DSPACE}}[t(n)]
 \]
 where $o(t)$ is the set of functions $f$ such that $f \in \mathcal{O}(t)$ but $t \not \in \mathcal{O}(f)$, that is all functions that grow more slowly than $t$.
 This holds for all space constructible $t \geq \log n$.
-The same holds for NSPACE\@.
+The same holds for \acs{NSPACE}\@.
 
 We will present a proof for deterministic space.
 \begin{proof}
     The proof uses a diagonalization argument by presenting some machine $D$ that takes a Turing machine $M$ and an input size in unary as input and does the opposite of $M$ if it halts.
     We want to show that for all $M$ which run in space $f(n) \in o(t(n))$, we have an input on which $D$ and $M$ do not agree.
-    This would show that the language computed by $D$ is not in DSPACE[$o(t)$], and thus the strict containment.
+    This would show that the language computed by $D$ is not in \acs{DSPACE}[$o(t)$], and thus the strict containment.
 
     On input $\langle M, 1^{k} \rangle$ our machine $D$ marks of $t(|\langle M, 1^{k} \rangle|)$ tape cells, which are the cells that are allowed for the computation.
     Further we also maintain a counter with size $|M|\cdot 2^{t(|\langle M, 1^{k} \rangle|)}$, which is the maximum amount of different configurations a Turing machine can pass before looping on a binary tape of size $t(|\langle M, 1^{k} \rangle|)$.
     Then, we simulate $M$ on input $\langle M, 1^{k} \rangle$.
     If we transcend any bound, we reject.
-    For all $M$ in DSPACE[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
+    For all $M$ in \acs{DSPACE}[$o(t)$], there is a $k$ such that $f(n) \leq t(n)$ by definition.
     On this input, the simulation finishes, and we can invert the output.
 
     This directly gives us an input for which $M$ and $D$ differ, and thus proves our claim.
-    Furthermore, $D$ runs in DSPACE[$t(n)$] as by construction we assured that we do not run infinitely and that we stay within the space bound.
+    Furthermore, $D$ runs in \acs{DSPACE}[$t(n)$] as by construction we assured that we do not run infinitely and that we stay within the space bound.
 \end{proof}
 
 
@@ -183,7 +183,7 @@ We will present a proof for deterministic space.
 
 Here, we will show that the regular languages are captured exactly by second-order logic where we restrict ourselves to quantify only over predicates of arity one and do not include $\leq$.
 Further, we also are not allowed to use $\leq$, but have access to equality $x = y$ and the successor relation $x = y + 1$.
-We call this class SOM[$+1$].
+We call this class \acs{MSO}[$+1$].
 
 First we need to present a formal definition of deterministic finite automata.
 \begin{define}[DFA]
@@ -199,18 +199,18 @@ First we need to present a formal definition of deterministic finite automata.
 \end{define}
 We say that a DFA $D$ accepts a word $w \in \Sigma^{*}$ if when starting at the start state, if we go through $w$ and always transition to the next state according to the actual symbol in $w$ and the actual state, we end up in an accepting state.
 
-In~\cite{theory-cs} and~\cite{Straubing1994} there is a proof of the following fact we will use in our proof for SOM[$+1$]:
+In~\cite{theory-cs} and~\cite{Straubing1994} there is a proof of the following fact we will use in our proof for \acs{MSO}[$+1$]:
 \begin{theorem}
     For any alphabet $\Sigma$, there is a DFA recognizing language $L \subseteq \Sigma^{*}$ if and only if it is regular.
 \end{theorem}
 
 Now we can start to prove our main theorem for regular languages.
 \begin{theorem}
-    For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in SOM[$+1$] if and only if it is regular.
+    For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in \acs{MSO}[$+1$] if and only if it is regular.
 \end{theorem}
 
 \begin{proof}
-    First we show that any regular language can be expressed in SOM[$+1$].
+    First we show that any regular language can be expressed in \acs{MSO}[$+1$].
     Let $L$ be regular, end $D_L$ be a DFA recognizing the language.
     We assume $L$ does not contain the empty word, otherwise we can recognize the language $L \setminus \{\varepsilon\}$ and then add $\varphi \lor \forall x(x \neq x)$, which adds the empty string back.
 
@@ -232,7 +232,7 @@ Now we can start to prove our main theorem for regular languages.
         \end{align*}
     \end{description}
     By induction, we can show that always exactly one $i$ satisfies $X_i(x)$ for any $x$.
-    Thus, if the created formula is satisfied, we know that $D_L$ accepts the word, and thus we have described $L$ in SOM[$+1$].
+    Thus, if the created formula is satisfied, we know that $D_L$ accepts the word, and thus we have described $L$ in \acs{MSO}[$+1$].
 
     \vspace{5mm}
 
@@ -247,7 +247,7 @@ Now we can start to prove our main theorem for regular languages.
     If at a position $i$ in our $(\mathcal{V}_1, \mathcal{V}_2)$-structures we have $x$ in the first-order component of its character, we see this as meaning that $x = i$.
     For the second-order variables in the third component, an $X$ at position $i$ means that $X(i)$ holds.
 
-    Now, we can prove by induction that all formulas in SOM[$+1$] with free variables in $\mathcal{V}_1$ and $\mathcal{V}_2$ are regular.
+    Now, we can prove by induction that all formulas in \acs{MSO}[$+1$] with free variables in $\mathcal{V}_1$ and $\mathcal{V}_2$ are regular.
     Sentences, the formulas without free variables are the special case where $\mathcal{V}_1, \mathcal{V}_2 = \emptyset$.
 
     First, we need to check that the $(\mathcal{V}_1, \mathcal{V}_2)$-structures are consistent, and no first-order variable $x$ appears more than once.
@@ -268,7 +268,7 @@ Now we can start to prove our main theorem for regular languages.
 
     The remaining case with second-order variables is treated analogously, without the restriction on the number of times the variable is used, so we do not need to duplicate our states.
 
-    By induction, we have thus showed the other direction, and we see that SOM[$+ 1$] and the regular languages are equivalent.
+    By induction, we have thus showed the other direction, and we see that \acs{MSO}[$+ 1$] and the regular languages are equivalent.
 \end{proof}
 
 \subsection{Context-Free Languages}\label{subsec:des-context-free-languages}
@@ -284,10 +284,10 @@ A matching relation is a binary relation $M$ on the universe $\{0, \dots, n - 1\
 \end{description}
 Visually, we can think of these relations as nested ranges over the universe.
 
-With matchings, we can define FO($\exists$Match) as the first-order logic extended with existential quantification over matching relations.
+With matchings, we can define \acs{FO}($\exists$Match) as the first-order logic extended with existential quantification over matching relations.
 
 \begin{theorem}
-    For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in FO($\exists$Match) if and only if it is context-free.
+    For any alphabet $\Sigma$, a language $L \subseteq \Sigma^{*}$ is expressible in \acs{FO}($\exists$Match) if and only if it is context-free.
 \end{theorem}
 
 For this, we first introduce a normal form for context-free grammars.
@@ -377,7 +377,7 @@ Now, we can start with the proof of our theorem.
         A tree language $T$ is recognizable if and only if there is a monadic second-order sentence that recognizes it.
     \end{lemma}
 
-    We now present some relations that can be written in MSO on trees.
+    We now present some relations that can be written in \acs{MSO} on trees.
     \begin{description}
         \item[Lf($i$)] Node $i$ is a leaf $\text{Lf}(i) \equiv \forall x \neq C(x, i)$
         \item[Lc($i, j$)] Node $i$ is the leftmost child of $j$ $\text{Lc}(i, j) \equiv C(i, j) \land \forall x (C(x, j) \to i < x)$
@@ -394,7 +394,7 @@ Now, we can start with the proof of our theorem.
         \end{align*}
     \end{description}
 
-    Using these two lemmas, we can continue by presenting for any formula $\varphi$ in FO($\exists$Match) a formula $\phi$ in MSO over trees such that
+    Using these two lemmas, we can continue by presenting for any formula $\varphi$ in \acs{FO}($\exists$Match) a formula $\phi$ in \acs{MSO} over trees such that
     \[w \models \varphi \Leftrightarrow \text{there exists a tree $T$ with yield $w$ such that } T \models \phi\]
 
     For this, we present a class of trees which correspond to a word with a matching.
@@ -432,7 +432,7 @@ Now, we can start with the proof of our theorem.
 
     This is already everything we need to do, and thus we can conclude that
     \[w \models \varphi \Leftrightarrow \text{there exists a tree $T$ with yield $w$ such that } T \models \Upsilon \land \gamma \]
-    Thus, we have proved both directions and see that the context free languages are exactly captured by FO($\exists$Match)
+    Thus, we have proved both directions and see that the context free languages are exactly captured by \acs{FO}($\exists$Match)
 \end{proof}
 
 \subsection{Context-Sensitive Languages}\label{subsec:des-context-sensitive-languages-context-app}
@@ -459,7 +459,7 @@ The two directions of the proof were presented separately in~\cite{Kuroda1964} a
     The other direction works by explicitly defining a grammar which simulates any linear bounded automaton backwards.
     Without loss of generality, we include an end marker $\#$.
 
-    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a NSPACE$[n]$ Turing machine.
+    Let $N = \langle Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject} \rangle$ be a \acs{NSPACE}$[n]$ Turing machine.
     Then, we construct a grammar $G = \langle V, \Sigma, P, S \rangle$ with $V = \bigcup_{q_i \in Q} \bigcup_{a_j \in \Gamma} \{b_{q_i, a_j}\} \cup \{S, L, R, \#\} \cup \bigcup_{a_w \in \Gamma \setminus \Sigma} \{a_w\}$.
     The $b_{q, a}$ represent a position on the tape including the actual state and the actual character, in addition we also have the start state, the end marker and some utility non-terminals.
 
@@ -495,7 +495,7 @@ At the same time, this shows that Hilbert's 10$^{th}$ problem is unsolvable.
 A full proof of these facts can be found in~\cite{Matijasevic1996}.
 
 With this new characterization, there is a quite straightforward characterization of computable sets.
-The logic FO$(\exists \mathbb{N})$ consists of all formulas $\phi(\overline{x}) \equiv \exists \overline{y} (\varphi(\overline{x}, \overline{y}))$ with $\varphi$ having only bounded quantifiers (of the form $\exists x < y$ or $\forall x < y$), addition, multiplication, equality, and any constant natural number~\cite{Entropy2020}.
+The logic \acs{FO}$(\exists \mathbb{N})$ consists of all formulas $\phi(\overline{x}) \equiv \exists \overline{y} (\varphi(\overline{x}, \overline{y}))$ with $\varphi$ having only bounded quantifiers (of the form $\exists x < y$ or $\forall x < y$), addition, multiplication, equality, and any constant natural number~\cite{Entropy2020}.
 The existential quantifiers at the beginning are allowed to range over all the natural numbers.
 
 These formulas can define exactly the Diophantine sets, as the formulas we present are exactly those that mean ``there is a tuple $\overline{y}$ of natural numbers such that some polynomial is satisfied''.
@@ -506,27 +506,27 @@ Thus, they also define exactly all computable sets.
 The domain of Descriptive Complexity is full of open questions as the proofs of lower bounds seems to be very difficult in most cases.
 Further, even separation between complexity classes which seem to take an exponential amount of resources compared to another one in practice can not be shown to be different.
 
-\subsubsection{P$\overset{?}{=}$NP}\label{subsubsec:pnp}
-The P vs.~NP question is the most emblematic question in Descriptive Complexity theory.
-In practice, for any NP-complete problem, only exponential worst-case algorithms are known.
-This leads to the widely believed conjuncture that P $\neq$ NP\@.
+\subsubsection{\acs{P}$\overset{?}{=}$\acs{NP}}\label{subsubsec:pnp}
+The \acs{P} vs.~\acs{NP} question is the most emblematic question in Descriptive Complexity theory.
+In practice, for any \acs{NP}-complete problem, only exponential worst-case algorithms are known.
+This leads to the widely believed conjuncture that \acs{P} $\neq$ \acs{NP}\@.
 The problem is one of the seven Millennium Problems and a solution of equality or inequality is worth 1 Million US dollars.
 
-The consequences of a solution stating that P $=$ NP could have many practical advantages if it was constructive and had a low constant, as many important problems in research and logistics could be solved quickly.
+The consequences of a solution stating that \acs{P} $=$ \acs{NP} could have many practical advantages if it was constructive and had a low constant, as many important problems in research and logistics could be solved quickly.
 It would also mean the breakdown of most of modern cryptography, which relies on problem being intractable.
 On a conceptual level, it would mean that finding a proof to a problem is not harder than verifying its correctness, which would greatly impact the work of mathematicians.
-If a proof of the contrary would be known, this would focus the research more on the average case complexity of NP problems, but because of the continued lack of success on the question, this shift has already widely taken place.
+If a proof of the contrary would be known, this would focus the research more on the average case complexity of \acs{NP} problems, but because of the continued lack of success on the question, this shift has already widely taken place.
 
-\subsubsection{NSPACE$[n]$$\overset{?}{=}$DSPACE$[n]$}\label{subsubsec:nspacedspace}
+\subsubsection{\acs{NSPACE}$[n]$$\overset{?}{=}$\acs{DSPACE}$[n]$}\label{subsubsec:nspacedspace}
 
 This problem is known under the name first linear bounded automaton problem since its proposal by Kuroda in~\cite{Kuroda1964}, and asks if nondeterminism adds power in the context of bounded space.
-This comes from the fact that a NSPACE$[n]$ Turing machine can be seen as a Turing machine with a linear bound on its space usage.
-This theorem is of interest as we know that NSPACE$[n]$ is equivalent to the context-sensitive languages by~\cref{subsec:des-context-sensitive-languages-context-app}.
+This comes from the fact that a \acs{NSPACE}$[n]$ Turing machine can be seen as a Turing machine with a linear bound on its space usage.
+This theorem is of interest as we know that \acs{NSPACE}$[n]$ is equivalent to the context-sensitive languages by~\cref{subsec:des-context-sensitive-languages-context-app}.
 
 Since the proposal, there were two advances.
-One is the proof that NSPACE is closed under complement.
-The contrary would have implied $\text{NSPACE}[n] \neq \text{DSPACE}[n]$ as DSPACE is closed under complement.
-The second advance is Savitch's theorem in~\cref{subsec:nspacesubsetdspacesquared} which already gives a bound for simulating NSPACE using DSPACE machines.
+One is the proof that \acs{NSPACE} is closed under complement.
+The contrary would have implied $\text{\acs{NSPACE}}[n] \neq \text{\acs{DSPACE}}[n]$ as \acs{DSPACE} is closed under complement.
+The second advance is Savitch's theorem in~\cref{subsec:nspacesubsetdspacesquared} which already gives a bound for simulating \acs{NSPACE} using \acs{DSPACE} machines.
 It is not known if this theorem is optimal, that is whether the blow-up by a power of 2 is optimal or if we can do better.
 
 An equality would imply that the context-sensitive languages can be recognized by a deterministic linear bounded automaton, which could make recognizing words in context-sensitive languages easier and faster.

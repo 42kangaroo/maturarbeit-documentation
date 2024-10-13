@@ -42,27 +42,27 @@ Complexity classes can be defined as the set of all problems for which there exi
 Now, some common complexity classes are defined.
 
 \begin{define}
-[{DTIME$[t(n)]$}]
-    We say that a decision problem is in DTIME$[t(n)]$ if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
+[{\acs{DTIME}$[t(n)]$}]
+    We say that a decision problem is in \acs{DTIME}$[t(n)]$ if there exists a deterministic Turing machine that takes a maximum of $f(n)$ steps on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
 \end{define}
 
-\begin{define}[P]
-    We say that a decision problem is in P if there exists a polynomial $q$ such that the problem is in DTIME$[q(n)]$.
+\begin{define}[\acs{P}]
+    We say that a decision problem is in \acs{P} if there exists a polynomial $q$ such that the problem is in \acs{DTIME}$[q(n)]$.
 \end{define}
 
 \begin{define}
-[{DSPACE$[t(n)]$}]
-    We say that a decision problem is in DSPACE$[t(n)]$ if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
+[{\acs{DSPACE}$[t(n)]$}]
+    We say that a decision problem is in \acs{DSPACE}$[t(n)]$ if there exists a deterministic Turing machine that visits a maximum of $f(n)$ tape cells on any input of size $n$ and $f(n) \in \mathcal{O}(t(n))$.
 \end{define}
 
-\begin{define}[PSPACE]
-    We say that a decision problem is in PSPACE if there exists a polynomial $q$ such that the problem is in DSPACE$[q(n)]$.
+\begin{define}[\acs{PSPACE}]
+    We say that a decision problem is in \acs{PSPACE} if there exists a polynomial $q$ such that the problem is in \acs{DSPACE}$[q(n)]$.
 \end{define}
 
-We can do the same for nondeterministic Turing machines, and get the corresponding complexity classes NTIME, NP, NSPACE, NPSPACE\@.
+We can do the same for nondeterministic Turing machines, and get the corresponding complexity classes \acs{NTIME}, \acs{NP}, \acs{NSPACE}, \acs{NPSPACE}\@.
 There, we always take the maximum of tape cells and steps over any computation branch.
 
-The complexity class P has a special meaning for computer scientists, as the problems in P are deemed ``feasible'' on modern computers.
+The complexity class \acs{P} has a special meaning for computer scientists, as the problems in \acs{P} are deemed ``feasible'' on modern computers.
 
 
 \section{Important Results}\label{sec:important-results}
@@ -85,20 +85,20 @@ These Turing machines are a generalization of nondeterministic Turing machines, 
 
 In addition to taking the ``or'' over its children, an alternating Turing machine can thus also take the ``and''.
 
-\sloppy We define ATIME$[t(n)]$ and ASPACE$[t(n)]$ analogously to NTIME$[t(n)]$ and NSPACE$[t(n)]$ in \cref{subsec:complexity-theory}.
+\sloppy We define \acs{ATIME}$[t(n)]$ and \acs{ASPACE}$[t(n)]$ analogously to \acs{NTIME}$[t(n)]$ and \acs{NSPACE}$[t(n)]$ in \cref{subsec:complexity-theory}.
 
 We can proceed to the proof of Savitch's theorem using the technique presented in~\cite{descriptive-complexity}.
 \begin{theorem}[Savitch's Theorem]
     For all space constructible functions with $t(n) \geq \log n$ we have
     \[
-        \text{\upshape NSPACE}[t(n)] \subseteq \text{\upshape ATIME}[t(n)^2] \subseteq \text{\upshape DSPACE}[t(n)^2]
+        \text{\upshape \acs{NSPACE}}[t(n)] \subseteq \text{\upshape \acs{ATIME}}[t(n)^2] \subseteq \text{\upshape \acs{DSPACE}}[t(n)^2]
     \]
 \end{theorem}
 
 \begin{proof}
-    We start with the first inclusion, $\text{NSPACE$[t(n)]$} \subseteq \text{ATIME$[t(n)^2]$}$.
-    We need to show that any NSPACE$[t(n)]$ Turing machine can be simulated by an ATIME$[t(n)^2]$ alternating Turing machine.
-    Let $N$ be a NSPACE$[t(n)]$ Turing machine.
+    We start with the first inclusion, $\text{\acs{NSPACE}$[t(n)]$} \subseteq \text{\acs{ATIME}$[t(n)^2]$}$.
+    We need to show that any \acs{NSPACE}$[t(n)]$ Turing machine can be simulated by an \acs{ATIME}$[t(n)^2]$ alternating Turing machine.
+    Let $N$ be a \acs{NSPACE}$[t(n)]$ Turing machine.
     Without loss of generality, we assume that $N$ clears its tape after accepting and goes back to the first cell.
 
     Consider $G_w$, the computation graph of $N$ on input $w$.
@@ -121,11 +121,11 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
     
     \vspace{5mm}
     
-    \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an ATIME$[s(n)]$ Turing machine $A$ using a DSPACE$[s(n)]$ Turing machine.
+    \sloppy For the second inclusion, by substituting $s(n)$ for $t(n)^2$, we need to simulate an \acs{ATIME}$[s(n)]$ Turing machine $A$ using a \acs{DSPACE}$[s(n)]$ Turing machine.
     Again, we consider the computation graph of $A$ of on input $w$.
     This graph has depth $\mathcal{O}(s(n))$ and size $2^{\mathcal{O}(s(n))}$.
 
-    A DSPACE$[s(n)]$ Turing machine $D$ can systematically search this computation graph to simulate $A$.
+    A \acs{DSPACE}$[s(n)]$ Turing machine $D$ can systematically search this computation graph to simulate $A$.
     This is done by keeping a string of choices $c_{1}c_{2}\dots c_r$ of length $\mathcal{O}(s(n))$ made up to this point.
     Each choice takes up $\mathcal{O}(1)$ place, as the number of transitions from one state is bounded by a constant depending only on $A$.
     Note that these choices uniquely determine which state we are in.
@@ -136,9 +136,9 @@ We can proceed to the proof of Savitch's theorem using the technique presented i
     In a universal state, $D$ simulates the children of that state, and if it gets a positive result from all of them, $D$ reports a positive result.
 
     Overall, $D$ only uses $\mathcal{O}(s(n))$ space to simulate $A$.
-    This shows that we can simulate an ATIME$[t(n)^2]$ Turing machine $A$ using a DSPACE$[t(n)^2]$ Turing machine.
+    This shows that we can simulate an \acs{ATIME}$[t(n)^2]$ Turing machine $A$ using a \acs{DSPACE}$[t(n)^2]$ Turing machine.
 
-    Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{NSPACE}[t(n)] \subseteq \text{DSPACE}[t(n)^2]$.
+    Thus, the second part of the theorem follows and by the transitivity of $\subseteq$ we have $\text{\acs{NSPACE}}[t(n)] \subseteq \text{\acs{DSPACE}}[t(n)^2]$.
 \end{proof}
 
 It is not known if the containment is strict for any of the inclusions.
@@ -146,25 +146,25 @@ Neither is it known if the quadratic overhead for simulating nondeterministic sp
 From this theorem, we also get the following corollary.
 
 \begin{corollary}
-    We have $\text{\upshape PSPACE} = \text{\upshape NPSPACE}$.
+    We have $\text{\upshape \acs{PSPACE}} = \text{\upshape \acs{NPSPACE}}$.
 \end{corollary}
 
 \begin{proof}
     \begin{align*}
-        \text{NPSPACE} &= \bigcup_{k \in \mathbb{N}}\text{NSPACE}[n^k] & \text{by definition} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}\text{DSPACE}[n^{2k}] & \text{by Savitch's Theorem} \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}\text{DSPACE}[n^{k}] \\
-        &= \text{PSPACE} & \text{by definition} \\
-        &= \bigcup_{k\in \mathbb{N}}\text{DSPACE}[n^{k}] \\
-        &\subseteq \bigcup_{k\in \mathbb{N}}\text{NSPACE}[n^{k}] \\
-        &= \text{NPSPACE}
+        \text{\acs{NPSPACE}} &= \bigcup_{k \in \mathbb{N}}\text{\acs{NSPACE}}[n^k] & \text{by definition} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}\text{\acs{DSPACE}}[n^{2k}] & \text{by Savitch's Theorem} \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}\text{\acs{DSPACE}}[n^{k}] \\
+        &= \text{\acs{PSPACE}} & \text{by definition} \\
+        &= \bigcup_{k\in \mathbb{N}}\text{\acs{DSPACE}}[n^{k}] \\
+        &\subseteq \bigcup_{k\in \mathbb{N}}\text{\acs{NSPACE}}[n^{k}] \\
+        &= \text{\acs{NPSPACE}}
     \end{align*}
 \end{proof}
 
 
 \section{Results concerning the Chomsky Hierarchy}\label{sec:results-concerning-the-chomsky-hierarchy}
 
-Now that we have seen most of the required theory, we can start to apply it to the main subject of this document: the Chomsky Hierarchy.
+Now that we have seen most of the required theory, we can start to apply it to the main subject of this document: the Chomsky hierarchy.
 
 The definitions of first- and second-order logic can be found in \cref{sec:first-order-logic} and \cref{sec:second-order-logic} respectively.
 For this section, we define the vocabulary on strings to be $\sigma = \langle Q_a, Q_b, \dots, Q_z, \leq , 0, 1, \max \rangle$.
@@ -182,8 +182,8 @@ Nevertheless, there are some known formalisms.
 One of them is the linear bounded nondeterministic Turing machine.
 This first equivalence is shown in \cref{subsec:des-context-sensitive-languages-context-app}.
 
-We define MSO(TC) to be second-order logic restricted to quantification over unary relations supplemented with the transitive closure operator.
-Then, the second formalism is given by the logic MSO(TC).
+We define \acs{MSO}(\acs{TC}) to be second-order logic restricted to quantification over unary relations supplemented with the transitive closure operator.
+Then, the second formalism is given by the logic \acs{MSO}(\acs{TC}).
 The equivalence was established by Immerman in \cite{Immerman1987}.
 The transitive closure operator takes the transitive closure over some graph and is defined as follows:
 
@@ -195,23 +195,23 @@ The transitive closure operator takes the transitive closure over some graph and
 
 \begin{theorem}
     \label{thm:contextsensitveMSOTC}
-    A language $L$ is context-sensitive if and only if it can be described by a formula in $MSO(TC)$.
+    A language $L$ is context-sensitive if and only if it can be described by a formula in $\acs{MSO}(\acs{TC})$.
 \end{theorem}
 
 \begin{proof}
-    By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of MSO(TC) and NSPACE$[n]$ Turing machines.
+    By~\cref{thm:nspacecontextsensitive}, we can also show the equivalence of \acs{MSO}(\acs{TC}) and \acs{NSPACE}$[n]$ Turing machines.
 
-    First, we show that any formula in MSO(TC) can be evaluated by a NSPACE$[n]$ Turing machine $N$.
-    The first step is to notice that any relation of MSO can be represented on the tape in $\mathcal{O}(n)$ space.
+    First, we show that any formula in \acs{MSO}(\acs{TC}) can be evaluated by a \acs{NSPACE}$[n]$ Turing machine $N$.
+    The first step is to notice that any relation of \acs{MSO} can be represented on the tape in $\mathcal{O}(n)$ space.
     For any sub-formula of the form $\left(TC_{\overline{a}, \overline{b}}\phi\left(\overline{a}, \overline{b}\right)\right)\left(\overline{u}, \overline{v}\right)$, $N$ writes down $\overline{u}$ and guesses the next vertex on the tape.
     Then, $N$ can check if the transition is valid by evaluating $\phi$.
     If it is, $N$ replaces $\overline{u}$ with the new vertex and repeats until it reaches $\overline{v}$.
-    Because Immerman showed that NSPACE is closed under complementation in~\cite{Immerman1988}, we know that $N$ can also compute any sub-formula of the form $\neg\left(TC_{\overline{a}, \overline{b}}\phi\left(\overline{a}, \overline{b}\right)\right)\left(\overline{u}, \overline{v}\right)$.
+    Because Immerman showed that \acs{NSPACE} is closed under complementation in~\cite{Immerman1988}, we know that $N$ can also compute any sub-formula of the form $\neg\left(TC_{\overline{a}, \overline{b}}\phi\left(\overline{a}, \overline{b}\right)\right)\left(\overline{u}, \overline{v}\right)$.
     The other parts of the formula can be evaluated easily in linear space, as $N$ just needs to write down relations when quantifying and remember in which part of the constant-size formula it is.
 
     \vspace{5mm}
 
-    For proving the other direction, consider a NSPACE$[n]$ Turing machine $N$.
+    For proving the other direction, consider a \acs{NSPACE}$[n]$ Turing machine $N$.
     We define the string vocabulary for our logic to be over the alphabet $\Sigma$ which contains the symbol $b_{a_i, q_j}$ for all pairs of tape symbols and Turing machine states in addition to all normal symbols $a_i$.
     We use these symbols to completely represent an instantaneous configuration of the computation of $N$.
     This is done by having creating a string from the tape content and replacing the character at the position of the read/write head by the $b_{a_i, q_j}$ which contains the actual character and state of $N$.
@@ -234,13 +234,13 @@ The transitive closure operator takes the transitive closure over some graph and
     Without loss of generality, we can assume that $N$ clears its tape after accepting, therefore the end position is unique.
     Thus, our formula holds if and only if there is an accepting path in $N$ on the input word $w$.
 
-    This concludes the equivalence of MSO(TC) and context-sensitive languages.
+    This concludes the equivalence of \acs{MSO}(\acs{TC}) and context-sensitive languages.
 \end{proof}
 
-An interesting normal form for MSO(TC) can be derived from this proof.
+An interesting normal form for \acs{MSO}(\acs{TC}) can be derived from this proof.
 \begin{corollary}
     \label{cor:normalmso}
-    Every formula in MSO(TC) can be written in the form
+    Every formula in \acs{MSO}(\acs{TC}) can be written in the form
     \[
         \left( TC_{\overline{X}, \overline{Y}} \varphi(\overline{X}, \overline{Y}) \right)\left( \overline{U}, \overline{V} \right)
     \]

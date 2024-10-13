@@ -28,10 +28,10 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
     We denote tuples of variables by $\overline{x} = \langle x_1, \dots, x_n \rangle$
     \item[Universe] The set over which variables and constants can range
     \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables.
-    In this document, we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
+    In this document, we always consider an equality relation $=$, an ordering relation $\leq$, and \acs{BIT}$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
     \item[Vocabulary] A tuple $\tau = \langle R_1^{a_1}, \dots, R_r^{a_r}, c_1, \dots, c_s \rangle$ of relations $R_i$ with arity $a_i$ and constants $c_j$\footnote{We omit functions, which are included in most textbook definitions, as they can be simulated by a relation in our case}
     \item[Structure] A tuple $\mathcal{A} = \langle |\mathcal{A}|, R_1^{\mathcal{A}}, \dots, R_r^{\mathcal{A}}, c_1^{\mathcal{A}}, \dots, c_s^{\mathcal{A}} \rangle$ where $|\mathcal{A}|$ is the universe, the constants are assigned a value from $|\mathcal{A}|$, and each relation is assigned a truth value for each $a_i$-tuple in $|\mathcal{A}|^{a_i}$.
-    The set of all structures for a given universe is denoted as STRUCT$[\tau]$
+    The set of all structures for a given universe is denoted as \acs{STRUCT}$[\tau]$
     \item[First-order formula] A first-order formula is inductively defined as follows:
     \begin{description}
         \item[Atoms] Any formula of the form $R(x_1, \dots, x_k)$ for some relation of arity $k$ is called an atomic formula
