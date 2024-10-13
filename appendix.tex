@@ -23,10 +23,9 @@ The definitions are taken from the lectures Discrete Mathematics in Computer Sci
 
 
 \section{First-Order Logic}\label{sec:first-order-logic}
-We abbreviate first-order logic as FO\@. % TODO check acronyms
 \begin{description}
     \item[Variable] A variable is an element that can have a value from a set.
-    Tuples of variables are denoted by $\overline{x} = \langle x_1, \dots, x_n \rangle$
+    We denote tuples of variables by $\overline{x} = \langle x_1, \dots, x_n \rangle$
     \item[Universe] The set over which variables and constants can range
     \item[Relation] A relation of arity $k$, $R(x_1, \dots, x_k)$ can be either true or false for any $k$-tuple of variables.
     In this document, we always consider an equality relation $=$, an ordering relation $\leq$, and BIT$(x, 1y)$, which means that the $y^{th}$ bit of $x$ is $1$ in binary notation, to be present
@@ -45,7 +44,7 @@ We abbreviate first-order logic as FO\@. % TODO check acronyms
     \item[Free variables] A variable in a formula which occurs at least once without being bound by a quantifier whose scope surrounds it
     \item[Semantics] For any structure, we can assign a truth value to any formula over the corresponding vocabulary.
     If the formula contains free variables, these need to be assigned a value from the universe first.
-    We say $\mathcal{A}$ satisfies $\phi$, denoted as $\mathcal{A} \models \phi$, if and only if $\phi$ is true under the interpretation of the constant and relations in $\mathcal{A}$.
+    We say $\mathcal{A}$ satisfies $\phi$, denoted as $\mathcal{A} \models \phi$, if and only if $\phi$ is true under the interpretation of the constants and relations in $\mathcal{A}$.
     This truth value is inductively assigned to all formulas as follows:
     \begin{description}
         \item[Atoms] For a formula $\phi$ of the form $R(x_1, \dots, x_k)$, we have $\mathcal{A} \models \phi$ if and only if the interpretation of the relation $R^{\mathcal{A}}$ maps $\langle x_1, \dots, x_k \rangle$ to true
@@ -64,7 +63,7 @@ We abbreviate first-order logic as FO\@. % TODO check acronyms
     \begin{itemize}
         \setlength\itemsep{0.15em}
         \item $I$ is bijective
-        \item for every available relation $R_i$ of arity $a_i$ and every $a_i$-tuple $\overline{e} = \langle e_1, \dots, e_{a_i} \rangle$ in $|\mathcal{A}|^{a_i}$, we have \[R_i^{\mathcal{A}}(e_1, \cdot, e_{a_i}) \Leftrightarrow R_i^{\mathcal{B}}(I(e_1), \cdot, I(e_{a_i}))\]
+        \item for every available relation $R_i$ of arity $a_i$ and every $a_i$-tuple $\overline{e} = \langle e_1, \dots, e_{a_i} \rangle$ in $|\mathcal{A}|^{a_i}$, we have \[R_i^{\mathcal{A}}(e_1, \dots, e_{a_i}) \Leftrightarrow R_i^{\mathcal{B}}(I(e_1), \dots, I(e_{a_i}))\]
         \item for every constant symbol $c_j$, we have $I(c_j^{\mathcal{A}}) = c_j^{\mathcal{B}}$
     \end{itemize}
     If such an $I$ exists for two structures $\mathcal{A}$ and $\mathcal{B}$, we write $\mathcal{A} \cong \mathcal{B}$
@@ -74,18 +73,17 @@ We abbreviate first-order logic as FO\@. % TODO check acronyms
 \section{Second-Order Logic}\label{sec:second-order-logic}
 In second-order logic, we extend the capabilities of first-order logic with the ability to quantify over relations.
 We thus also need to extend our definitions.
-We abbreviate second-order logic as SO\@.
 \begin{description}
-    \item[Second-order variables] A relation that is not given in the vocabulary and can be substituted with a specific interpretation
-    \item[Second-order formula] In addition to the inductive rules of the FO formulas, we can quantify over second-order formulas
+    \item[Second-order variables] A relation that is not given in the vocabulary and can be substituted with a specific relation
+    \item[Second-order formula] In addition to the inductive rules of the first-order formulas, we can quantify over second-order formulas
     \begin{description}
-        \item[Second-order Existential quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
-        \item[Second-order Universal quantification] If $\varphi$ is a formula, then $\forall V\varphi$ is a formula
+        \item[Second-order existential quantification] If $\varphi$ is a formula, then $\exists V\varphi$ is a formula
+        \item[Second-order universal quantification] If $\varphi$ is a formula, then $\forall V\varphi$ is a formula
     \end{description}
-    \item[Second-order Semantics] We also need to extend the first-order semantics
+    \item[Second-order semantics] We also need to extend the first-order semantics
     \begin{description}
-        \item[Second-order Existential quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U / V)$, where $\varphi(U / V)$ denotes $\varphi$ with any occurrence of $V$ replaced by $U$
-        \item[Second-order Universal quantification] We have $\mathcal{A} \models \forall V\varphi$ if and only if for all relations $U$ over $|\mathcal{A}|$ we have $\mathcal{A} \models \varphi(U / V)$
+        \item[Second-order existential quantification]  We have $\mathcal{A} \models \exists V\varphi$ if and only if there exists a relation $U$ over $|\mathcal{A}|$ such that $\mathcal{A} \models \varphi(U / V)$, where $\varphi(U / V)$ denotes $\varphi$ with any occurrence of $V$ replaced by $U$
+        \item[Second-order universal quantification] We have $\mathcal{A} \models \forall V\varphi$ if and only if for all relations $U$ over $|\mathcal{A}|$ we have $\mathcal{A} \models \varphi(U / V)$
     \end{description}
 \end{description}
 
@@ -94,7 +92,7 @@ We abbreviate second-order logic as SO\@.
 Turing machines are the most common model of computation.
 \begin{description}
     \item[Informal definition] A Turing machine is an automaton with a finite number of states and an infinite tape.
-    Using a read/write head, which can read one symbol on the tape, modify one symbol on the tape and move left and right, a Turing Machine can compute functions
+    Using a read/write head, which can read one symbol on the tape, modify one symbol on the tape and move left or right, a Turing Machine can compute functions
     \item[Formal definition] Formally, a Turing machine is a 7-tuple $M = \langle  Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}\rangle$, where
     \begin{description}
         \item[$Q$] is the set of states
@@ -111,14 +109,14 @@ Turing machines are the most common model of computation.
     If at some point the Turing machine enters the accepting or the rejecting state, the computation halts, and the Turing machine is said to have accepted / rejected the input.
     It can happen that the Turing machine continues indefinitely or loops.
     In that case, we also say that it has rejected its input.
-    In this document, we will ignore the tape content after the computation and focus on decision problems.
+    In this document, we ignore the tape content after the computation and focus on decision problems.
     \item[Decidability] If a Turing machine halts on all inputs, we say that it decides a problem, as we can always be sure that the machine will accept or reject an input in finite time.
     \item[Nondeterministic Turing machine] We can extend the transition function $\delta$ to allow multiple transitions from a given state.
     Formally, we then have $\delta : \Gamma \times Q \to \mathcal{P}(\Gamma \times Q \times \{L, R\})$.
     If at some point there are multiple transitions that are possible from the current state, we can take any of them.
     If there exists any computational path which leads to an accepting state, the nondeterministic Turing machine accepts.
-    This is not analogous to how real sequential computers work, but allows interesting results, and is as powerful as a normal deterministic Turing machine.
-    \item[Space/Time-Constructible functions] A function $f(n)$ is time constructible if there exists a Turing machine which on input $1^{n}$ writes $f(n)$ in binary on its tape in time $f(n)$.
+    This is not analogous to how real sequential computers work, but allows interesting results, and is not more powerful than a normal deterministic Turing machine.
+    \item[Space/Time-constructible functions] A function $f(n)$ is time constructible if there exists a Turing machine which on input $1^{n}$ writes $f(n)$ in binary on its tape in time $f(n)$.
     Space-constructible functions are defined analogously.
-    \item[Church-Turing Thesis] The Church-Turing Thesis states that anything that can be done on a real-world computer can be done using a Turing machine.
+    \item[Church-Turing thesis] The Church-Turing thesis states that anything that can be done on a real-world computer can be done using a Turing machine.
 \end{description}

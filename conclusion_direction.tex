@@ -4,10 +4,13 @@
 \chapter{Conclusion and Direction}\label{ch:conclusion-and-direction}
 
 \section{Conclusion}\label{sec:conclusion}
-In this document, we investigated multiple logics which have a relation to Savitch's theorem.  % TODO we / I in conclusion?
+In this document, multiple logics which have a relation to Savitch's theorem were investigated.
 This has led us to a better notion of how these logics are related to NSPACE$[s(n)]$ and thus also to linear bounded automata and context-sensitive languages.
+We found out that context-sensitive languages correspond to reachability querries on certain graphs.
+Further, \cref{sec:analogues-to-proof-for-dspace} seems to indicate that they are not local structures as remembering only local transformations is not enough to capture them.
+In \cref{sec:restricting-universal-quantification}, we have seen that even very little boolean universal quantification is probably too much for the existential nature of NSPACE$[n]$ Turing machines to handle.
 
-In the beginning, we introduced the theory of formal languages and the Chomsky Hierarchy.
+In the beginning, the theory of formal languages and the Chomsky Hierarchy were introduced.
 Afterwards, the main tool of Descriptive Complexity used in this document, Complexity theory, was presented.
 Next, Savitch's theorem and its proof were explained.
 From then on, this theorem was used multiple times.
@@ -26,7 +29,7 @@ The difficulty of this problem is illustrated by Savitch's theorem, which has no
 
 The next method I tried was mixing transitive closure logic with iterative logic.
 This turned out not to be very powerful, as any interesting result in one of the mixed logics would imply one in pure iterative logic.
-Nevertheless, some upper and lower bounds were shown using Savitch's theorem and the space hierarchy theorem.
+Nevertheless, I showed upper and lower bounds using Savitch's theorem and the space hierarchy theorem.
 
 In an attempt to make FO-VAR less powerful, I also tried restricting universal quantification.
 A new formula made this possible.
@@ -35,11 +38,11 @@ The generalization of this idea by adding more bits to the extended variables an
 
 The most complicated result I was able to get does not have any tight connection to context-sensitive languages.
 It concerns the simulation of alternating Turing machines using FO-VAR\@.
-There, a quite tight containment was found, which bounds some alternating Turing machine classes from above and below by a factor of $\log(s(n))$.
-A combination of different techniques used in previous results was used to get the logical formula.
+There, I found quite a tight containment, which bounds some alternating Turing machine classes from above and below by a factor of $\log(s(n))$.
+I used a combination of different techniques used in previous results to get the logical formula.
 This result could lead to a path for describing alternating space-time classes exactly using an equivalent logic.
 
-\subsection{Working process}\label{subsec:working-process}
+\subsection{Working Process}\label{subsec:working-process}
 Generally, I learned a lot during this project.
 It also provided me insight into how scientific research is done, and I was able to immerse myself in a domain that fascinates me.
 I knew that I could not expect any significant results, and indeed I worked on many different ideas, but most of the time hit a dead end.
@@ -73,7 +76,7 @@ Overall, I think there are three main points which could be improved:
 \section{Directions}\label{sec:directions}
 Multiple topics could be investigated further and would provide an even deeper understanding of the inner workings of Savitch's theorem.
 
-In all proofs concerning equivalences between transitive closure logics and NSPACE$[s(n)]$, we assumed that $s(n)$ is at most polynomial.
+In all proofs concerning equivalences between transitive closure logics and NSPACE$[s(n)]$, it is assumed that $s(n)$ is at most polynomial.
 This is still a profound limitation, and finding a generalization could lead to new insights that could help in the polynomial case and in the end also in the case where $s(n) = n$, capturing exactly the context-sensitive languages.
 
 In the context of Savitch's theorem, it would also be interesting to investigate the computation graphs of NSPACE and DSPACE Turing machines.
@@ -81,7 +84,7 @@ This has been discussed on the theoretical computer science stack exchange in~\c
 A motivation for this is that the number of nodes in both graphs is the same, only the number of edges varies.
 
 Another approach that could be investigated is looking at normal forms.
-One that seems to have some potential is the Kuroda Normal Form described in~\cite{Kuroda1964}.
+One that seems to have some potential is the Kuroda normal form described in~\cite{Kuroda1964}.
 This approach could yield a semantic restriction similar to the one for context-free languages described in \cref{subsec:des-context-free-languages}.
 
 Further, one could investigate hierarchies of transitive closure logics, generalized quantifiers and alternating time-space complexity classes.
