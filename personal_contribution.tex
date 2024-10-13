@@ -5,7 +5,7 @@
 In this chapter, results of searches for new restrictions of first-order logic and other related concepts are presented.
 I did not find any fundamentally new result about the characterization of context-sensitive languages using first-order logic but managed to prove that various approaches could not lead to an equivalence.
 Further, I also lowered some upper bounds for simulating alternating Turing machines using iterative logic.
-Using a restricted form of iterative logic, I could lower the bounds for an iterative simulation of a nondeterministic Turing Machine.
+Using a restricted form of iterative logic, I could lower the bounds for an iterative simulation of a nondeterministic Turing machine.
 
 
 \section{Direct Transformation}\label{sec:direct-transformation}
@@ -26,7 +26,7 @@ This then directly gives us a characterization of \acs{NSPACE}$[s(n)]$ without r
 The extended variables in \acs{FO-VAR}$[1, n^k / \log(n)]$ have exactly the same capabilities as second-order variables of arity $k$ in second-order logic.
 This is true as for every second-order variable $X$ we can have an extended variable $X'$ such that bit $\overline{x}$ of $X'$ is set if and only if $X(\overline{x})$ is true.
 By generalizing the proof of \cref{thm:contextsensitveMSOTC}, we have \acs{NSPACE}$[n^k] = $ \acs{SO}(\acs{TC}, arity $k$).
-We now prove that \acs{SO}(\acs{TC}, arity $k$) = \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}), thus also capturing \acs{NSPACE}$[n^k]$ with an extension of first-order logic.
+We now prove that ${\text{\acs{SO}(\acs{TC}, arity }k\text{)}}$ = \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}), thus also capturing \acs{NSPACE}$[n^k]$ with an extension of first-order logic.
 
 \begin{proof}
     We show by induction on the structures of the formulas that each formula in \acs{SO}(\acs{TC}, arity $k$) has an equivalent formula in \acs{FO-VAR}$[1, n^k/\log(n)]$(\acs{TC}) and vice versa.
@@ -96,7 +96,7 @@ As the Turing machines under consideration are deterministic, the character at p
 Further, it only depends on the characters at positions $\overline{x} - 1, \overline{x}$, and $\overline{x} + 1$ at time $t - 1$.
 Because it can be assumed without loss of generality that the Turing machine returns to the starting tape cell and clears its tape after accepting, finding out the value of $C_{2^{cn^k}}(\overline{0}, \overline{b})$ is sufficient to determine if the machine accepts.
 
-If we want to extend this to nondeterministic Turing machines using $C_{t}(\overline{x}, \overline{b})$ to mean that the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
+If we want to extend this to nondeterministic Turing machines by defining $C_{t}(\overline{x}, \overline{b})$ to mean that the character at position $\overline{x}$ \emph{can} be $\overline{b}$ at time $t$, we run into problems.
 As we do not have the guarantee that the computation is deterministic, we can not say any more that the new state only depends on the possible characters on the tape at time $t - 1$.
 Doing this would mean that impossible states could be reached.
 This would happen because the formula does not remember which combinations of characters are possible, which is required as the characters of each tape cell can not be chosen independently.
@@ -152,8 +152,7 @@ Now, there are multiple cases
 \end{description}
 
 We thus get that any improvement of our simulation results happens only when we have less than $s(n)$ variable bits.
-Using Savitch's theorem once more, we also get that $r(n) > \sqrt{n}$.
-Another result is that if $t(n)r(n) < s(n)^2$, Savitch's theorem can be improved as
+One result following from this is that if $t(n)r(n) < s(n)^2$, Savitch's theorem can be improved as
 \[
     \text{\acs{FO-VAR}}[t(n), r(n)/\log(n)] \subseteq \text{\acs{DSPACE}}[t(n)r(n)]
 \]
@@ -189,7 +188,7 @@ for some constant $c$.
 In $\acs{QB}$, the first quantification and $M_1$ mean that the formula breaks with the actual branch being true whenever $X$ and $Y$ are connected.
 When this happens, quantification is done universally over the empty set, which is defined as true.
 If no connection exists yet, a middle configuration $\overline{Z}$ is guessed, and both sides are checked by universally choosing $b_2$.
-In $M_2$, the formula then checks that $\overline{A}$ and $\overline{B}$ are the endpoints of the path determined by $b_2, \overline{X}, \overline{Z} \text{ and }\overline{Y}$.
+In $M_2$, the formula then checks that $\overline{A}$ and $\overline{B}$ are the endpoints of the path determined by $b_2, \overline{X}, \overline{Z} \text{, and }\overline{Y}$.
 After this, $\overline{A}$ and $\overline{B}$ are copied to $\overline{Y}$ and $\overline{X}$ in $M_3$.
 When iterating this, a path from $\overline{C}$ to $\overline{D}$ is guessed, and every connection between adjacent states is checked.
 
@@ -200,6 +199,7 @@ The only difference lies in how the paths are split.
 Instead of splitting the paths into two parts, they are split into $r(n)$ parts.
 This is done by guessing $r(n) - 1$ middle configurations at once in an existential extended variable and choosing which part to check using the universal extended variable.
 Thus, for a path of length $2^{cs(n)}$, the formula needs at most \[\log_{r(n)}\left(2^{cs(n)}\right) = \frac{\log\left(2^{cs(n)}\right)}{\log(r(n))} = cs(n)/\log(r(n))\] iterations.
+
 As for simulating this formula with a Turing machine, the product of the number of iterations and the size of the extended variables are important, we do not gain any tighter results from this.
 
 
@@ -229,11 +229,12 @@ with \[
 This gives us a formula in \acs{FO-VAR}$[t(n), s(n)/\log(n)]$ which simulates a computation of an alternating Turing machine.
 Some of these $M_i$ are not quantifier-free.
 The quantifiers could be moved out of the $M_i$, but would make the formula less readable.
+
 This formula works as follows:
-The formula $\acs{QB}$ starts by checking if the accepting configuration has already been reached using $M_1$.
-Next, if the simulation is not done yet, $\acs{QB}$ existentially guesses the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
-In $M_2$, either this existentially guessed next state is retained if the simulated Turing machine is in an existential state (thus effectively doing nothing) or the existentially quantified state is ignored and a universal quantification over all states which are connected to the current one is done.
-The last thing $\acs{QB}$ does is copying $\overline{B}$ to $\overline{X}$, making it the new start of the path.
+The formula starts by checking if the accepting configuration has already been reached using $M_1$.
+Next, if the simulation is not done yet, the formula existentially guesses the next configuration, restricting this quantification to only those configurations which are directly connected to the actual one.
+In $M_2$, either this existentially guessed next state is retained if the simulated Turing machine is in an existential state or the existentially quantified state is ignored and a universal quantification over all states which are connected to the current one is done.
+The last thing the formula does is copying $\overline{B}$ to $\overline{X}$, making it the new start of the path.
 
 By combining the above techniques for switching between universal and existential quantification with the path-halving method used in Savitch's theorem, we get an even stronger result.
 
@@ -259,7 +260,7 @@ Before presenting the formula, we first think of how many iterations are needed.
 Because of the halving trick,  $\log(a)$ iterations are used for a path of length $a$.
 By summing over all path segments with only one quantification type, we can bound the total number of iterations.
 As we are simulating an alternating Turing machine which makes at most $t(n)$ steps, the total of all path segments can not exceed $t(n)$.
-To get an upper bound on this, we can use Jensen's inequality (\cite{inequalities-math-oly}, p.28).
+To get an upper bound on the number of iterations, we can use Jensen's inequality (\cite{inequalities-math-oly}, p.28).
 We get
 \[
     \begin{aligned}
@@ -293,14 +294,14 @@ The following formula simulates an \acs{ATSR}$[t(n), s(n), r(n)]$ Turing machine
         N_{5} \equiv&~(b_{1} \land b_{path} = b_{0}) \lor (\neg b_{1} \land (existential(X) \to b_{path}))
     \end{aligned}
 \]
-and $\left([\acs{QB}]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(\text{true} / b_{path}, AS / S, AS / X, AS /I, AS /S, AS / E, AE / Y)$ being the final formula.
+and \[\left([\acs{QB}]^{r(n)\log(t(n)/r(n))}(\neg b_{path})\right)(\text{true} / b_{path}, AS / S, AS / X, AS /I, AS /S, AS / E, AE / Y)\] being the final formula.
 
 The meanings of the variables are explained below:
 \begin{description}
     \setlength\itemsep{0.15em}
     \item[$Y$:] the accepting vertex
     \item[$X$:] the starting vertex in the actual component
-    \item[$I$:] the vertex for which whether a path from $X$ exists is being checked
+    \item[$I$:] the vertex for which it is being checked whether a path from $X$ exists
     \item[$S$:] the start of the path segment which is currently checked
     \item[$E$:] the end of the path segment  which is currently checked
     \item[$Z, Z_{e}$:] the guessed middle vertex of a path segment from $S$ to $E$
@@ -322,10 +323,10 @@ As this formula is quite intricate, it is proposed to read it four times, each t
     As $b_{path}$ is true, in $N_3$ the choice made for $b_{2e}$ is ignored and the side is universally chosen.
     $M_4$ copies the relevant new starting and ending vertices to $A$ and $B$.
     Because $b_1$ is true, $A$ and $B$ are copied to $S$ and $E$ in $M_5$.
-    In $M_6$ and $M_7$ combined  $X$ and $I$ are copied to $A$ and $B$ and back again.
-    The same is done with $b_{path}$ using $N_4$, $N_5$ and $b_0$.
+    In $M_6$ and $M_7$ combined, $X$ and $I$ are copied to $A$ and $B$ and back again.
+    The same is done with $b_{path}$ using $N_4$, $N_5$, and $b_0$.
     In the end, the formula gets a new configuration with the guessed middle vertex replacing either the former ending or starting vertex.
-    If no path exists, this continues until in the formula $\neg b_{path}$ and this branch is marked as false.
+    If no path exists, this continues until in the formula $\neg b_{path}$ this branch is marked as false.
 
     \item The second case we look at is the case where the formula claims that no path exists.
     Here, $b_{path}$ is false.
@@ -337,7 +338,7 @@ As this formula is quite intricate, it is proposed to read it four times, each t
     The next two quantifiers quantify existentially which half of $S \to Z \to E$ is not connected.
     This half must exist, as otherwise, a path from $S$ to $E$ exists, which would contradict $\neg b_{path}$.
     Because $b_1$ is again true, the relevant part of the path is copied to $A$ and $B$ in $M_4$ and back to $S$ and $E$ in $M_5$.
-    In $M_6$, $M_7$, $N_4$ and $N_5$ the formula does the same as in the first case, which is not changing $X$, $I$ and $b_{path}$.
+    In $M_6$, $M_7$, $N_4$, and $N_5$ the formula does the same as in the first case, which is not changing $X$, $I$,    and $b_{path}$.
     If no path exists, this continues until the formula $\neg b_{path}$ is hit.
     At this point, this branch of the formula is marked as true, as effectively, no path from $X$ to $I$ exists by making these choices.
 
@@ -362,7 +363,7 @@ As this formula is quite intricate, it is proposed to read it four times, each t
     In $M_4$, $A$ and $B$ are guessed such that $A$ is the new starting vertex corresponding to the old ending vertex $I$, and $B$ is either the accepting vertex $E$ or an existential vertex.
     Then, $A$ is copied to $S$ in $M_5$, marking it as the starting vertex.
     Further, because we changed the quantification type, a valid $S$ must now be universal.
-    Thus, all vertices which are either the accepting vertex or are existential are universally quantified.
+    Thus, all vertices which are either the accepting vertex or are existential are universally quantified for $E$.
     After that, in $M_6$ and $M_7$, the formula copies $S$ to $X$ and $E$ to $I$ via $A$ and $B$.
     The last change happens in $N_{5}$, where the formula quantifies existentially if it claims that a path from $X$ to $I$ exists or that no such path does.
     Thus, the variables are set for a new block of universal states.

@@ -84,7 +84,7 @@ In \cref{sec:formal-languages-app}, explanations for regular languages (\cref{su
 
 We can define the most significant class of languages for this document by multiple equivalent restrictions on the grammars.
 
-One restriction is that all rules have to be of the form $\alpha\beta\gamma \to \alpha\varphi\gamma$ with $\alpha, \gamma$ being words over the union of $\Sigma$ and $V$, $\beta \in V$ and $\varphi$ being a nonempty word over $\Sigma \cup V$.
+One restriction is that all rules have to be of the form $\alpha\beta\gamma \to \alpha\varphi\gamma$ with $\alpha$ and $\gamma$ being words over $\Sigma \cup V$, $\beta$ being a symbol of $V$ and $\varphi$ being a nonempty word over $\Sigma \cup V$.
 This means that only the non-terminal symbol is allowed to change.
 Additionally, if $S$ is the start symbol and never occurs on the right-hand side of any rule, we may include the exception $S \to \varepsilon$.
 
@@ -108,11 +108,11 @@ The last restriction, the one that is most useful for proofs, is the Kuroda norm
 \begin{itemize}
     \setlength\itemsep{0.15em}
     \item $A \to BC$
-    \item $AB \to CB$
+    \item $AB \to CD$
     \item $A \to a$
     \item $S \to \varepsilon$ if $S$ is the start symbol and does not occur on any right-hand side of a rule.
 \end{itemize}
-where $A, B, C, S \in V$ and $a \in \Sigma$.
+where $A, B, C, D, S \in V$ and $a \in \Sigma$.
 
 The corresponding formalism for these languages is the linearly bounded nondeterministic Turing machine, which can only write on the tape cells that contained the input word in the beginning.
 This and an equivalent extension of second-order logic are proven in~\cref{subsec:des-context-sensitive-languages}.
